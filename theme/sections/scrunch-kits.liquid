@@ -1,0 +1,210 @@
+{% comment %}
+  Scrunch & Create - Curated Kits Section
+  Why: Replicates the 3-bundle curated kit showcase from features/products/components/KitsSection/
+{% endcomment %}
+
+<div class="sc-kits-section">
+  <div class="page-width">
+    <div class="sc-section-header">
+      <div class="sc-section-title-wrap">
+        <h2 class="sc-section-title">{{ section.settings.heading | default: "The Kits" }}</h2>
+        <p class="sc-section-subtitle">{{ section.settings.subheading | default: "Curated sets — ready to gift or keep" }}</p>
+      </div>
+      {%- if section.settings.view_all_link != blank -%}
+        <a href="{{ section.settings.view_all_link }}" class="sc-section-link">
+          {{ section.settings.view_all_text | default: "Shop all kits" }} &rarr;
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="sc-kits-grid">
+      {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
+        {%- for product in section.settings.collection.products limit: 3 -%}
+          <a href="{{ product.url }}" class="sc-kit-card">
+            <div class="sc-kit-img-wrap">
+              {%- if product.featured_media != blank -%}
+                <img
+                  src="{{ product.featured_media | image_url: width: 600 }}"
+                  alt="{{ product.title | escape }}"
+                  loading="lazy"
+                  width="{{ product.featured_media.width | default: 600 }}"
+                  height="{{ product.featured_media.height | default: 450 }}"
+                  class="sc-kit-img"
+                >
+              {%- endif -%}
+            </div>
+            <div class="sc-kit-body">
+              <h3 class="sc-kit-name">{{ product.title }}</h3>
+              <p class="sc-kit-desc">{{ product.description | strip_html | truncatewords: 15 }}</p>
+              <div class="sc-kit-pricing">
+                <span class="sc-kit-price">{{ product.price | money }}</span>
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="sc-kit-original">{{ product.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Static Default Fallbacks when collection is not yet linked -->
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="sc-kit-card" {{ block.shopify_attributes }}>
+            <div class="sc-kit-img-wrap">
+              {%- if block.settings.image != blank -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width | default: 600 }}"
+                  height="{{ block.settings.image.height | default: 450 }}"
+                  class="sc-kit-img"
+                >
+              {%- else -%}
+                {%- liquid
+                  assign kit_default_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775597038/scrunchcreate/products/gifthamper/sc-gifthamper-1.webp'
+                  if forloop.index == 2
+                    assign kit_default_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775596991/scrunchcreate/products/flowerjewellery/rose/yellow/sc-flowerjewellery-rose-yellow-1.webp'
+                  elsif forloop.index >= 3
+                    assign kit_default_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775597011/scrunchcreate/products/gifthamper/satin-hamper/black/sc-gifthamper-satin-hamper-black-1.webp'
+                  endif
+                -%}
+                <img
+                  src="{{ kit_default_img }}"
+                  alt="{{ block.settings.title | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="450"
+                  class="sc-kit-img"
+                >
+              {%- endif -%}
+            </div>
+            <div class="sc-kit-body">
+              <h3 class="sc-kit-name">{{ block.settings.title }}</h3>
+              <p class="sc-kit-desc">{{ block.settings.desc }}</p>
+              <div class="sc-kit-pricing">
+                <span class="sc-kit-price">{{ block.settings.price }}</span>
+                {%- if block.settings.compare_price != blank -%}
+                  <span class="sc-kit-original">{{ block.settings.compare_price }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrunch Curated Kits",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Kits"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Curated sets — ready to gift or keep"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Gift Hampers / Kits Collection"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Text",
+      "default": "Shop all kits"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "kit",
+      "name": "Curated Kit Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Kit Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Kit Name",
+          "default": "The Everyday Luxe Kit"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description",
+          "default": "3 Classic satin scrunchies + 1 Jimmy Choo hair bow in a gift box."
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Offer Price",
+          "default": "₹199"
+        },
+        {
+          "type": "text",
+          "id": "compare_price",
+          "label": "Original Price",
+          "default": "₹249"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Kit Product URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrunch Curated Kits",
+      "blocks": [
+        {
+          "type": "kit",
+          "settings": {
+            "title": "Everyday Polish Kit",
+            "desc": "2 Classic scrunchies + 1 Satin bow in a signature gift box.",
+            "price": "₹199",
+            "compare_price": "₹249"
+          }
+        },
+        {
+          "type": "kit",
+          "settings": {
+            "title": "Festive Bloom Kit",
+            "desc": "Rose Flower Jewellery set + 2 Tulip scrunchies for special events.",
+            "price": "₹399",
+            "compare_price": "₹499"
+          }
+        },
+        {
+          "type": "kit",
+          "settings": {
+            "title": "Satin Hamper Luxury Kit",
+            "desc": "Complete accessory wardrobe in hand-tied luxury packaging.",
+            "price": "₹699",
+            "compare_price": "₹799"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

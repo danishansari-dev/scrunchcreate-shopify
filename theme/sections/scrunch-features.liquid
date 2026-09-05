@@ -1,0 +1,110 @@
+{% comment %}
+  Scrunch & Create - Features & Trust Badges Section
+  Why: Replicates the desktop 4-column feature grid and continuous mobile marquee ticker from components/FeaturesSection/
+{% endcomment %}
+
+<div class="sc-features-section">
+  <div class="page-width">
+    <!-- Desktop 4-Card Grid -->
+    <div class="sc-features-grid">
+      {%- for block in section.blocks -%}
+        <div class="sc-feature-item" {{ block.shopify_attributes }}>
+          <div class="sc-feature-icon-wrap">
+            {%- case block.settings.icon -%}
+              {%- when 'truck' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                  <path d="M15 18h2a1 1 0 0 0 1-1v-3.28a1 1 0 0 0-.684-.948l-1.923-.641a1 1 0 0 1-.684-.949V8a1 1 0 0 1 1-1h4.28a1 1 0 0 1 .97.757l1.143 4.572A1.5 1.5 0 0 1 21.5 14v3a1 1 0 0 1-1 1h-1"></path>
+                  <circle cx="17" cy="18" r="2"></circle>
+                  <circle cx="7" cy="18" r="2"></circle>
+                </svg>
+              {%- when 'shield' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              {%- when 'box' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                  <path d="m3.3 7 8.7 5 8.7-5"></path>
+                  <path d="M12 22V12"></path>
+                </svg>
+              {%- when 'heart' -%}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                </svg>
+            {%- endcase -%}
+          </div>
+          <div class="sc-feature-text">
+            <h3 class="sc-feature-title">{{ block.settings.title }}</h3>
+            <p class="sc-feature-subtitle">{{ block.settings.subtitle }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Mobile Ticker Marquee (Hidden on desktop) -->
+  <div class="sc-mobile-ticker">
+    <div class="sc-ticker-track">
+      <div class="sc-ticker-item">
+        <span>🎀 HANDCRAFTED &nbsp;&nbsp;✦&nbsp;&nbsp; 🚚 FREE SHIPPING ABOVE ₹499 &nbsp;&nbsp;✦&nbsp;&nbsp; 💝 1200+ HAPPY CUSTOMERS &nbsp;&nbsp;✦&nbsp;&nbsp; 🌿 ECO PACKAGING &nbsp;&nbsp;✦&nbsp;&nbsp; ⭐ MADE IN INDIA &nbsp;&nbsp;✦&nbsp;&nbsp; 🎁 GIFT WRAPPING AVAILABLE &nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+      </div>
+      <div class="sc-ticker-item" aria-hidden="true">
+        <span>🎀 HANDCRAFTED &nbsp;&nbsp;✦&nbsp;&nbsp; 🚚 FREE SHIPPING ABOVE ₹499 &nbsp;&nbsp;✦&nbsp;&nbsp; 💝 1200+ HAPPY CUSTOMERS &nbsp;&nbsp;✦&nbsp;&nbsp; 🌿 ECO PACKAGING &nbsp;&nbsp;✦&nbsp;&nbsp; ⭐ MADE IN INDIA &nbsp;&nbsp;✦&nbsp;&nbsp; 🎁 GIFT WRAPPING AVAILABLE &nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrunch Trust Features",
+  "tag": "section",
+  "class": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck / Free Shipping" },
+            { "value": "shield", "label": "Shield / Quality Assured" },
+            { "value": "box", "label": "Box / Eco Packaging" },
+            { "value": "heart", "label": "Heart / Made with Love" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "On orders above ₹499"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrunch Trust Features",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "truck", "title": "Free Shipping", "subtitle": "On orders above ₹499" } },
+        { "type": "feature", "settings": { "icon": "shield", "title": "Quality Assured", "subtitle": "Premium handmade products" } },
+        { "type": "feature", "settings": { "icon": "box", "title": "Eco Packaging", "subtitle": "Sustainable & beautiful" } },
+        { "type": "feature", "settings": { "icon": "heart", "title": "Made with Love", "subtitle": "Handcrafted in India" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

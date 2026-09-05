@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "policy_hub": {
+      "type": "scrunch-policy",
+      "settings": {
+        "heading": "Refund & Cancellation Policy",
+        "subheading": "Details regarding our 5-day replacement window, hygiene guidelines, and unboxing verification."
+      }
+    }
+  },
+  "order": [
+    "policy_hub"
+  ]
+}

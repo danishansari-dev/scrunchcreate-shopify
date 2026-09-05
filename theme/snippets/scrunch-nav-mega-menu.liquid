@@ -1,0 +1,436 @@
+{% comment %}
+  Scrunch & Create Dynamic Mega Menu
+  Generates multi-column dropdowns dynamically from collections['all'].products
+  Features:
+  - Top category active underline in pink (#e78592)
+  - Smooth hover transitions with 180ms exit debounce to prevent accidental closing
+  - Invisible top hit-testing bridge to maintain hover state while moving cursor into menu
+  - Suffix-cleaned column headings (Classic, Combo, Satin, etc.) with underline dividers
+  - Adaptive max-content sizing so single/dual column categories are compact without blank space
+  - Subcategory color variant links with variant query navigation
+  - "View all X colors →" pink link
+{% endcomment %}
+
+<nav class="sc-header-nav" aria-label="Main Navigation">
+  <ul class="sc-nav-list" role="list">
+    <!-- 1. Shop link -->
+    <li class="sc-nav-item">
+      {% comment %}
+        Why: Uses standard Shopify routes object to ensure compatibility across locales and markets.
+      {% endcomment %}
+      <a href="{{ routes.all_products_collection_url }}" class="sc-nav-link{% if request.path == routes.all_products_collection_url %} is-active{% endif %}">
+        Shop
+      </a>
+    </li>
+
+    <!-- 2. Dynamic Categories -->
+    {%- assign categories_list = 'Hair Bows:HairBow:hair-bows,Scrunchies:Scrunchie:scrunchies,Gift Hampers:GiftHamper:gift-hampers,Flower Jewellery:FlowerJewellery:flower-jewellery,Hairclips:Hairclip:hairclips' | split: ',' -%}
+
+    {%- for cat_item in categories_list -%}
+      {%- assign parts = cat_item | split: ':' -%}
+      {%- assign cat_title = parts[0] -%}
+      {%- assign cat_type = parts[1] -%}
+      {%- assign cat_slug = parts[2] -%}
+
+      <li class="sc-nav-item sc-nav-item--has-dropdown" data-category="{{ cat_slug }}">
+        <a href="{{ routes.collections_url }}/{{ cat_slug }}" class="sc-nav-link{% if request.path contains cat_slug %} is-active{% endif %}">
+          <span>{{ cat_title }}</span>
+          <svg class="sc-nav-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </a>
+
+        <!-- Mega Menu Floating Dropdown -->
+        <div class="sc-mega-dropdown" role="region" aria-label="{{ cat_title }} subcategories">
+          <div class="sc-mega-grid">
+            {%- assign matched_products_count = 0 -%}
+            {%- for prod in collections['all'].products -%}
+              {%- assign prod_type_clean = prod.type | downcase | remove: ' ' | remove: '-' -%}
+              {%- assign target_type_clean = cat_type | downcase | remove: ' ' | remove: '-' -%}
+
+              {%- if prod_type_clean == target_type_clean or prod.tags contains cat_type -%}
+                {%- assign matched_products_count = matched_products_count | plus: 1 -%}
+                
+                {%- comment -%} Clean sub-type title from product title with comprehensive suffix removal {%- endcomment -%}
+                {%- assign sub_title = prod.title
+                  | remove: 'Scrunchies' | remove: 'Scrunchie' | remove: 'scrunchies' | remove: 'scrunchie'
+                  | remove: 'Hair Bows' | remove: 'Hair Bow' | remove: 'HairBows' | remove: 'HairBow' | remove: 'Hairbows' | remove: 'Hairbow' | remove: 'hair bows' | remove: 'hair bow' | remove: 'hairbow'
+                  | remove: 'Hair Clips' | remove: 'Hair Clip' | remove: 'Hairclips' | remove: 'Hairclip' | remove: 'hairclips' | remove: 'hairclip'
+                  | remove: 'Flower Jewellery' | remove: 'FlowerJewellery' | remove: 'Flowerjewellery' | remove: 'flower jewellery' | remove: 'flowerjewellery' | remove: 'FLOWERJEWELLERY' | remove: 'FLOWER JEWELLERY' | remove: 'Jewellery' | remove: 'jewellery' | remove: 'JEWELLERY'
+                  | remove: 'Gift Hampers' | remove: 'Gift Hamper' | remove: 'GiftHampers' | remove: 'GiftHamper' | remove: 'Gifthamper' | remove: 'gifthamper' | remove: 'GIFTHAMPER' | remove: 'Hampers' | remove: 'Hamper' | remove: 'hampers' | remove: 'hamper' | remove: 'HAMPER' | remove: 'Gift' | remove: 'gift' | remove: 'GIFT'
+                  | replace: 'PRINCES', 'PRINCESS' | replace: 'Princes', 'Princess'
+                  | strip -%}
+                {%- if sub_title == blank -%}
+                  {%- assign sub_title = 'Standard' -%}
+                {%- endif -%}
+
+                <div class="sc-mega-col">
+                  <a href="{{ prod.url }}" class="sc-mega-col-heading">
+                    {{ sub_title | upcase }}
+                  </a>
+
+                  <ul class="sc-mega-list" role="list">
+                    {%- assign color_option = nil -%}
+                    {%- for opt in prod.options_with_values -%}
+                      {%- assign opt_name = opt.name | downcase -%}
+                      {%- if opt_name == 'color' or opt_name == 'colour' -%}
+                        {%- assign color_option = opt -%}
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+
+                    {%- if color_option != nil and color_option.values.size > 0 -%}
+                      {%- for val in color_option.values limit: 5 -%}
+                        {%- comment -%} Find variant ID for direct deep linking {%- endcomment -%}
+                        {%- assign target_variant = nil -%}
+                        {%- for var in prod.variants -%}
+                          {%- if var.option1 == val or var.option2 == val or var.title contains val -%}
+                            {%- assign target_variant = var -%}
+                            {%- break -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+
+                        <li>
+                          <a
+                            href="{{ prod.url }}{% if target_variant %}?variant={{ target_variant.id }}{% endif %}"
+                            class="sc-mega-link"
+                          >
+                            {{ val | replace: '-', ' ' | capitalize }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+
+                      {%- if color_option.values.size > 5 -%}
+                        <li class="sc-mega-view-all-item">
+                          <a href="{{ prod.url }}" class="sc-mega-view-all">
+                            View all {{ color_option.values.size }} colors &rarr;
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- else -%}
+                      <!-- If product has no color variants, list individual variant titles or single product link -->
+                      {%- for var in prod.variants limit: 5 -%}
+                        <li>
+                          <a href="{{ prod.url }}?variant={{ var.id }}" class="sc-mega-link">
+                            {{ var.title | replace: 'Default Title', 'Standard' }}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    {%- endif -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </li>
+    {%- endfor -%}
+
+    <!-- 3. Track Order Link -->
+    <li class="sc-nav-item">
+      {% comment %}
+        Why: Direct entry point to live order tracking page for post-purchase shoppers.
+      {% endcomment %}
+      <a href="/pages/track-order" class="sc-nav-link{% if request.path contains 'track-order' %} is-active{% endif %}">
+        Track Order
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<style>
+  /*
+    Why: Scoped mobile-first hiding ensures that the desktop mega-menu navigation never flashes or renders
+    inline on mobile/tablet viewports (< 990px), where the hamburger drawer menu handles navigation.
+  */
+  .sc-header-nav {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    .sc-header-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+    }
+  }
+
+  .sc-nav-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 22px;
+  }
+
+  .sc-nav-item {
+    position: relative;
+    padding: 10px 0;
+  }
+
+  .sc-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #2d2724;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 4px 0;
+    position: relative;
+    transition: color 0.15s ease;
+  }
+
+  .sc-nav-link:hover,
+  .sc-nav-item:hover > .sc-nav-link,
+  .sc-nav-item.is-open > .sc-nav-link,
+  .sc-nav-link.is-active {
+    color: #1a1614;
+    font-weight: 600;
+  }
+
+  /* Pink active underline matching reference image */
+  .sc-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #e78592;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+  }
+
+  .sc-nav-item:hover > .sc-nav-link::after,
+  .sc-nav-item.is-open > .sc-nav-link::after,
+  .sc-nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* Chevron transition */
+  .sc-nav-caret {
+    transition: transform 0.2s ease;
+  }
+
+  .sc-nav-item:hover .sc-nav-caret,
+  .sc-nav-item.is-open .sc-nav-caret {
+    transform: rotate(180deg);
+  }
+
+  /* Mega Dropdown Floating Container */
+  .sc-mega-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    width: max-content;
+    max-width: min(94vw, 920px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    padding-top: 6px;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s ease;
+  }
+
+  /* Specific smart alignment per category */
+  .sc-nav-item[data-category="hair-bows"] .sc-mega-dropdown {
+    left: 10%;
+    transform: translateX(-10%) translateY(-6px);
+  }
+  .sc-nav-item[data-category="hair-bows"].is-open .sc-mega-dropdown,
+  .sc-nav-item[data-category="hair-bows"]:hover .sc-mega-dropdown {
+    transform: translateX(-10%) translateY(0);
+  }
+
+  .sc-nav-item[data-category="scrunchies"] .sc-mega-dropdown {
+    left: 50%;
+    transform: translateX(-42%) translateY(-6px);
+  }
+  .sc-nav-item[data-category="scrunchies"].is-open .sc-mega-dropdown,
+  .sc-nav-item[data-category="scrunchies"]:hover .sc-mega-dropdown {
+    transform: translateX(-42%) translateY(0);
+  }
+
+  .sc-nav-item[data-category="hairclips"] .sc-mega-dropdown {
+    left: auto;
+    right: 0;
+    transform: translateY(-6px);
+  }
+  .sc-nav-item[data-category="hairclips"].is-open .sc-mega-dropdown,
+  .sc-nav-item[data-category="hairclips"]:hover .sc-mega-dropdown {
+    transform: translateY(0);
+  }
+
+  /* Hit-testing bridge to bridge any gap between navbar trigger and dropdown */
+  .sc-mega-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: transparent;
+    z-index: 10;
+  }
+
+  .sc-nav-item.is-open .sc-mega-dropdown,
+  .sc-nav-item--has-dropdown:hover .sc-mega-dropdown,
+  .sc-mega-dropdown:hover,
+  .sc-mega-dropdown.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .sc-nav-item[data-category="gift-hampers"].is-open .sc-mega-dropdown,
+  .sc-nav-item[data-category="gift-hampers"]:hover .sc-mega-dropdown,
+  .sc-nav-item[data-category="flower-jewellery"].is-open .sc-mega-dropdown,
+  .sc-nav-item[data-category="flower-jewellery"]:hover .sc-mega-dropdown {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .sc-mega-grid {
+    background: #ffffff;
+    border: 1px solid rgba(54, 45, 39, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 20px 44px rgba(42, 34, 29, 0.1), 0 2px 8px rgba(42, 34, 29, 0.04);
+    padding: 20px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: max-content;
+    max-width: 100%;
+  }
+
+  .sc-mega-col {
+    display: flex;
+    flex-direction: column;
+    width: 122px;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  .sc-mega-col-heading {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #1a1614;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(54, 45, 39, 0.1);
+    transition: color 0.15s ease;
+  }
+
+  .sc-mega-col-heading:hover {
+    color: #e78592;
+  }
+
+  .sc-mega-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .sc-mega-link {
+    color: #5a524c;
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+    display: inline-block;
+  }
+
+  .sc-mega-link:hover {
+    color: #e78592;
+    transform: translateX(2px);
+  }
+
+  .sc-mega-view-all-item {
+    margin-top: 5px;
+  }
+
+  .sc-mega-view-all {
+    display: inline-block;
+    color: #e78592;
+    font-size: 11.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+  }
+
+  .sc-mega-view-all:hover {
+    color: #d96b7a;
+    transform: translateX(3px);
+  }
+
+  @media screen and (max-width: 989px) {
+    .sc-header-nav {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    let closeTimer = null;
+    let activeItem = null;
+
+    const navItems = document.querySelectorAll('.sc-nav-item--has-dropdown');
+
+    function openItem(item) {
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      if (activeItem && activeItem !== item) {
+        activeItem.classList.remove('is-open');
+        const activeDropdown = activeItem.querySelector('.sc-mega-dropdown');
+        if (activeDropdown) activeDropdown.classList.remove('is-open');
+      }
+      activeItem = item;
+      item.classList.add('is-open');
+      const dropdown = item.querySelector('.sc-mega-dropdown');
+      if (dropdown) dropdown.classList.add('is-open');
+    }
+
+    function scheduleClose() {
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        if (activeItem) {
+          activeItem.classList.remove('is-open');
+          const activeDropdown = activeItem.querySelector('.sc-mega-dropdown');
+          if (activeDropdown) activeDropdown.classList.remove('is-open');
+          activeItem = null;
+        }
+      }, 180);
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('mouseenter', () => openItem(item));
+      item.addEventListener('mouseleave', scheduleClose);
+
+      const dropdown = item.querySelector('.sc-mega-dropdown');
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', () => {
+          if (closeTimer) {
+            clearTimeout(closeTimer);
+            closeTimer = null;
+          }
+          openItem(item);
+        });
+        dropdown.addEventListener('mouseleave', scheduleClose);
+      }
+    });
+  })();
+</script>

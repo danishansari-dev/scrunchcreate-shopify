@@ -1,0 +1,39 @@
+# Environment variables and secrets
+.env
+.env*.local
+*.env
+!.env.example
+
+# Node dependencies
+node_modules/
+
+# Shopify CLI state & cache
+.shopify/
+*.zip
+
+# Playwright & automation traces
+.playwright*
+playwright-report/
+test-results/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor & OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

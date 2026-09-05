@@ -1,0 +1,145 @@
+{% comment %}
+  Scrunch & Create - Instagram UGC Grid Section
+  Why: Replicates the 4-tile Instagram gallery linking directly to @scrunch_and_create from components/InstagramSection/
+{% endcomment %}
+
+<div class="sc-instagram-section">
+  <div class="page-width">
+    <div class="sc-instagram-header">
+      <div class="sc-insta-icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+      </div>
+      <h2 class="sc-instagram-title">{{ section.settings.heading | default: "Follow Us on Instagram" }}</h2>
+      <a
+        href="{{ section.settings.instagram_url | default: 'https://www.instagram.com/scrunch_and_create' }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sc-instagram-handle"
+      >
+        {{ section.settings.handle | default: "@scrunch_and_create" }}
+      </a>
+    </div>
+
+    <div class="sc-instagram-grid">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: section.settings.instagram_url | default: 'https://www.instagram.com/scrunch_and_create' }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sc-insta-tile"
+          {{ block.shopify_attributes }}
+          aria-label="View on Instagram"
+        >
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 500 }}"
+              alt="Instagram post"
+              loading="lazy"
+              width="{{ block.settings.image.width | default: 500 }}"
+              height="{{ block.settings.image.height | default: 500 }}"
+              class="sc-insta-img"
+            >
+          {%- else -%}
+            {%- liquid
+              assign insta_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775597198/scrunchcreate/products/scrunchie/classic/brown/sc-scrunchie-classic-brown-1.webp'
+              if forloop.index == 2
+                assign insta_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775597148/scrunchcreate/products/hairbow/satin/black/sc-hairbow-satin-black-1.webp'
+              elsif forloop.index == 3
+                assign insta_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775597038/scrunchcreate/products/gifthamper/sc-gifthamper-1.webp'
+              elsif forloop.index >= 4
+                assign insta_img = 'https://res.cloudinary.com/duu26sqog/image/upload/v1775596991/scrunchcreate/products/flowerjewellery/rose/yellow/sc-flowerjewellery-rose-yellow-1.webp'
+              endif
+            -%}
+            <img
+              src="{{ insta_img }}"
+              alt="Instagram photo"
+              loading="lazy"
+              width="500"
+              height="500"
+              class="sc-insta-img"
+            >
+          {%- endif -%}
+          <div class="sc-insta-overlay">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>View on Instagram</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    <div class="sc-instagram-footer">
+      <a
+        href="{{ section.settings.instagram_url | default: 'https://www.instagram.com/scrunch_and_create' }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sc-insta-btn"
+      >
+        Show More Images
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrunch Instagram Feed",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Follow Us on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Instagram Handle",
+      "default": "@scrunch_and_create"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram Account URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Instagram Photo Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Tile Photo"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Post / Reel URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrunch Instagram Feed",
+      "blocks": [
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" },
+        { "type": "post" }
+      ]
+    }
+  ]
+}
+{% endschema %}

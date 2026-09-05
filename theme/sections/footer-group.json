@@ -1,0 +1,16 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "newsletter_eyebrow": "SCRUNCH & CREATE",
+        "newsletter_heading": "Handmade drops, styling notes, and gift-ready offers."
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

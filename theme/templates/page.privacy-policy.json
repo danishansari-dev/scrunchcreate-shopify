@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "policy_hub": {
+      "type": "scrunch-policy",
+      "settings": {
+        "heading": "Privacy Policy",
+        "subheading": "How we safeguard your personal details, secure your transactions, and protect your privacy."
+      }
+    }
+  },
+  "order": [
+    "policy_hub"
+  ]
+}

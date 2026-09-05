@@ -1,0 +1,154 @@
+---
+name: shopify-ecom-seo
+description: >-
+  Implement e-commerce SEO, structured data, and metadata for Shopify stores. Use when
+  auditing or implementing JSON-LD schemas (Product, Offer, AggregateRating, BreadcrumbList, Organization),
+  canonical tags, Open Graph meta tags, sitemaps, or robots.txt rules.
+---
+
+# Shopify E-Commerce SEO & Structured Data
+
+This skill establishes best practices for technical search engine optimization (SEO), rich snippet generation via schema.org JSON-LD, and metadata management for Shopify storefronts.
+
+---
+
+## 1. JSON-LD Structured Data Implementation
+
+### 1.1. Product & Offer Schema
+Place in `snippets/product-json-ld.liquid` or within product templates to generate Google Rich Results (price, availability, ratings):
+
+```liquid
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "image": [
+    {% for image in product.images %}
+      {{ image | image_url: width: 1200 | prepend: "https:" | json }}{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ],
+  "description": {{ product.description | strip_html | truncatewords: 50 | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ shop.name | json }}
+  },
+  "offers": [
+    {% for variant in product.variants %}
+      {
+        "@type": "Offer",
+        "name": {{ variant.title | json }},
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ variant.price | divided_by: 100.00 | json }},
+        "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": "{{ shop.url }}{{ variant.url }}",
+        "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}"
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+  {% if product.metafields.reviews.rating.value %}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product.metafields.reviews.rating.value }}",
+    "reviewCount": "{{ product.metafields.reviews.rating_count.value | default: 1 }}"
+  }
+  {% endif %}
+}
+</script>
+```
+
+### 1.2. BreadcrumbList Schema
+Enables Google breadcrumb navigation in search result snippets:
+```liquid
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {% if template.name == 'collection' and collection.handle %}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+      }
+    {% elsif template.name == 'product' %}
+      {% if collection %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | json }},
+          "item": "{{ shop.url }}{{ product.url }}"
+        }
+      {% else %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ product.title | json }},
+          "item": "{{ shop.url }}{{ product.url }}"
+        }
+      {% endif %}
+    {% endif %}
+  ]
+}
+</script>
+```
+
+---
+
+## 2. Canonical Tags & Duplicate Content Prevention
+
+Shopify defaults to nested collection URLs for products (e.g. `/collections/frontpage/products/satin-scrunchie`), which can dilute link equity.
+
+Always enforce clean canonical URLs in `layout/theme.liquid`:
+```liquid
+<link rel="canonical" href="{{ canonical_url }}">
+```
+And ensure internal collection product links use root product paths:
+```liquid
+<!-- Preferred: Output direct /products/handle rather than /collections/.../products/handle -->
+<a href="{{ product.url | within: nil }}">
+```
+
+---
+
+## 3. Social Graph & Open Graph Metadata
+
+Ensure rich preview cards on WhatsApp, Instagram, and Twitter:
+```liquid
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | default: shop.name }}">
+<meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
+<meta property="og:description" content="{{ page_description | default: shop.description | escape }}">
+{% if page_image %}
+  <meta property="og:image" content="http:{{ page_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | image_url: width: 1200 }}">
+{% endif %}
+<meta name="twitter:card" content="summary_large_image">
+```
+
+---
+
+## 4. Crawlability & Indexation
+
+- **Sitemap:** Automatically generated by Shopify at `/sitemap.xml`.
+- **Search & Filter Pages:** Use `noindex, follow` on paginated filters, cart, and account pages:
+```liquid
+{% if template contains 'search' or template contains 'cart' or request.path contains '/account' %}
+  <meta name="robots" content="noindex, follow">
+{% endif %}
+```

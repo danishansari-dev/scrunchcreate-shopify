@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "policy_hub": {
+      "type": "scrunch-policy",
+      "settings": {
+        "heading": "Shipping & Delivery Policy",
+        "subheading": "Order processing timelines, free shipping eligibility, delivery estimates, and live courier tracking."
+      }
+    }
+  },
+  "order": [
+    "policy_hub"
+  ]
+}

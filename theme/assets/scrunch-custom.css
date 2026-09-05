@@ -1,0 +1,1750 @@
+/* ==========================================================================
+   Scrunch & Create Brand Design System Tokens & Custom Section Styles
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand Palette */
+  --sc-color-primary: #E78592;
+  --sc-color-primary-strong: #D96B7A;
+  --sc-color-secondary: #4A1C40;
+  --sc-color-surface: #FFFFFF;
+  --sc-color-surface-soft: #FAF5F7;
+  --sc-color-surface-card: #FFFFFF;
+  --sc-color-text-main: #2D2024;
+  --sc-color-text-muted: #8B7D82;
+  --sc-color-border-soft: #F0E8EC;
+  --sc-color-border-medium: #E2D5DC;
+  --sc-color-error: #D20000;
+  --sc-color-on-primary: #FFFFFF;
+
+  /* Typography */
+  --font-heading-family: 'Cormorant Garamond', Georgia, serif;
+  --font-body-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px rgba(74, 28, 64, 0.06);
+  --shadow-card: 0 4px 16px rgba(74, 28, 64, 0.08);
+  --shadow-hover: 0 8px 24px rgba(74, 28, 64, 0.12);
+}
+
+/* Global Typography */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.banner__heading,
+.header__heading-text,
+.sc-section-title,
+.sc-mobile-heading {
+  font-family: var(--font-heading-family) !important;
+  color: var(--sc-color-text-main);
+  letter-spacing: -0.01em;
+}
+
+/* Prevent horizontal overflow across all viewports while preserving sticky headers */
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body, p, span, a, input, button, select, textarea {
+  font-family: var(--font-body-family);
+}
+
+/* Primary Button Polish */
+.button--primary,
+.button,
+.sc-mobile-cta {
+  background-color: var(--sc-color-primary) !important;
+  color: var(--sc-color-on-primary) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-body-family);
+  font-weight: 600;
+  transition: all 0.2s ease !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button--primary:hover,
+.button:hover {
+  background-color: var(--sc-color-primary-strong) !important;
+  transform: translateY(-1px);
+}
+
+/* Section Header Shared Component */
+.sc-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--sc-color-border-soft);
+  padding-bottom: 16px;
+}
+
+.sc-section-title {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.sc-section-subtitle {
+  font-size: 1.4rem;
+  color: var(--sc-color-text-muted);
+  margin: 4px 0 0;
+}
+
+.sc-section-link {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--sc-color-primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.sc-section-link:hover {
+  color: var(--sc-color-primary-strong);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   1. HERO BANNER SECTION
+   ========================================================================== */
+.sc-hero-banner-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--sc-color-surface-soft);
+}
+
+.sc-desktop-carousel {
+  position: relative;
+  width: 100%;
+  height: 520px;
+}
+
+@media (max-width: 767px) {
+  .sc-desktop-carousel {
+    display: none !important;
+  }
+}
+
+.sc-carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.sc-carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.sc-carousel-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.sc-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sc-slide-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.sc-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--sc-color-border-soft);
+  color: var(--sc-color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.2s ease;
+}
+
+.sc-nav-btn:hover {
+  background: #ffffff;
+  color: var(--sc-color-primary);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.sc-prev-btn { left: 24px; }
+.sc-next-btn { right: 24px; }
+
+/* Mobile Hero Banner */
+.sc-mobile-hero-container {
+  display: none;
+  position: relative;
+  min-height: 440px;
+}
+
+@media (max-width: 767px) {
+  .sc-mobile-hero-container {
+    display: block !important;
+  }
+}
+
+.sc-mobile-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  padding: 48px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.sc-mobile-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+.sc-mobile-bg-wash {
+  position: absolute;
+  inset: 0;
+  background: var(--slide-gradient);
+  z-index: 0;
+}
+
+.sc-mobile-content {
+  position: relative;
+  z-index: 1;
+  color: #FFFFFF;
+}
+
+.sc-mobile-badge {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.sc-mobile-heading {
+  font-size: clamp(2.4rem, 7vw, 3.4rem);
+  font-weight: 700;
+  color: #FFFFFF !important;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+
+.sc-mobile-subtext {
+  font-size: clamp(1.3rem, 4vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 20px;
+  line-height: 1.4;
+}
+
+.sc-mobile-cta {
+  padding: 12px 28px;
+  font-size: 1.4rem;
+  min-height: 44px; /* Accessible 44px touch target */
+  touch-action: manipulation;
+}
+
+.sc-cta-saffron { background-color: #E78592 !important; color: #fff !important; }
+.sc-cta-rose { background-color: #FFFFFF !important; color: var(--sc-color-secondary) !important; }
+.sc-cta-dark { background-color: var(--sc-color-secondary) !important; color: #fff !important; }
+
+.sc-mobile-dots {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+}
+
+.sc-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+}
+
+/* Transparent touch expansion hitbox to ensure easy tapping on mobile */
+.sc-dot::before {
+  content: '';
+  position: absolute;
+  inset: -12px -6px;
+}
+
+.sc-dot.is-active {
+  width: 24px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   2. FEATURES / TRUST BADGES SECTION
+   ========================================================================== */
+.sc-features-section {
+  padding: 32px 0;
+  background-color: var(--sc-color-surface-soft);
+  border-bottom: 1px solid var(--sc-color-border-soft);
+}
+
+.sc-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.sc-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px;
+}
+
+.sc-feature-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: var(--sc-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  flex-shrink: 0;
+}
+
+.sc-feature-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--sc-color-text-main);
+}
+
+.sc-feature-subtitle {
+  font-size: 1.2rem;
+  color: var(--sc-color-text-muted);
+  margin: 2px 0 0;
+}
+
+/* Mobile Ticker */
+.sc-mobile-ticker {
+  display: none;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+@media (max-width: 767px) {
+  .sc-features-grid { display: none; }
+  .sc-mobile-ticker { display: flex; }
+}
+
+.sc-ticker-track {
+  display: flex;
+  animation: scTickerMarquee 24s linear infinite;
+}
+
+.sc-ticker-item {
+  display: flex;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--sc-color-secondary);
+}
+
+@keyframes scTickerMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   3. CURATED KITS SECTION
+   ========================================================================== */
+.sc-kits-section {
+  padding: 48px 0;
+}
+
+.sc-kits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 767px) {
+  .sc-kits-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 4px 16px 20px;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    scrollbar-width: none;
+  }
+
+  .sc-kits-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sc-kit-card {
+    flex: 0 0 82%;
+    max-width: 320px;
+    scroll-snap-align: center;
+  }
+}
+
+.sc-kit-card {
+  background: var(--sc-color-surface);
+  border: 1px solid var(--sc-color-border-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-kit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.sc-kit-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background-color: var(--sc-color-surface-soft);
+}
+
+.sc-kit-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.sc-kit-card:hover .sc-kit-img {
+  transform: scale(1.04);
+}
+
+.sc-kit-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sc-kit-name {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.sc-kit-desc {
+  font-size: 1.35rem;
+  color: var(--sc-color-text-muted);
+  line-height: 1.4;
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.sc-kit-pricing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sc-kit-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--sc-color-primary);
+}
+
+.sc-kit-original {
+  font-size: 1.4rem;
+  color: var(--sc-color-text-muted);
+  text-decoration: line-through;
+}
+
+/* ==========================================================================
+   4. INSTAGRAM SECTION
+   ========================================================================== */
+.sc-instagram-section {
+  padding: 48px 0;
+  background-color: var(--sc-color-surface-soft);
+  text-align: center;
+}
+
+.sc-instagram-header {
+  margin-bottom: 28px;
+}
+
+.sc-insta-icon-wrap {
+  color: var(--sc-color-primary);
+  margin-bottom: 8px;
+}
+
+.sc-instagram-title {
+  font-size: 2.8rem;
+  margin: 0 0 4px;
+}
+
+.sc-instagram-handle {
+  font-size: 1.5rem;
+  color: var(--sc-color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sc-instagram-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 767px) {
+  .sc-instagram-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.sc-insta-tile {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: block;
+}
+
+.sc-insta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.sc-insta-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(74, 28, 64, 0.7);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.sc-insta-tile:hover .sc-insta-overlay {
+  opacity: 1;
+}
+
+.sc-insta-tile:hover .sc-insta-img {
+  transform: scale(1.05);
+}
+
+.sc-insta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 36px;
+  background: linear-gradient(135deg, #e78592 0%, #c76f7e 100%);
+  color: #ffffff !important;
+  border-radius: 999px;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 18px rgba(199, 111, 126, 0.35);
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.sc-insta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(199, 111, 126, 0.5);
+  background: linear-gradient(135deg, #d96b7a 0%, #b25867 100%);
+}
+
+/* ==========================================================================
+   5. COLOR SWATCHES & PRODUCT CARD POLISH
+   ========================================================================== */
+.card__heading {
+  margin: 4px 0 6px 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  color: #2c2024 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 38px;
+}
+
+.card__heading a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.sc-card-swatches-wrap {
+  min-height: 24px;
+  margin: 4px 0 6px 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+.sc-swatches-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  flex-wrap: wrap !important;
+  margin: 0 !important;
+  padding: 2px 0 !important;
+}
+
+.sc-swatch-dot {
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #ffffff !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  outline: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.sc-swatch-dot:hover,
+.sc-swatch-dot.is-active,
+.sc-swatch-dot[aria-checked="true"] {
+  transform: scale(1.22) !important;
+  box-shadow: 0 0 0 2px #e78592, 0 3px 6px rgba(231, 133, 146, 0.35) !important;
+}
+
+.sc-swatch-more {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #8c767f !important;
+  background-color: #f7eef1 !important;
+  border: 1px solid #edd9df !important;
+  padding: 1px 7px !important;
+  border-radius: 99px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+/* Quick View Modal */
+.sc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.sc-modal-overlay[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sc-modal-container {
+  position: relative;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 900px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.sc-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--sc-color-text-muted);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.sc-modal-close:hover {
+  color: var(--sc-color-text-main);
+}
+
+/* ==========================================================================
+   6. COLLECTIONS GRID SECTION
+   ========================================================================== */
+.sc-collections-section {
+  padding: 48px 0;
+  background-color: var(--sc-color-surface);
+}
+
+.sc-collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 989px) {
+  .sc-collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 540px) {
+  .sc-collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.sc-col-card {
+  background: var(--sc-color-surface);
+  border: 1px solid var(--sc-color-border-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-col-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.sc-col-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background-color: var(--sc-color-surface-soft);
+}
+
+.sc-col-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.sc-col-card:hover .sc-col-img {
+  transform: scale(1.06);
+}
+
+.sc-col-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(45, 32, 36, 0.75) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.sc-col-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #FFFFFF !important;
+  margin: 0 0 4px;
+}
+
+.sc-col-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(231, 133, 146, 0.9);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.sc-col-body {
+  padding: 14px 16px;
+  background-color: var(--sc-color-surface);
+}
+
+.sc-col-desc {
+  font-size: 1.25rem;
+  color: var(--sc-color-text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .sc-col-body {
+    display: none;
+  }
+}
+
+/* Product Card Custom Meta Row & Badges */
+.sc-card-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  width: 100%;
+  gap: 6px;
+}
+
+.sc-card-category-pill {
+  display: inline-block;
+  background-color: #f7eef1;
+  color: #9a6572;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 65%;
+}
+
+.sc-card-rating {
+  color: #eab308;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sc-card-stock-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #15803d;
+  margin-top: 6px;
+  white-space: nowrap;
+}
+
+.sc-stock-text-mobile {
+  display: none;
+}
+
+.sc-stock-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE HEADER & MOBILE NAVIGATION OVERHAUL
+   ========================================================================== */
+
+/*
+  Why: Sticky header wrapper with consistent solid white backdrop across all store pages
+  prevents page elements from bleeding through when scrolling or opening drawers.
+*/
+.header-wrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid rgba(54, 45, 39, 0.07) !important;
+  background: #ffffff !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 999 !important;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease !important;
+}
+
+.scrolled-past-header .header-wrapper,
+.header-wrapper.scrolled {
+  box-shadow: 0 4px 18px rgba(42, 34, 29, 0.06) !important;
+}
+
+.section-header {
+  margin-bottom: 0 !important;
+}
+
+main#MainContent {
+  padding-top: 0 !important;
+}
+
+/*
+  Why: Desktop navigation mega-menu is strictly hidden by default on mobile/tablet screens (< 990px)
+  to prevent collision with the logo, hamburger toggle, and right action icons.
+*/
+.sc-header-nav {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop Header Layout (>= 990px)
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 990px) {
+  .header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    min-height: 56px !important;
+    padding: 8px 32px !important;
+    box-sizing: border-box !important;
+  }
+
+  header-drawer {
+    display: none !important;
+  }
+
+  .sc-header-nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 1 auto !important;
+  }
+
+  .header__heading {
+    flex: 0 0 auto !important;
+  }
+
+  .header__icons {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet & Mobile Responsive Header Grid (< 990px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 989px) {
+  /*
+    Why: 3-column CSS Grid with minmax fractional side columns ensures the brand logo remains
+    true-centered across iPad, tablet portrait, and mobile screens without overflowing.
+  */
+  .header {
+    display: grid !important;
+    grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr) !important;
+    grid-template-areas: 'drawer heading icons' !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 54px !important;
+    padding: 6px 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  header-drawer {
+    grid-area: drawer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-self: start !important;
+    margin: 0 !important;
+    z-index: 10 !important;
+  }
+
+  .header__heading,
+  .header__heading-link {
+    grid-area: heading !important;
+    justify-self: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .header__icons {
+    grid-area: icons !important;
+    justify-self: end !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 3px !important;
+    padding: 0 !important;
+  }
+
+  .header__icon {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 !important;
+  }
+
+  .header__icon .svg-wrapper,
+  .header__icon .icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small Mobile Viewports (<= 374px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 374px) {
+  /*
+    Why: On tight screens (iPhone SE, 320px-360px), auto 1fr auto with reduced gaps and
+    proportional icon touch targets ensures zero clipping, wrapping, or horizontal scroll.
+  */
+  .header {
+    grid-template-columns: auto 1fr auto !important;
+    column-gap: 4px !important;
+    padding: 4px 8px !important;
+    min-height: 50px !important;
+  }
+
+  .header__heading-link .h2,
+  .header__heading-link,
+  .header__heading {
+    font-size: 16px !important;
+  }
+
+  .header__icon {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+  }
+
+  .header__icon .svg-wrapper,
+  .header__icon .icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .header__icons {
+    gap: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Logo Typography & Brand Presentation
+   -------------------------------------------------------------------------- */
+.header__heading-link .h2,
+.header__heading-link,
+.header__heading {
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  font-size: clamp(16.5px, 4vw, 21px) !important;
+  color: #24201e !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.header__heading-link:hover .h2,
+.header__heading-link:hover {
+  color: #1a1614 !important;
+}
+
+/* --------------------------------------------------------------------------
+   Header Action Icons & Badges
+   -------------------------------------------------------------------------- */
+.header__icon {
+  height: 44px;
+  width: 44px;
+  min-width: 44px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #332d29 !important;
+  transition: color 0.15s ease, transform 0.15s ease, background-color 0.15s ease !important;
+  border-radius: 8px !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none !important;
+}
+
+.header__icon:hover {
+  color: #e78592 !important;
+}
+
+/* Cart Icon & Count Badge */
+.header__icon--cart {
+  position: relative !important;
+}
+
+.cart-count-bubble {
+  position: absolute !important;
+  top: 4px !important;
+  right: 4px !important;
+  left: auto !important;
+  bottom: auto !important;
+  min-width: 18px !important;
+  height: 18px !important;
+  padding: 0 4px !important;
+  border-radius: 999px !important;
+  background-color: #e11d48 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+  border: 1.5px solid #ffffff !important;
+}
+
+@media screen and (max-width: 374px) {
+  .cart-count-bubble {
+    top: 2px !important;
+    right: 2px !important;
+    min-width: 16px !important;
+    height: 16px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hamburger Menu & Drawer Modernization
+   -------------------------------------------------------------------------- */
+.header__icon--menu {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+.header__icon--menu:hover,
+.header__icon--menu:focus-visible {
+  background-color: rgba(54, 45, 39, 0.05) !important;
+  color: #e78592 !important;
+}
+
+details[open] > .header__icon--menu {
+  color: #e78592 !important;
+  background-color: rgba(231, 133, 146, 0.08) !important;
+}
+
+.menu-drawer {
+  background-color: #ffffff !important;
+  box-shadow: 8px 0 32px rgba(42, 34, 29, 0.1) !important;
+  border-right: 1px solid rgba(54, 45, 39, 0.08) !important;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .menu-drawer {
+    width: 380px !important;
+    max-width: 85vw !important;
+  }
+}
+
+.menu-drawer__navigation {
+  padding: 1rem 0 2rem 0 !important;
+}
+
+.menu-drawer__menu-item {
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif) !important;
+  font-size: 1.55rem !important;
+  font-weight: 600 !important;
+  color: #2d2724 !important;
+  padding: 1.3rem 2.2rem !important;
+  border-bottom: 1px solid rgba(54, 45, 39, 0.04) !important;
+  transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease !important;
+  letter-spacing: normal !important;
+}
+
+.menu-drawer__menu-item:hover,
+.menu-drawer__menu-item:focus-visible,
+.menu-drawer summary.menu-drawer__menu-item:hover {
+  color: #e78592 !important;
+  background-color: rgba(231, 133, 146, 0.05) !important;
+  padding-left: 2.6rem !important;
+}
+
+.menu-drawer summary.menu-drawer__menu-item > .svg-wrapper {
+  color: #8c827a !important;
+  transition: transform 0.2s ease, color 0.2s ease !important;
+}
+
+.menu-drawer summary.menu-drawer__menu-item:hover > .svg-wrapper {
+  color: #e78592 !important;
+  transform: translateY(-50%) translateX(3px) !important;
+}
+
+/* Submenu drawer view */
+.menu-drawer__submenu {
+  background-color: #ffffff !important;
+}
+
+.menu-drawer__close-button {
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif) !important;
+  font-size: 1.45rem !important;
+  font-weight: 700 !important;
+  color: #2d2724 !important;
+  background-color: #faf8f7 !important;
+  padding: 1.4rem 2.2rem !important;
+  margin-top: 0 !important;
+  border-bottom: 1px solid rgba(54, 45, 39, 0.08) !important;
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+}
+
+.menu-drawer__close-button:hover {
+  color: #e78592 !important;
+  background-color: rgba(231, 133, 146, 0.08) !important;
+}
+
+.menu-drawer__close-button .svg-wrapper {
+  color: #e78592 !important;
+}
+
+/* Category spotlight link inside mobile drawer */
+.sc-drawer-all-link {
+  display: block !important;
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 700 !important;
+  color: #e78592 !important;
+  background-color: rgba(231, 133, 146, 0.08) !important;
+  border-radius: 8px !important;
+  margin: 10px 18px 6px 18px !important;
+  padding: 10px 16px !important;
+  text-decoration: none !important;
+  font-size: 1.4rem !important;
+  transition: background-color 0.15s ease, transform 0.15s ease !important;
+}
+
+.sc-drawer-all-link:hover {
+  background-color: rgba(231, 133, 146, 0.15) !important;
+  transform: translateX(2px) !important;
+}
+
+/* Utility & Social links inside Drawer */
+.menu-drawer__utility-links {
+  background-color: #faf8f7 !important;
+  border-top: 1px solid rgba(54, 45, 39, 0.08) !important;
+  padding: 1.8rem 2.2rem !important;
+}
+
+.menu-drawer .list-social {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.menu-drawer .list-social__item {
+  display: inline-flex !important;
+  margin: 0 !important;
+}
+
+.menu-drawer .list-social__link {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  background-color: #ffffff !important;
+  border: 1px solid rgba(54, 45, 39, 0.12) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #332d29 !important;
+  padding: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.menu-drawer .list-social__link:hover {
+  color: #e78592 !important;
+  border-color: #e78592 !important;
+  background-color: rgba(231, 133, 146, 0.08) !important;
+  transform: translateY(-2px) !important;
+}
+
+.menu-drawer .list-social__link .icon {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* ==========================================================================
+   7. MOBILE-FIRST RESPONSIVE OPTIMIZATIONS & PDP STICKY ATC
+   ========================================================================== */
+
+/* Mobile Sticky Bottom Add To Cart Floating Bar */
+.sc-sticky-atc {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  background: #ffffff;
+  border-top: 1px solid rgba(54, 45, 39, 0.12);
+  box-shadow: 0 -4px 24px rgba(42, 34, 29, 0.12);
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+}
+
+.sc-sticky-atc.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .sc-sticky-atc {
+    display: none !important;
+  }
+}
+
+.sc-sticky-atc__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.sc-sticky-atc__product-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.sc-sticky-atc__thumb-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--sc-color-surface-soft);
+  border: 1px solid rgba(54, 45, 39, 0.08);
+  flex-shrink: 0;
+}
+
+.sc-sticky-atc__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sc-sticky-atc__meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.sc-sticky-atc__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--sc-color-text-main);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.sc-sticky-atc__price-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.sc-sticky-atc__price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--sc-color-primary);
+}
+
+.sc-sticky-atc__compare-price {
+  font-size: 1.2rem;
+  color: var(--sc-color-text-muted);
+  text-decoration: line-through;
+}
+
+.sc-sticky-atc__variant-tag {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #7d6e75;
+  background: #f7eef1;
+  padding: 1px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+}
+
+.sc-sticky-atc__action {
+  flex-shrink: 0;
+}
+
+.sc-sticky-atc__btn {
+  padding: 0 20px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: 0 4px 12px rgba(231, 133, 146, 0.35) !important;
+  touch-action: manipulation;
+}
+
+.sc-sticky-atc__btn:active {
+  transform: scale(0.97);
+}
+
+/* Free Shipping Goal Meter in Cart Drawer */
+.sc-free-shipping-bar {
+  padding: 14px 20px;
+  background: #fdf8f9;
+  border-bottom: 1px solid rgba(231, 133, 146, 0.15);
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+}
+
+.sc-shipping-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.3rem;
+  color: #4a3e43;
+  margin-bottom: 8px;
+}
+
+.sc-shipping-text strong {
+  color: var(--sc-color-primary-strong);
+  font-weight: 700;
+}
+
+.sc-shipping-text.is-unlocked {
+  color: #15803d;
+}
+
+.sc-shipping-text.is-unlocked strong {
+  color: #15803d;
+}
+
+.sc-shipping-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.sc-shipping-meter {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #f0e2e6;
+  overflow: hidden;
+  position: relative;
+}
+
+.sc-shipping-meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e78592 0%, #c76f7e 100%);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sc-shipping-meter-fill.is-full {
+  background: #22c55e;
+}
+
+/* Mobile Screen Fine-Tuning (<= 767px) */
+@media screen and (max-width: 767px) {
+  /* Prevent iOS Safari 16px zoom bug on inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Global Touch Polish */
+  body, html {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Section Padding reduction on mobile */
+  .sc-kits-section,
+  .sc-collections-section,
+  .sc-instagram-section {
+    padding: 32px 0;
+  }
+
+  .sc-section-header {
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+  }
+
+  .sc-section-title {
+    font-size: 2.2rem;
+  }
+
+  .sc-section-subtitle {
+    font-size: 1.25rem;
+  }
+
+  /* 2-Column Product Cards Polish */
+  .sc-card-meta-row {
+    margin-bottom: 4px;
+  }
+
+  .sc-card-category-pill {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  .sc-card-rating {
+    font-size: 11px;
+  }
+
+  .sc-card-stock-note {
+    font-size: 10.5px;
+    margin-top: 4px;
+  }
+
+  .sc-stock-text-desktop {
+    display: none;
+  }
+
+  .sc-stock-text-mobile {
+    display: inline;
+  }
+
+  .sc-card-swatches-wrap {
+    min-height: 22px;
+    margin: 3px 0 5px 0 !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .sc-swatches-row {
+    margin: 0 !important;
+    gap: 6px !important;
+  }
+
+  .sc-swatch-dot {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  /* PDP Variant Button Touch Enhancements */
+  .product-form__input--pill input[type='radio'] + label {
+    min-height: 42px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 1.35rem;
+    border-radius: 8px;
+    touch-action: manipulation;
+  }
+
+  /* Drawer checkout button safe-area support */
+  .cart__ctas {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Cart quantity button touch targets */
+  .quantity__button {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  /* Sticky checkout footer on mobile /cart page */
+  .cart__footer-wrapper {
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+    background: #ffffff;
+    box-shadow: 0 -4px 20px rgba(42, 34, 29, 0.08);
+    border-top: 1px solid rgba(54, 45, 39, 0.08);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* ============================================= */
+/*   CHECKOUT FLOW IMPROVEMENTS                  */
+/* ============================================= */
+
+/* Branded Pink Checkout Button — Cart Drawer + Cart Page */
+.cart__checkout-button {
+  background-color: #e78592 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease !important;
+}
+
+.cart__checkout-button:hover {
+  background-color: #d96b7a !important;
+  box-shadow: 0 4px 16px rgba(231, 133, 146, 0.35);
+}
+
+.cart__checkout-button:active {
+  transform: scale(0.98);
+}
+
+/* Trust Badges Row in Cart Drawer */
+.sc-cart-trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0 6px;
+  border-top: 1px solid rgba(54, 45, 39, 0.06);
+  margin-top: 10px;
+}
+
+.sc-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #776c66;
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+  white-space: nowrap;
+}
+
+.sc-trust-badge svg {
+  color: #e78592;
+  flex-shrink: 0;
+}
+
+/* Continue Shopping Link in Cart Drawer */
+.sc-cart-continue-shopping {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+.sc-continue-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #776c66;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+}
+
+.sc-continue-link:hover {
+  color: #e78592;
+}
+
+.sc-continue-link svg {
+  transition: transform 0.2s ease;
+}
+
+.sc-continue-link:hover svg {
+  transform: translateX(-3px);
+}
+
+/* WhatsApp FAB hide when cart drawer is open */
+.sc-wa-widget--hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(20px) scale(0.9) !important;
+  transition: opacity 0.2s ease, transform 0.25s ease, pointer-events 0s linear 0.2s !important;
+}
+
+/* Free Shipping Bar variant for standalone /cart page */
+.sc-free-shipping-bar--cart-page {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(231, 133, 146, 0.15);
+}
+
+/*
+ * Fail-safe: Hide WhatsApp widget via CSS :has() when cart drawer is active
+ * Why: CSS :has() acts as an instant, zero-delay fail-safe selector to hide the WhatsApp floating
+ * button the exact millisecond the cart drawer is opened, avoiding any tap collisions on mobile.
+ */
+body:has(cart-drawer.active) #sc-whatsapp-widget {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(20px) scale(0.9) !important;
+}
+

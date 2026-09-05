@@ -1,0 +1,170 @@
+{% comment %}
+  Scrunch & Create - Color Swatches Snippet
+  Why: Renders visual color swatches for product cards with instant, client-side variant image switching on click.
+{% endcomment %}
+
+{%- liquid
+  assign is_color_option = false
+  for option in product.options_with_values
+    assign downcased_option = option.name | downcase
+    if downcased_option == 'color' or downcased_option == 'colour' or downcased_option == 'style' or downcased_option == 'shade'
+      assign is_color_option = true
+      assign color_option = option
+    endif
+  endfor
+-%}
+
+{%- if is_color_option and color_option.values.size > 1 -%}
+  <div class="sc-swatches-row" role="radiogroup" aria-label="Available Colors for {{ product.title | escape }}">
+    {%- for value in color_option.values limit: 5 -%}
+      {%- liquid
+        assign downcased_val = value | downcase | replace: ' ', '-' | replace: '_', '-'
+        assign raw_downcased_val = value | downcase | strip
+        assign bg_style = 'background-color: #e5d8dc;'
+
+        case downcased_val
+          when 'black'
+            assign bg_style = 'background-color: #1C1C1C;'
+          when 'white'
+            assign bg_style = 'background-color: #FFFFFF;'
+          when 'red', 'cherry-red', 'ruby'
+            assign bg_style = 'background-color: #C81D31;'
+          when 'pink', 'baby-pink', 'blush'
+            assign bg_style = 'background-color: #F4A6B8;'
+          when 'hot-pink', 'rose-pink', 'magenta'
+            assign bg_style = 'background-color: #D84B78;'
+          when 'mauve'
+            assign bg_style = 'background-color: #B784A7;'
+          when 'plum', 'wine', 'burgundy', 'maroon'
+            assign bg_style = 'background-color: #5C1D36;'
+          when 'emerald', 'green', 'bottle-green', 'dark-green'
+            assign bg_style = 'background-color: #1D5A3A;'
+          when 'sage', 'mint', 'mint-green', 'light-mint', 'sage-green'
+            assign bg_style = 'background-color: #99C7A8;'
+          when 'olive', 'olive-green', 'metallic-olive'
+            assign bg_style = 'background-color: #708238;'
+          when 'navy', 'navy-blue', 'royal-blue'
+            assign bg_style = 'background-color: #1D2A54;'
+          when 'petrol', 'petrol-blue', 'teal'
+            assign bg_style = 'background-color: #006674;'
+          when 'sky-blue', 'powder-blue', 'baby-blue'
+            assign bg_style = 'background-color: #8EB8D8;'
+          when 'yellow', 'mustard', 'lemon', 'light-yellow'
+            assign bg_style = 'background-color: #F4C430;'
+          when 'lavender', 'lilac', 'purple'
+            assign bg_style = 'background-color: #B8A4C8;'
+          when 'brown', 'chocolate', 'coffee', 'golden-brown'
+            assign bg_style = 'background-color: #6E473B;'
+          when 'beige', 'cream', 'nude', 'ivory'
+            assign bg_style = 'background-color: #F5EBE1;'
+          when 'gold', 'golden', 'saffron', 'champagne'
+            assign bg_style = 'background-color: #D4AF37;'
+          when 'silver', 'grey', 'gray'
+            assign bg_style = 'background-color: #C5C5C5;'
+          when 'pistachio'
+            assign bg_style = 'background-color: #93C572;'
+          when 'peach', 'peach-cream', 'peach-pink'
+            assign bg_style = 'background-color: #FBBF9A;'
+          when 'orange', 'rust', 'coral'
+            assign bg_style = 'background-color: #E86A58;'
+          when 'combo', 'mixed', 'triple-colour'
+            assign bg_style = 'background: linear-gradient(135deg, #F4A6B8 0%, #B8A4C8 50%, #8EB8D8 100%);'
+          when 'standard'
+            assign bg_style = 'background-color: #D1989E;'
+          when 'tulip', 'tulip-sheer', 'satin-tulip'
+            assign bg_style = 'background-color: #E88299;'
+          when '3-layered'
+            assign bg_style = 'background: linear-gradient(135deg, #FADBD8 0%, #EDBB99 50%, #D5F5E3 100%);'
+          when 'jimmi-choo'
+            assign bg_style = 'background: linear-gradient(135deg, #D7BDE2 0%, #F9E79F 100%);'
+          when 'mini-bow'
+            assign bg_style = 'background-color: #F5B7B1;'
+          when 'pigtail'
+            assign bg_style = 'background-color: #AED6F1;'
+          when 'princess'
+            assign bg_style = 'background-color: #F9E79F;'
+          when 'scarf'
+            assign bg_style = 'background-color: #A3E4D7;'
+          else
+            assign bg_style = 'background: linear-gradient(135deg, #F4A6B8 0%, #E8DCC8 100%);'
+        endcase
+
+        # 1. Look for matching variant
+        assign matched_variant = null
+        for v in product.variants
+          assign v_opt1 = v.option1 | downcase | strip
+          assign v_opt2 = v.option2 | downcase | strip
+          assign v_opt3 = v.option3 | downcase | strip
+          if v_opt1 == raw_downcased_val or v_opt2 == raw_downcased_val or v_opt3 == raw_downcased_val
+            assign matched_variant = v
+            break
+          endif
+        endfor
+
+        # 2. Look for matching media/image
+        assign swatch_media = null
+        if matched_variant != null and matched_variant.featured_media != blank
+          assign swatch_media = matched_variant.featured_media
+        else
+          for m in product.media
+            assign m_alt = m.alt | downcase
+            assign match_phrase = ' - ' | append: raw_downcased_val
+            if m_alt contains match_phrase or m_alt contains raw_downcased_val
+              assign swatch_media = m
+              break
+            endif
+          endfor
+        endif
+
+        assign swatch_img_src = ''
+        assign swatch_img_srcset = ''
+        if swatch_media != null
+          assign swatch_img_src = swatch_media | image_url: width: 533
+          capture swatch_img_srcset
+            if swatch_media.width >= 165
+              echo swatch_media | image_url: width: 165 | append: ' 165w,'
+            endif
+            if swatch_media.width >= 360
+              echo swatch_media | image_url: width: 360 | append: ' 360w,'
+            endif
+            if swatch_media.width >= 533
+              echo swatch_media | image_url: width: 533 | append: ' 533w,'
+            endif
+            if swatch_media.width >= 720
+              echo swatch_media | image_url: width: 720 | append: ' 720w,'
+            endif
+            if swatch_media.width >= 940
+              echo swatch_media | image_url: width: 940 | append: ' 940w'
+            endif
+          endcapture
+        endif
+      -%}
+
+      <button
+        type="button"
+        class="sc-swatch-dot {% if forloop.first %}is-active{% endif %}"
+        style="{{ bg_style }}"
+        title="{{ value | escape }}"
+        aria-label="{{ value | escape }} color option"
+        role="radio"
+        aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"
+        data-color-name="{{ value | escape }}"
+        {% if swatch_img_src != blank %}
+          data-image-src="{{ swatch_img_src }}"
+          data-image-srcset="{{ swatch_img_srcset | strip }}"
+          data-image-alt="{{ product.title | escape }} - {{ value | escape }}"
+        {% endif %}
+        {% if matched_variant != null %}
+          data-variant-id="{{ matched_variant.id }}"
+          data-variant-url="{{ product.url }}?variant={{ matched_variant.id }}"
+        {% endif %}
+      ></button>
+    {%- endfor -%}
+
+    {%- if color_option.values.size > 5 -%}
+      <a href="{{ product.url }}" class="sc-swatch-more" aria-label="View {{ color_option.values.size | minus: 5 }} more colors for {{ product.title | escape }}">
+        +{{ color_option.values.size | minus: 5 }}
+      </a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

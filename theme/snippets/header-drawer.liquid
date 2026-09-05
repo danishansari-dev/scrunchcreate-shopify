@@ -1,0 +1,240 @@
+{% doc %}
+  Renders a header drawer menu for mobile and desktop.
+
+  @param {boolean} [show_country_selector] - Whether to render the country selector in the drawer.
+  @param {boolean} [show_language_selector] - Whether to render the language selector in the drawer.
+  @param {boolean} [show_social_links] - Whether to render social links list in the drawer.
+
+  @example
+  {% render 'header-drawer', show_language_selector: true %}
+{% enddoc %}
+
+<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary
+      class="header__icon header__icon--menu header__icon--summary link focus-inset"
+      aria-label="{{ 'sections.header.menu' | t }}"
+    >
+      <span>
+        {{- 'icon-hamburger.svg' | inline_asset_content -}}
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </summary>
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
+      <div class="menu-drawer__inner-container">
+        <div class="menu-drawer__navigation-container">
+          <nav class="menu-drawer__navigation">
+            <ul class="menu-drawer__menu has-submenu list-menu" role="list">
+              <li>
+                {% comment %}
+                  Why: Uses standard Shopify routes object for global compatibility.
+                {% endcomment %}
+                <a href="{{ routes.all_products_collection_url }}" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                  Shop
+                </a>
+              </li>
+
+              {%- assign categories_list = 'Hair Bows:HairBow:hair-bows,Scrunchies:Scrunchie:scrunchies,Gift Hampers:GiftHamper:gift-hampers,Flower Jewellery:FlowerJewellery:flower-jewellery,Hairclips:Hairclip:hairclips' | split: ',' -%}
+
+              {%- for cat_item in categories_list -%}
+                {%- assign parts = cat_item | split: ':' -%}
+                {%- assign cat_title = parts[0] -%}
+                {%- assign cat_type = parts[1] -%}
+                {%- assign cat_slug = parts[2] -%}
+
+                <li>
+                  <details id="Details-menu-drawer-menu-item-{{ forloop.index }}">
+                    <summary class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                      {{ cat_title }}
+                      <span class="svg-wrapper">
+                        {{- 'icon-arrow.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="svg-wrapper">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
+                    </summary>
+                    <div class="menu-drawer__submenu has-submenu gradient motion-reduce" tabindex="-1">
+                      <div class="menu-drawer__inner-submenu">
+                        <button class="menu-drawer__close-button link link--text focus-inset" aria-expanded="true">
+                          <span class="svg-wrapper">
+                            {{- 'icon-arrow.svg' | inline_asset_content -}}
+                          </span>
+                          {{ cat_title }}
+                        </button>
+                        <ul class="menu-drawer__menu list-menu" role="list" tabindex="-1">
+                          <li>
+                            {% comment %}
+                              Why: Highlighted 'All Category' entry point styled with brand pink accent pill
+                            {% endcomment %}
+                            <a href="{{ routes.collections_url }}/{{ cat_slug }}" class="sc-drawer-all-link link link--text focus-inset">
+                              All {{ cat_title }} &rarr;
+                            </a>
+                          </li>
+                          {%- for prod in collections['all'].products -%}
+                            {%- assign prod_type_clean = prod.type | downcase | remove: ' ' | remove: '-' -%}
+                            {%- assign target_type_clean = cat_type | downcase | remove: ' ' | remove: '-' -%}
+                            {%- if prod_type_clean == target_type_clean or prod.tags contains cat_type -%}
+                              {%- assign sub_title = prod.title
+                                | remove: 'Scrunchies' | remove: 'Scrunchie' | remove: 'scrunchies' | remove: 'scrunchie'
+                                | remove: 'Hair Bows' | remove: 'Hair Bow' | remove: 'HairBows' | remove: 'HairBow' | remove: 'Hairbows' | remove: 'Hairbow' | remove: 'hair bows' | remove: 'hair bow' | remove: 'hairbow'
+                                | remove: 'Hair Clips' | remove: 'Hair Clip' | remove: 'Hairclips' | remove: 'Hairclip' | remove: 'hairclips' | remove: 'hairclip'
+                                | remove: 'Flower Jewellery' | remove: 'FlowerJewellery' | remove: 'Flowerjewellery' | remove: 'flower jewellery' | remove: 'flowerjewellery' | remove: 'FLOWERJEWELLERY' | remove: 'FLOWER JEWELLERY' | remove: 'Jewellery' | remove: 'jewellery' | remove: 'JEWELLERY'
+                                | remove: 'Gift Hampers' | remove: 'Gift Hamper' | remove: 'GiftHampers' | remove: 'GiftHamper' | remove: 'Gifthamper' | remove: 'gifthamper' | remove: 'GIFTHAMPER' | remove: 'Hampers' | remove: 'Hamper' | remove: 'hampers' | remove: 'hamper' | remove: 'HAMPER' | remove: 'Gift' | remove: 'gift' | remove: 'GIFT'
+                                | replace: 'PRINCES', 'PRINCESS' | replace: 'Princes', 'Princess'
+                                | strip -%}
+                              {%- if sub_title == blank -%}
+                                {%- assign sub_title = 'Standard' -%}
+                              {%- endif -%}
+                              <li>
+                                <a href="{{ prod.url }}" class="menu-drawer__menu-item link link--text list-menu__item focus-inset">
+                                  {{ sub_title }}
+                                </a>
+                              </li>
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    </div>
+                  </details>
+                </li>
+              {%- endfor -%}
+              <li>
+                {% comment %}
+                  Why: Direct entry point in mobile drawer for customer parcel tracking.
+                {% endcomment %}
+                <a href="/pages/track-order" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                  Track Order
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="menu-drawer__utility-links">
+            {%- if show_country_selector or show_language_selector -%}
+              <div class="menu-drawer__localization header-localization">
+                {%- if show_country_selector -%}
+                  <localization-form>
+                    {%- form 'localization', id: 'HeaderCountryMobileForm', class: 'localization-form' -%}
+                      <div>
+                        <h2 class="visually-hidden" id="HeaderCountryMobileLabel">
+                          {{ 'localization.country_label' | t }}
+                        </h2>
+                        {%- render 'country-localization', localPosition: 'HeaderCountryMobile' -%}
+                      </div>
+                    {%- endform -%}
+                  </localization-form>
+                {% endif %}
+
+                {%- if show_language_selector -%}
+                  <localization-form>
+                    {%- form 'localization', id: 'HeaderLanguageMobileForm', class: 'localization-form' -%}
+                      <div>
+                        <h2 class="visually-hidden" id="HeaderLanguageMobileLabel">
+                          {{ 'localization.language_label' | t }}
+                        </h2>
+                        {%- render 'language-localization', localPosition: 'HeaderLanguageMobile' -%}
+                      </div>
+                    {%- endform -%}
+                  </localization-form>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+            {% if show_social_links %}
+              <ul class="list list-social list-unstyled" role="list">
+                {%- if settings.social_twitter_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_twitter_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-twitter.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_facebook_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_facebook_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-facebook.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_pinterest_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_pinterest_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-pinterest.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_instagram_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_instagram_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-instagram.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_tiktok_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_tiktok_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-tiktok.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_tumblr_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_tumblr_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-tumblr.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_snapchat_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_snapchat_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-snapchat.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_youtube_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_youtube_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-youtube.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if settings.social_vimeo_link != blank -%}
+                  <li class="list-social__item">
+                    <a href="{{ settings.social_vimeo_link }}" class="list-social__link link">
+                      <span class="svg-wrapper">
+                        {{- 'icon-vimeo.svg' | inline_asset_content -}}
+                      </span>
+                      <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+</header-drawer>

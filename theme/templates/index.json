@@ -1,0 +1,247 @@
+{
+  "sections": {
+    "scrunch_hero_banner": {
+      "type": "scrunch-hero-banner",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "badge": "✦ HANDCRAFTED IN INDIA",
+            "heading": "New Collection",
+            "subtext": "Handcrafted with Love",
+            "cta_text": "Shop Now",
+            "cta_style": "saffron",
+            "mobile_gradient": "linear-gradient(135deg, #5B2333 0%, #8B3A4A 40%, #C9A87C 100%)"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "badge": "🎁 PERFECT GIFTS",
+            "heading": "Gift Something Special",
+            "subtext": "Curated hampers for your loved ones",
+            "cta_text": "Explore Hampers",
+            "cta_style": "rose",
+            "mobile_gradient": "linear-gradient(135deg, #E8C4D8 0%, #D4A8C8 40%, #B8A0D2 100%)"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "badge": "⭐ 1200+ HAPPY CUSTOMERS",
+            "heading": "Customer Favourites",
+            "subtext": "Loved by our amazing community",
+            "cta_text": "Shop Bestsellers",
+            "cta_style": "dark",
+            "mobile_gradient": "linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 40%, #FDDCBE 100%)"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {
+        "autoplay": 4000
+      }
+    },
+    "scrunch_features": {
+      "type": "scrunch-features",
+      "blocks": {
+        "f_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "subtitle": "On orders above ₹499"
+          }
+        },
+        "f_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Quality Assured",
+            "subtitle": "Premium handmade products"
+          }
+        },
+        "f_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "box",
+            "title": "Eco Packaging",
+            "subtitle": "Sustainable & beautiful"
+          }
+        },
+        "f_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "title": "Made with Love",
+            "subtitle": "Handcrafted in India"
+          }
+        }
+      },
+      "block_order": [
+        "f_1",
+        "f_2",
+        "f_3",
+        "f_4"
+      ],
+      "settings": {}
+    },
+    "scrunch_collections": {
+      "type": "scrunch-collections",
+      "blocks": {
+        "c_1": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Scrunchies",
+            "badge": "24 styles",
+            "desc": "Luxurious fabric scrunchies that care for your hair",
+            "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597198/scrunchcreate/products/scrunchie/classic/brown/sc-scrunchie-classic-brown-1.webp",
+            "link": "/collections/all"
+          }
+        },
+        "c_2": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Hair Bows",
+            "badge": "18 styles",
+            "desc": "Elegant bows for a sophisticated touch",
+            "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597148/scrunchcreate/products/hairbow/satin/black/sc-hairbow-satin-black-1.webp",
+            "link": "/collections/all"
+          }
+        },
+        "c_3": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Hairclips",
+            "badge": "12 styles",
+            "desc": "Elegant clips for a stylish look",
+            "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597566/scrunchcreate/products/hairclip/rose/red/sc-hairclip-rose-red-1.webp",
+            "link": "/collections/all"
+          }
+        },
+        "c_4": {
+          "type": "collection_card",
+          "settings": {
+            "title": "Gift Hampers",
+            "badge": "12 styles",
+            "desc": "Curated gift sets for your loved ones",
+            "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597038/scrunchcreate/products/gifthamper/sc-gifthamper-1.webp",
+            "link": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "c_1",
+        "c_2",
+        "c_3",
+        "c_4"
+      ],
+      "settings": {
+        "heading": "Discover Our Collections",
+        "subheading": "Handmade for every occasion"
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Customer Favourites",
+        "heading_size": "h2",
+        "description": "<p>Our most loved hair accessories, handmade with care</p>",
+        "show_description": true,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "hover",
+        "columns_mobile": "2",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "scrunch_kits": {
+      "type": "scrunch-kits",
+      "blocks": {
+        "kit_1": {
+          "type": "kit",
+          "settings": {
+            "title": "Everyday Polish Kit",
+            "desc": "2 Classic scrunchies + 1 Satin bow in a signature gift box.",
+            "price": "₹199",
+            "compare_price": "₹249"
+          }
+        },
+        "kit_2": {
+          "type": "kit",
+          "settings": {
+            "title": "Festive Bloom Kit",
+            "desc": "Rose Flower Jewellery set + 2 Tulip scrunchies for special events.",
+            "price": "₹399",
+            "compare_price": "₹499"
+          }
+        },
+        "kit_3": {
+          "type": "kit",
+          "settings": {
+            "title": "Satin Hamper Luxury Kit",
+            "desc": "Complete accessory wardrobe in hand-tied luxury packaging.",
+            "price": "₹699",
+            "compare_price": "₹799"
+          }
+        }
+      },
+      "block_order": [
+        "kit_1",
+        "kit_2",
+        "kit_3"
+      ],
+      "settings": {
+        "heading": "The Kits",
+        "subheading": "Curated sets — ready to gift or keep",
+        "view_all_text": "Shop all kits"
+      }
+    },
+    "scrunch_instagram": {
+      "type": "scrunch-instagram",
+      "blocks": {
+        "post_1": { "type": "post", "settings": {} },
+        "post_2": { "type": "post", "settings": {} },
+        "post_3": { "type": "post", "settings": {} },
+        "post_4": { "type": "post", "settings": {} }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ],
+      "settings": {
+        "heading": "Follow Us on Instagram",
+        "handle": "@scrunch_and_create",
+        "instagram_url": "https://www.instagram.com/scrunch_and_create"
+      }
+    }
+  },
+  "order": [
+    "scrunch_hero_banner",
+    "scrunch_features",
+    "scrunch_collections",
+    "featured_collection",
+    "scrunch_kits",
+    "scrunch_instagram"
+  ]
+}

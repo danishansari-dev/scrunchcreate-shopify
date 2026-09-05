@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "track_order_hub": {
+      "type": "scrunch-track-order",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "Track Your Order",
+        "subheading": "Enter your order number and registered email or mobile to see real-time delivery updates from Delhivery.",
+        "support_whatsapp": "917300969491"
+      }
+    }
+  },
+  "order": [
+    "track_order_hub"
+  ]
+}

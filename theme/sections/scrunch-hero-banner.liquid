@@ -1,0 +1,312 @@
+{% comment %}
+  Scrunch & Create - Hero Banner Carousel
+  Why: Replicates the responsive desktop slide track and mobile gradient hero banner overlay from components/Banner/
+{% endcomment %}
+
+<div class="sc-hero-banner-wrapper" data-section-id="{{ section.id }}" data-autoplay="{{ section.settings.autoplay | default: 4000 }}">
+  <!-- Desktop Carousel View (Hidden on mobile) -->
+  <div class="sc-desktop-carousel">
+    <div class="sc-carousel-track">
+      {%- for block in section.blocks -%}
+        <div class="sc-carousel-slide {% if forloop.first %}is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 1800 }}"
+              alt="{{ block.settings.heading | escape }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              width="{{ block.settings.image.width | default: 1800 }}"
+              height="{{ block.settings.image.height | default: 600 }}"
+              class="sc-slide-img"
+            >
+          {%- else -%}
+            {%- liquid
+              assign default_slide = 'slider1.png'
+              if forloop.index == 2
+                assign default_slide = 'slider2.png'
+              elsif forloop.index >= 3
+                assign default_slide = 'slider3.png'
+              endif
+            -%}
+            <img
+              src="{{ default_slide | asset_url }}"
+              alt="{{ block.settings.heading | escape }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              width="1800"
+              height="600"
+              class="sc-slide-img"
+            >
+          {%- endif -%}
+
+          {%- if block.settings.cta_link != blank -%}
+            <a href="{{ block.settings.cta_link }}" class="sc-slide-link" aria-label="{{ block.settings.heading }}"></a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <!-- Desktop Navigation Buttons -->
+    <button class="sc-nav-btn sc-prev-btn" aria-label="Previous slide">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="sc-nav-btn sc-next-btn" aria-label="Next slide">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Hero Banner (Visible only on mobile <= 767px) -->
+  <div class="sc-mobile-hero-container">
+    {%- for block in section.blocks -%}
+      <div class="sc-mobile-slide {% if forloop.first %}is-active{% endif %}" data-mobile-index="{{ forloop.index0 }}" style="--slide-gradient: {{ block.settings.mobile_gradient }};" {{ block.shopify_attributes }}>
+        <div class="sc-mobile-bg-wash"></div>
+        <div class="sc-mobile-content">
+          {%- if block.settings.badge != blank -%}
+            <span class="sc-mobile-badge">{{ block.settings.badge }}</span>
+          {%- endif -%}
+          <h2 class="sc-mobile-heading">{{ block.settings.heading }}</h2>
+          {%- if block.settings.subtext != blank -%}
+            <p class="sc-mobile-subtext">{{ block.settings.subtext }}</p>
+          {%- endif -%}
+          {%- if block.settings.cta_text != blank and block.settings.cta_link != blank -%}
+            <a href="{{ block.settings.cta_link }}" class="sc-mobile-cta sc-cta-{{ block.settings.cta_style }}">
+              {{ block.settings.cta_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <!-- Mobile Indicator Dots -->
+    <div class="sc-mobile-dots" aria-label="Slide indicators">
+      {%- for block in section.blocks -%}
+        <button class="sc-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * Initializes the responsive Hero Banner carousel with touch swipe gestures for mobile
+   * @danishansari-dev userId - Admin/Theme author
+   * @returns {void}
+   */
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!wrapper) return;
+
+    const desktopSlides = wrapper.querySelectorAll('.sc-carousel-slide');
+    const mobileSlides = wrapper.querySelectorAll('.sc-mobile-slide');
+    const mobileContainer = wrapper.querySelector('.sc-mobile-hero-container');
+    const dots = wrapper.querySelectorAll('.sc-dot');
+    const prevBtn = wrapper.querySelector('.sc-prev-btn');
+    const nextBtn = wrapper.querySelector('.sc-next-btn');
+    const count = desktopSlides.length;
+    if (count <= 1) return;
+
+    let current = 0;
+    let timer = null;
+    const interval = parseInt(wrapper.dataset.autoplay) || 4000;
+
+    /**
+     * Activates a specific slide index on both desktop and mobile views
+     * @danishansari-dev userId - Admin
+     * @param {number} idx - Target slide index
+     * @returns {void}
+     */
+    function showSlide(idx) {
+      current = ((idx % count) + count) % count;
+      desktopSlides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+      mobileSlides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
+    }
+
+    /**
+     * Starts or resets the automatic slide transition timer
+     * @danishansari-dev userId - Admin
+     * @returns {void}
+     */
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(() => showSlide(current + 1), interval);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { showSlide(current - 1); startTimer(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { showSlide(current + 1); startTimer(); });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => { showSlide(i); startTimer(); });
+    });
+
+    // Pause autoplay on mouse hover (desktop)
+    wrapper.addEventListener('mouseenter', () => clearInterval(timer));
+    wrapper.addEventListener('mouseleave', () => startTimer());
+
+    // Touch Swipe Gesture Support for Mobile Devices
+    if (mobileContainer) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+      const swipeThreshold = 40;
+
+      mobileContainer.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+        clearInterval(timer);
+      }, { passive: true });
+
+      mobileContainer.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipeGesture();
+        startTimer();
+      }, { passive: true });
+
+      /**
+       * Evaluates touch delta to determine if horizontal swipe threshold was reached
+       * @danishansari-dev userId - Admin
+       * @returns {void}
+       */
+      function handleSwipeGesture() {
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // Ensure horizontal movement dominates vertical scroll
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+          if (diffX < 0) {
+            // Swiped left -> Next slide
+            showSlide(current + 1);
+          } else {
+            // Swiped right -> Previous slide
+            showSlide(current - 1);
+          }
+        }
+      }
+    }
+
+    startTimer();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Scrunch Hero Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "autoplay",
+      "min": 3000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Slide Duration",
+      "default": 4000
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Banner Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Mobile Badge Text",
+          "default": "✦ HANDCRAFTED IN INDIA"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Slide Heading",
+          "default": "New Collection"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Slide Subtitle",
+          "default": "Handcrafted with Love"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Button Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "cta_style",
+          "label": "Button Color Style",
+          "options": [
+            { "value": "saffron", "label": "Saffron Pink" },
+            { "value": "rose", "label": "Rose Blossom" },
+            { "value": "dark", "label": "Plum Dark" }
+          ],
+          "default": "saffron"
+        },
+        {
+          "type": "color_background",
+          "id": "mobile_gradient",
+          "label": "Mobile Gradient Background",
+          "default": "linear-gradient(135deg, #5B2333 0%, #8B3A4A 40%, #C9A87C 100%)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrunch Hero Banner",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "✦ HANDCRAFTED IN INDIA",
+            "heading": "New Collection",
+            "subtext": "Handcrafted with Love",
+            "cta_text": "Shop Now",
+            "cta_style": "saffron",
+            "mobile_gradient": "linear-gradient(135deg, #5B2333 0%, #8B3A4A 40%, #C9A87C 100%)"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "🎁 PERFECT GIFTS",
+            "heading": "Gift Something Special",
+            "subtext": "Curated hampers for your loved ones",
+            "cta_text": "Explore Hampers",
+            "cta_style": "rose",
+            "mobile_gradient": "linear-gradient(135deg, #E8C4D8 0%, #D4A8C8 40%, #B8A0D2 100%)"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "badge": "⭐ 1200+ HAPPY CUSTOMERS",
+            "heading": "Customer Favourites",
+            "subtext": "Loved by our amazing community",
+            "cta_text": "Shop Bestsellers",
+            "cta_style": "dark",
+            "mobile_gradient": "linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 40%, #FDDCBE 100%)"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

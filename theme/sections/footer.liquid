@@ -1,0 +1,517 @@
+{% comment %}
+  Bespoke Scrunch & Create Footer matching React website exactly
+  Features:
+  - Upper Newsletter Band with pill subscription form
+  - 4-column brand grid (Brand + Contact, Shop, Policies, Instagram with image grid & social icons)
+  - Bottom bar with copyright and "Made in India"
+{% endcomment %}
+
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .sc-footer {
+    border-top: 1px solid rgba(54, 45, 39, 0.08);
+    background: #f4ede7;
+    color: #24201e;
+    font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+  }
+
+  .sc-footer__newsletter-band,
+  .sc-footer__main,
+  .sc-footer__bottom {
+    width: min(100%, 1440px);
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .sc-footer__newsletter-band {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 32px;
+    align-items: center;
+    padding-top: 48px;
+    padding-bottom: 40px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .sc-footer__newsletter-band {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding-top: 36px;
+      padding-bottom: 30px;
+    }
+  }
+
+  .sc-footer__newsletter-eyebrow {
+    margin: 0 0 8px;
+    color: #9b6670;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .sc-footer__newsletter-title {
+    margin: 0;
+    color: #24201e;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+  }
+
+  @media screen and (max-width: 750px) {
+    .sc-footer__newsletter-title {
+      font-size: 22px;
+    }
+  }
+
+  .sc-footer__newsletter-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 6px 6px 6px 16px;
+    border: 1px solid rgba(54, 45, 39, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 30px rgba(42, 34, 29, 0.06);
+    align-items: center;
+  }
+
+  .sc-footer__newsletter-input {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #24201e;
+    font-size: 15px;
+    font-weight: 500;
+    outline: none;
+  }
+
+  .sc-footer__newsletter-input::placeholder {
+    color: #8c7e77;
+  }
+
+  .sc-footer__subscribe-btn {
+    height: 44px;
+    padding: 0 28px;
+    border: 1px solid #24201e;
+    border-radius: 999px;
+    background: #24201e;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 200ms ease;
+  }
+
+  .sc-footer__subscribe-btn:hover {
+    border-color: #c76f7e;
+    background: #c76f7e;
+    transform: translateY(-1px);
+  }
+
+  @media screen and (max-width: 480px) {
+    .sc-footer__newsletter-form {
+      grid-template-columns: 1fr;
+      border-radius: 14px;
+      padding: 8px;
+    }
+    .sc-footer__newsletter-input {
+      padding-left: 8px;
+      font-size: 16px; /* Prevents iOS Safari input auto-zoom */
+    }
+    .sc-footer__subscribe-btn {
+      width: 100%;
+    }
+  }
+
+  .sc-footer__main {
+    padding-top: 10px;
+    padding-bottom: 48px;
+  }
+
+  .sc-footer__grid {
+    display: grid;
+    grid-template-columns: minmax(260px, 1.4fr) minmax(130px, 0.7fr) minmax(140px, 0.7fr) minmax(280px, 1.2fr);
+    gap: 40px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(54, 45, 39, 0.1);
+  }
+
+  @media screen and (max-width: 990px) {
+    .sc-footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .sc-footer__grid {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
+
+  .sc-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sc-footer__brand-title {
+    color: #24201e;
+    font-size: 24px;
+    font-weight: 900;
+    margin: 0;
+    text-decoration: none;
+    font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+  }
+
+  .sc-footer__bio {
+    max-width: 320px;
+    margin: 0;
+    color: #5e534e;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  .sc-footer__contact-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .sc-footer__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #24201e;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .sc-footer__contact-link:hover {
+    color: #c76f7e;
+  }
+
+  .sc-footer__section-title {
+    margin: 0 0 6px;
+    color: #24201e;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-body-family, 'Plus Jakarta Sans', sans-serif);
+  }
+
+  .sc-footer__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sc-footer__link {
+    color: #4a403b;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 150ms ease, transform 150ms ease;
+    display: inline-block;
+  }
+
+  .sc-footer__link:hover {
+    color: #c76f7e;
+    transform: translateX(2px);
+  }
+
+  .sc-footer__insta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .sc-footer__insta-handle {
+    color: #5e534e;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .sc-footer__insta-handle:hover {
+    color: #c76f7e;
+  }
+
+  .sc-footer__insta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .sc-footer__insta-tile {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    display: block;
+    background: #e6ded7;
+    transition: transform 200ms ease;
+  }
+
+  .sc-footer__insta-tile:hover {
+    transform: scale(1.05);
+  }
+
+  .sc-footer__insta-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sc-footer__socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .sc-footer__social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #24201e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(42, 34, 29, 0.08);
+    transition: all 200ms ease;
+  }
+
+  .sc-footer__social-link:hover {
+    background: #24201e;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .sc-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    padding-bottom: 28px;
+    border-top: 1px solid rgba(54, 45, 39, 0.08);
+    font-size: 13px;
+    color: #7d706a;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 600px) {
+    .sc-footer__bottom {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+</style>
+
+<footer class="sc-footer">
+  <section class="sc-footer__newsletter-band" aria-labelledby="footer-newsletter-title">
+    <div class="sc-footer__newsletter-copy">
+      <p class="sc-footer__newsletter-eyebrow">{{ section.settings.newsletter_eyebrow | default: 'SCRUNCH & CREATE' }}</p>
+      <h2 id="footer-newsletter-title" class="sc-footer__newsletter-title">
+        {{ section.settings.newsletter_heading | default: 'Handmade drops, styling notes, and gift-ready offers.' }}
+      </h2>
+    </div>
+    {% form 'customer', class: 'sc-footer__newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input
+        id="Footer-Email"
+        type="email"
+        name="contact[email]"
+        placeholder="Email address"
+        class="sc-footer__newsletter-input"
+        value="{{ form.email }}"
+        aria-required="true"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="email"
+        required
+      >
+      <button type="submit" class="sc-footer__subscribe-btn" name="commit">Subscribe</button>
+    {% endform %}
+  </section>
+
+  <section class="sc-footer__main">
+    <div class="sc-footer__grid">
+      <!-- Column 1: Brand & Contact -->
+      <div class="sc-footer__col">
+        <a href="{{ routes.root_url }}" class="sc-footer__brand-title">Scrunch &amp; Create</a>
+        <p class="sc-footer__bio">
+          Premium handmade hair accessories crafted in India for everyday polish, gifting, and occasion styling.
+        </p>
+        <div class="sc-footer__contact-stack">
+          <a href="tel:+917300969491" class="sc-footer__contact-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            +91 73009 69491
+          </a>
+          <a href="mailto:scrunchcreate@gmail.com" class="sc-footer__contact-link">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <path d="m22 6-10 7L2 6" />
+            </svg>
+            scrunchcreate@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Shop Links -->
+      <div class="sc-footer__col">
+        <h3 class="sc-footer__section-title">Shop</h3>
+        <ul class="sc-footer__link-list">
+          {% comment %}
+            Why: Uses dynamic collection routes to prevent broken link routing and includes all 5 live store categories.
+          {% endcomment %}
+          <li><a href="{{ routes.all_products_collection_url }}" class="sc-footer__link">All Products</a></li>
+          <li><a href="{{ routes.collections_url }}/scrunchies" class="sc-footer__link">Scrunchies</a></li>
+          <li><a href="{{ routes.collections_url }}/hair-bows" class="sc-footer__link">Hair Bows</a></li>
+          <li><a href="{{ routes.collections_url }}/gift-hampers" class="sc-footer__link">Gift Hampers</a></li>
+          <li><a href="{{ routes.collections_url }}/flower-jewellery" class="sc-footer__link">Flower Jewellery</a></li>
+          <li><a href="{{ routes.collections_url }}/hairclips" class="sc-footer__link">Hairclips</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Policies -->
+      <div class="sc-footer__col">
+        <h3 class="sc-footer__section-title">Policies</h3>
+        <ul class="sc-footer__link-list">
+          {% comment %}
+            Why: Links directly to official shop policies or dedicated Policy Hub pages.
+          {% endcomment %}
+          <li>
+            <a href="{% if shop.terms_of_service != blank %}{{ shop.terms_of_service.url }}{% else %}/pages/terms-and-conditions#terms{% endif %}" class="sc-footer__link">
+              Terms &amp; Conditions
+            </a>
+          </li>
+          <li>
+            <a href="{% if shop.refund_policy != blank %}{{ shop.refund_policy.url }}{% else %}/pages/refund-policy#refund{% endif %}" class="sc-footer__link">
+              Refund &amp; Returns
+            </a>
+          </li>
+          <li>
+            <a href="{% if shop.shipping_policy != blank %}{{ shop.shipping_policy.url }}{% else %}/pages/shipping-policy#shipping{% endif %}" class="sc-footer__link">
+              Shipping &amp; Delivery
+            </a>
+          </li>
+          <li>
+            <a href="{% if shop.privacy_policy != blank %}{{ shop.privacy_policy.url }}{% else %}/pages/privacy-policy#privacy{% endif %}" class="sc-footer__link">
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a href="/pages/contact#contact" class="sc-footer__link">
+              Support &amp; Contact
+            </a>
+          </li>
+          <li>
+            {% comment %}
+              Why: Direct link in footer customer care column for package tracking.
+            {% endcomment %}
+            <a href="/pages/track-order" class="sc-footer__link">
+              Track Your Order
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Instagram & Social Proof -->
+      <div class="sc-footer__col">
+        <div class="sc-footer__insta-header">
+          <h3 class="sc-footer__section-title">Instagram</h3>
+          <a class="sc-footer__insta-handle" href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer">
+            @scrunch_and_create
+          </a>
+        </div>
+        <div class="sc-footer__insta-grid">
+          <a href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" class="sc-footer__insta-tile" aria-label="Scrunch and Create on Instagram">
+            <img src="https://res.cloudinary.com/duu26sqog/image/upload/v1775597198/scrunchcreate/products/scrunchie/classic/brown/sc-scrunchie-classic-brown-1.webp" alt="Scrunchie on Instagram" width="200" height="200" loading="lazy">
+          </a>
+          <a href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" class="sc-footer__insta-tile" aria-label="Scrunch and Create on Instagram">
+            <img src="https://res.cloudinary.com/duu26sqog/image/upload/v1775597148/scrunchcreate/products/hairbow/satin/black/sc-hairbow-satin-black-1.webp" alt="Hair Bow on Instagram" width="200" height="200" loading="lazy">
+          </a>
+          <a href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" class="sc-footer__insta-tile" aria-label="Scrunch and Create on Instagram">
+            <img src="https://res.cloudinary.com/duu26sqog/image/upload/v1775597038/scrunchcreate/products/gifthamper/sc-gifthamper-1.webp" alt="Gift Hamper on Instagram" width="200" height="200" loading="lazy">
+          </a>
+          <a href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" class="sc-footer__insta-tile" aria-label="Scrunch and Create on Instagram">
+            <img src="https://res.cloudinary.com/duu26sqog/image/upload/v1775596991/scrunchcreate/products/flowerjewellery/rose/yellow/sc-flowerjewellery-rose-yellow-1.webp" alt="Flower Jewellery on Instagram" width="200" height="200" loading="lazy">
+          </a>
+        </div>
+        <div class="sc-footer__socials" aria-label="Social links">
+          <a class="sc-footer__social-link" href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="18" cy="6" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a class="sc-footer__social-link" href="https://www.facebook.com/people/Scrunch-Create/61562141818887/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z" />
+            </svg>
+          </a>
+          <a class="sc-footer__social-link" href="https://www.pinterest.com/@scrunch_and_create" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
+            </svg>
+          </a>
+          <a class="sc-footer__social-link" href="https://wa.me/917300969491" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sc-footer__bottom">
+    <span>&copy; {{ 'now' | date: '%Y' }} Scrunch &amp; Create. All rights reserved.</span>
+    <span>Made in India</span>
+  </section>
+</footer>
+
+{% schema %}
+{
+  "name": "Scrunch Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "newsletter_eyebrow",
+      "label": "Newsletter Eyebrow",
+      "default": "SCRUNCH & CREATE"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter Heading",
+      "default": "Handmade drops, styling notes, and gift-ready offers."
+    }
+  ]
+}
+{% endschema %}

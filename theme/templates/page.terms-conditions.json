@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "policy_hub": {
+      "type": "scrunch-policy",
+      "settings": {
+        "heading": "Terms & Conditions",
+        "subheading": "Please review the terms, conditions, and artisanal craftsmanship standards governing your purchase."
+      }
+    }
+  },
+  "order": [
+    "policy_hub"
+  ]
+}

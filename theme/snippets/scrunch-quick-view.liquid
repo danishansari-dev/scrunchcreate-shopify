@@ -1,0 +1,71 @@
+{% comment %}
+  Scrunch & Create - Quick View Modal Snippet
+  Why: Replicates the Quick View modal dialog from ProductCard/index.jsx for rapid browsing without leaving the grid.
+{% endcomment %}
+
+<div id="sc-quickview-modal" class="sc-modal-overlay" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="sc-modal-container">
+    <button type="button" class="sc-modal-close" aria-label="Close Quick View">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <div class="sc-modal-body" id="sc-quickview-content">
+      <!-- Injected dynamically via JS when Quick View button is clicked -->
+      <div class="sc-modal-loader">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('sc-quickview-modal');
+    if (!modal) return;
+
+    const closeBtn = modal.querySelector('.sc-modal-close');
+    const content = document.getElementById('sc-quickview-content');
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+
+    document.addEventListener('click', async (e) => {
+      const qvBtn = e.target.closest('[data-quickview-url]');
+      if (!qvBtn) return;
+
+      e.preventDefault();
+      const url = qvBtn.getAttribute('data-quickview-url');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      content.innerHTML = '<div class="sc-modal-loader">Loading product details...</div>';
+
+      try {
+        const response = await fetch(`${url}?section_id=main-product`);
+        const html = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const productSection = doc.querySelector('.product');
+        if (productSection) {
+          content.innerHTML = '';
+          content.appendChild(productSection);
+        } else {
+          content.innerHTML = '<p style="padding: 24px; text-align: center;">Could not load product preview.</p>';
+        }
+      } catch (err) {
+        content.innerHTML = '<p style="padding: 24px; text-align: center; color: red;">Failed to load product.</p>';
+      }
+    });
+  });
+</script>

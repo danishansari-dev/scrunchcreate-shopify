@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "policy_hub": {
+      "type": "scrunch-policy",
+      "settings": {
+        "heading": "Store Policies & Legal",
+        "subheading": "Everything you need to know about shopping, shipping, refunds, and privacy at Scrunch & Create."
+      }
+    }
+  },
+  "order": [
+    "policy_hub"
+  ]
+}

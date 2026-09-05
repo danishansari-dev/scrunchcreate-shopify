@@ -1,0 +1,67 @@
+{% comment %}
+  Why: Intercepts 404 routes matching store policy URLs (e.g. /pages/terms-and-conditions,
+  /pages/refund-policy, /pages/shipping-policy, /policies/*) and renders the comprehensive
+  Scrunch Policy Hub instead of a 404 error page.
+{% endcomment %}
+
+<div id="sc-policy-404-container" style="display: none;">
+  {% render 'scrunch-policy' %}
+</div>
+
+<div id="sc-standard-404-container">
+  <style type="text/css">
+    .template-404 .title + * {
+      margin-top: 1rem;
+    }
+
+    @media screen and (min-width: 750px) {
+      .template-404 .title + * {
+        margin-top: 2rem;
+      }
+    }
+  </style>
+
+  <div class="template-404 page-width page-margin center">
+    <p>
+      {{ 'templates.404.subtext' | t }}
+    </p>
+    <h1 class="title">
+      {{ 'templates.404.title' | t }}
+    </h1>
+    <a href="{{ routes.all_products_collection_url }}" class="button">
+      {{ 'general.continue_shopping' | t }}
+    </a>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    const isPolicy = path.includes('terms') || path.includes('refund') || path.includes('shipping') || path.includes('privacy') || path.includes('policy') || path.includes('policies') || path.includes('legal') || path.includes('contact') || hash.includes('terms') || hash.includes('refund') || hash.includes('shipping') || hash.includes('privacy') || hash.includes('contact');
+
+    if (isPolicy) {
+      const policyWrap = document.getElementById('sc-policy-404-container');
+      const stdWrap = document.getElementById('sc-standard-404-container');
+      if (policyWrap) policyWrap.style.display = 'block';
+      if (stdWrap) stdWrap.style.display = 'none';
+
+      let targetTab = 'terms';
+      if (path.includes('refund') || hash.includes('refund')) targetTab = 'refund';
+      else if (path.includes('shipping') || hash.includes('shipping')) targetTab = 'shipping';
+      else if (path.includes('privacy') || hash.includes('privacy')) targetTab = 'privacy';
+      else if (path.includes('contact') || hash.includes('contact')) targetTab = 'contact';
+      else if (path.includes('terms') || hash.includes('terms')) targetTab = 'terms';
+
+      const tabTitles = {
+        'terms': 'Terms & Conditions',
+        'refund': 'Refund & Returns Policy',
+        'shipping': 'Shipping & Delivery Policy',
+        'privacy': 'Privacy Policy',
+        'contact': 'Support & Contact'
+      };
+
+      document.title = (tabTitles[targetTab] || 'Store Policies') + ' – Scrunch & Create';
+    }
+  })();
+</script>
