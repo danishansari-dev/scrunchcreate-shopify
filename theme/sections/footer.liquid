@@ -462,22 +462,30 @@
             <img src="https://res.cloudinary.com/duu26sqog/image/upload/v1775596991/scrunchcreate/products/flowerjewellery/rose/yellow/sc-flowerjewellery-rose-yellow-1.webp" alt="Flower Jewellery on Instagram" width="200" height="200" loading="lazy">
           </a>
         </div>
+        {%- comment -%}
+          Why: Renders brand social links dynamically configured in theme settings with robust fallback defaults.
+        {%- endcomment -%}
         <div class="sc-footer__socials" aria-label="Social links">
-          <a class="sc-footer__social-link" href="https://www.instagram.com/scrunch_and_create" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a class="sc-footer__social-link" href="{{ settings.social_instagram_link | default: 'https://www.instagram.com/scrunch_and_create' }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <rect x="2" y="2" width="20" height="20" rx="5" />
               <circle cx="12" cy="12" r="4" />
               <circle cx="18" cy="6" r="1.5" fill="currentColor" stroke="none" />
             </svg>
           </a>
-          <a class="sc-footer__social-link" href="https://www.facebook.com/people/Scrunch-Create/61562141818887/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <a class="sc-footer__social-link" href="{{ settings.social_facebook_link | default: 'https://www.facebook.com/people/Scrunch-Create/61562141818887/' }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z" />
             </svg>
           </a>
-          <a class="sc-footer__social-link" href="https://www.pinterest.com/@scrunch_and_create" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
+          <a class="sc-footer__social-link" href="{{ settings.social_pinterest_link | default: 'https://in.pinterest.com/scrunchcreate/' }}" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z" />
+            </svg>
+          </a>
+          <a class="sc-footer__social-link" href="{{ settings.social_youtube_link | default: 'https://www.youtube.com/@scrunch_and_create' }}" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
             </svg>
           </a>
           <a class="sc-footer__social-link" href="https://wa.me/917300969491" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
