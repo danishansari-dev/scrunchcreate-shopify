@@ -479,7 +479,8 @@ Images follow a structured path convention:
 |----------|-----------|
 | Instagram | [@scrunch_and_create](https://instagram.com/scrunch_and_create) |
 | Facebook | [Scrunch & Create](https://facebook.com/people/Scrunch-Create/61562141818887/) |
-| Pinterest | [@scrunch_and_create](https://pinterest.com/@scrunch_and_create) |
+| Pinterest | [scrunchcreate](https://in.pinterest.com/scrunchcreate/) |
+| YouTube | [@scrunch_and_create](https://www.youtube.com/@scrunch_and_create) |
 | WhatsApp | +91 73009 69491 |
 | Email | scrunchcreate@gmail.com |
 
