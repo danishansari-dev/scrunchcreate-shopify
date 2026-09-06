@@ -1499,7 +1499,7 @@
         "type": "textarea",
         "id": "whatsapp_greeting",
         "label": "Chat Greeting Message",
-        "default": "Hi there! 👋 Welcome to Scrunch & Create. How can we help you with your handcrafted scrunchies, bows, or custom gift hampers today?"
+        "default": "Hi there! 👋 Welcome to Scrunch & Create! How can we help you today?"
       },
       {
         "type": "text",
