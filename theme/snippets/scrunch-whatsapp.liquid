@@ -187,9 +187,11 @@
         <span class="sc-wa-btn__label">{{ button_label }}</span>
       {%- endif -%}
 
-      {%- if show_badge -%}
-        <span id="sc-wa-badge" class="sc-wa-btn__badge" aria-label="1 unread message">1</span>
-      {%- endif -%}
+      {%- comment -%}
+        Why: Do not display a fake unread message count badge.
+        The red "1" badge has been removed to avoid misleading users when no real
+        customer messaging or notification system is active.
+      {%- endcomment -%}
     </button>
   </aside>
 
