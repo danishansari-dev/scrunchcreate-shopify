@@ -15,7 +15,7 @@
   assign phone_number = settings.whatsapp_phone | default: '917300969491'
   assign agent_name = settings.whatsapp_agent_name | default: 'Scrunch & Create Support'
   assign agent_status = settings.whatsapp_agent_status | default: 'Typically replies in minutes'
-  assign greeting_message = settings.whatsapp_greeting | default: 'Hi there! 👋 Welcome to Scrunch & Create. How can we help you with your handcrafted scrunchies, bows, or custom gift hampers today?'
+  assign greeting_message = settings.whatsapp_greeting | default: 'Hi there! 👋 Welcome to Scrunch & Create! How can we help you today?'
   assign default_message = settings.whatsapp_default_message | default: 'Hi Scrunch & Create! I have a question about your products.'
   assign widget_position = settings.whatsapp_position | default: 'bottom_right'
   assign button_label = settings.whatsapp_button_label | default: 'Chat with us'
@@ -96,12 +96,17 @@
               </button>
             {%- endif -%}
 
+            {%- comment -%}
+              Why: Dedicated quick reply for general post-order assistance (order changes, cancellation,
+              payment issues, damaged/wrong items). Order tracking is available through the dedicated
+              Track Order page, and shipping delivery updates are sent via automated customer notifications.
+            {%- endcomment -%}
             <button
               type="button"
               class="sc-wa-chip"
-              data-message="Hi Scrunch & Create! I want to check the status of my order."
+              data-message="Hi Scrunch & Create! I need help with an order (order changes, cancellation, payment, damaged/wrong item, or support)."
             >
-              📦 Track my order
+              📦 Order help
             </button>
 
             <button
@@ -118,14 +123,6 @@
               data-message="Hi Scrunch & Create! Can you help me pick the best scrunchies & hair accessories for my hair type?"
             >
               ✨ Styling & recommendations
-            </button>
-
-            <button
-              type="button"
-              class="sc-wa-chip"
-              data-message="Hi Scrunch & Create! I have a question regarding shipping charges and delivery time."
-            >
-              🚚 Shipping & Delivery time
             </button>
           </div>
         {%- endif -%}
