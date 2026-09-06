@@ -185,7 +185,7 @@
       "whatsapp_default_message": "Hi Scrunch & Create! I have a question about your products.",
       "whatsapp_position": "bottom_right",
       "whatsapp_button_label": "Chat with us",
-      "whatsapp_show_badge": true,
+      "whatsapp_show_badge": false,
       "whatsapp_show_quick_chips": true,
       "sections": {
         "main-password-header": {
