@@ -149,7 +149,14 @@
           <div class="card__information">
             <div class="sc-card-meta-row">
               <span class="sc-card-category-pill">{{ card_product.type | default: 'Scrunchie' }}</span>
-              <span class="sc-card-rating">★★★★★ 4.9</span>
+              {% comment %}
+                Why: Five individual stars consume excessive horizontal space on mobile viewports.
+                We structure the stars with responsive classes so mobile displays a clean, compact "★ 4.9"
+                while desktop viewports retain the full "★★★★★ 4.9" visual layout.
+              {% endcomment %}
+              <span class="sc-card-rating" aria-label="Rating: 4.9 out of 5 stars">
+                <span class="sc-rating-star">★</span><span class="sc-rating-desktop-stars">★★★★</span> 4.9
+              </span>
             </div>
             <h3
               class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
