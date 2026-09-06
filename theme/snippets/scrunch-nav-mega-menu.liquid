@@ -127,12 +127,13 @@
     {%- endfor -%}
 
     <!-- 3. Track Order Link -->
-    <li class="sc-nav-item">
+    <li class="sc-nav-item sc-nav-item--track-order">
       {% comment %}
-        Why: Direct entry point to live order tracking page for post-purchase shoppers.
+        Why: Clearly visible primary navigation item linking directly to the dedicated
+        order-tracking page (/pages/track-order) for post-purchase parcel tracking.
       {% endcomment %}
-      <a href="/pages/track-order" class="sc-nav-link{% if request.path contains 'track-order' %} is-active{% endif %}">
-        Track Order
+      <a href="/pages/track-order" class="sc-nav-link{% if request.path contains 'track-order' %} is-active{% endif %}" aria-label="Track Order">
+        <span>Track Order</span>
       </a>
     </li>
   </ul>
@@ -372,6 +373,23 @@
   .sc-mega-view-all:hover {
     color: #d96b7a;
     transform: translateX(3px);
+  }
+
+  /*
+    Why: Track Order is a primary navigation destination for returning customers.
+    Setting medium-bold weight and clear hover contrast makes it easily discoverable at a glance.
+  */
+  .sc-nav-item--track-order .sc-nav-link {
+    font-weight: 600;
+  }
+
+  @media screen and (min-width: 990px) and (max-width: 1200px) {
+    .sc-nav-list {
+      gap: 14px;
+    }
+    .sc-nav-link {
+      font-size: 13px;
+    }
   }
 
   @media screen and (max-width: 989px) {
