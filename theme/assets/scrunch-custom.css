@@ -629,6 +629,15 @@ body, p, span, a, input, button, select, textarea {
   min-height: 38px;
 }
 
+/*
+ * Eliminate Ghost Card Title Overlay
+ * Why: Dawn renders a duplicate card__information block inside card__inner for no-media fallbacks.
+ * When media is present, this block must be hidden to prevent faint ghost text over the product image.
+ */
+.card .card__inner .card__information {
+  display: none !important;
+}
+
 .card__heading a {
   color: inherit !important;
   text-decoration: none !important;
@@ -686,6 +695,66 @@ body, p, span, a, input, button, select, textarea {
   align-items: center !important;
   justify-content: center !important;
   line-height: 1 !important;
+}
+
+/*
+ * Base Price & Rating Presentation Rules
+ * Why: Allows selective display between standard desktop currency formatting
+ * and concise ₹ rupee symbols on mobile viewports.
+ */
+.sc-price-mobile {
+  display: none !important;
+}
+.sc-price-desktop {
+  display: inline !important;
+}
+.sc-rating-star,
+.sc-rating-desktop-stars {
+  color: #f59e0b;
+}
+
+/*
+ * Customer Favourites "View all" Button
+ * Why: Dawn applies an aggressive default black box-shadow border via ::after.
+ * We reset ::after and style the button as a branded rose/pink pill with smooth hover.
+ */
+.collection__view-all a.button,
+.collection__view-all .button {
+  background-color: #e78592 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 999px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  min-height: 42px !important;
+  padding: 10px 32px !important;
+  box-shadow: 0 4px 14px rgba(231, 133, 146, 0.3) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+}
+
+.collection__view-all a.button::after,
+.collection__view-all .button::after {
+  display: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  content: none !important;
+}
+
+.collection__view-all a.button:hover,
+.collection__view-all .button:hover {
+  background-color: #d96b7a !important;
+  box-shadow: 0 6px 20px rgba(231, 133, 146, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+.collection__view-all a.button:active,
+.collection__view-all .button:active {
+  transform: translateY(0) scale(0.98) !important;
 }
 
 /* Quick View Modal */
@@ -1561,48 +1630,375 @@ details[open] > .header__icon--menu {
     font-size: 1.25rem;
   }
 
-  /* 2-Column Product Cards Polish */
+  /* ==========================================================================
+     MOBILE CAROUSEL & "CUSTOMER FAVOURITES" OVERHAUL
+     ========================================================================== */
+
+  /* Section Spacing: Tighten vertical gaps in Customer Favourites section */
+  .section-featured-collection-padding,
+  .collection {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+  }
+
+  .collection__title.title-wrapper {
+    margin-bottom: 12px !important;
+  }
+
+  .collection__title .title {
+    font-size: 2.2rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .collection__description {
+    font-size: 1.25rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Product Carousel Layout: 1.2 to 1.35 cards visible with 18-25px peek */
+  .collection slider-component {
+    margin-bottom: 0 !important;
+  }
+
+  .collection .slider--tablet.grid--peek {
+    scroll-padding-left: 16px !important;
+    padding: 0 !important;
+    margin: 0 0 10px 0 !important;
+    column-gap: 12px !important;
+    gap: 12px !important;
+  }
+
+  .collection .slider--tablet.grid--peek .grid__item {
+    /*
+     * Why: Squeezing 2 columns on mobile resulted in cramped cards (~150px) and a clipped 3rd card.
+     * Setting width to calc(100vw - 52px) (bounded between 250px and 380px) guarantees:
+     * 1. Approximately 1.2 to 1.35 cards visible across mobile screens (320px - 430px).
+     * 2. Controlled 18-24px peek of the second card, matching the design spec.
+     * 3. The third card remains fully offscreen on initial load.
+     * 4. Product titles, swatches, and prices never clip or overflow.
+     */
+    width: calc(100vw - 52px) !important;
+    max-width: 380px !important;
+    min-width: 250px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    scroll-snap-align: start !important;
+  }
+
+  .collection .slider--tablet.grid--peek .grid__item:first-of-type {
+    margin-left: 16px !important;
+  }
+
+  .collection .slider--tablet.grid--peek:after {
+    content: '';
+    width: 16px !important;
+    flex-shrink: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Consistent Card Heights & Flex Column Structure */
+  .collection .card-wrapper,
+  .product-grid .card-wrapper {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .collection .card-wrapper .card,
+  .product-grid .card-wrapper .card {
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .collection .card-wrapper .card__content,
+  .product-grid .card-wrapper .card__content {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex-grow: 1 !important;
+    padding: 10px 12px 12px 12px !important;
+  }
+
+  .collection .card-wrapper .card__information,
+  .product-grid .card-wrapper .card__information {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+  }
+
+  /* Product Information Hierarchy:
+     1. Category + Compact Rating
+     2. Product Name
+     3. Color Swatches
+     4. Current Price + Old Price
+     5. Shipping Availability
+  */
   .sc-card-meta-row {
-    margin-bottom: 4px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 6px !important;
+    min-height: 20px !important;
   }
 
   .sc-card-category-pill {
-    font-size: 10px;
-    padding: 1px 6px;
+    font-size: 10.5px !important;
+    padding: 2px 7px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    border-radius: 999px !important;
   }
 
+  /* Compact Rating: "★ 4.9" on mobile */
   .sc-card-rating {
-    font-size: 11px;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    color: #6b5560 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
   }
 
-  .sc-card-stock-note {
-    font-size: 10.5px;
-    margin-top: 4px;
+  .sc-rating-star {
+    color: #f59e0b !important;
+    font-size: 12px !important;
   }
 
-  .sc-stock-text-desktop {
-    display: none;
+  .sc-rating-desktop-stars {
+    display: none !important;
   }
 
-  .sc-stock-text-mobile {
-    display: inline;
+  /* Product Title: 2-line clamp, controlled wrap, uniform height */
+  .card__heading {
+    margin: 2px 0 6px 0 !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: #2c2024 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
   }
 
+  /* Color Swatches: single-line, 15px dots, accessible 31px touch target */
   .sc-card-swatches-wrap {
-    min-height: 22px;
-    margin: 3px 0 5px 0 !important;
-    display: flex;
-    align-items: center;
+    min-height: 22px !important;
+    height: 22px !important;
+    margin: 2px 0 6px 0 !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .sc-swatches-row {
-    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
     gap: 6px !important;
+    margin: 0 !important;
+    padding: 2px 0 !important;
   }
 
   .sc-swatch-dot {
-    width: 17px !important;
-    height: 17px !important;
+    width: 15px !important;
+    height: 15px !important;
+    min-width: 15px !important;
+    position: relative !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /*
+   * Why: WCAG touch target accessibility. While visual dot is a refined 15px,
+   * the hit area is expanded to 31x31px via an invisible ::after overlay.
+   */
+  .sc-swatch-dot::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+  }
+
+  /* Refined, non-aggressive active state ring */
+  .sc-swatch-dot:hover,
+  .sc-swatch-dot.is-active,
+  .sc-swatch-dot[aria-checked="true"] {
+    transform: scale(1.08) !important;
+    box-shadow: 0 0 0 1.5px #ffffff, 0 0 0 3px #e78592 !important;
+  }
+
+  .sc-swatch-more {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    height: 15px !important;
+    line-height: 1 !important;
+    padding: 0 6px !important;
+    border-radius: 99px !important;
+    flex-shrink: 0 !important;
+    align-self: center !important;
+  }
+
+  /* Pricing: Clean Indian Rupee Symbol (₹40 / ₹48) & Reordered Hierarchy */
+  .sc-price-desktop {
+    display: none !important;
+  }
+
+  .sc-price-mobile {
+    display: inline !important;
+  }
+
+  .card-information .price {
+    min-height: 22px !important;
+    margin: 2px 0 4px 0 !important;
+  }
+
+  .price .price__container {
+    display: flex !important;
+    align-items: baseline !important;
+  }
+
+  .price .price__sale {
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Primary visual element: Sale Price */
+  .price .price-item--sale {
+    order: 1 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #2c2024 !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  /* Secondary visual element: Regular Price Struck-Through */
+  .price .price__sale span:has(.price-item--regular),
+  .price .price__sale .price-item--regular {
+    order: 2 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: #9ca3af !important;
+    text-decoration: line-through !important;
+  }
+
+  .price .price__regular .price-item--regular {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #2c2024 !important;
+  }
+
+  /* Shipping Status: Compact, single-line, consistent height */
+  .sc-card-stock-note {
+    font-size: 11px !important;
+    margin-top: 4px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .sc-stock-text-desktop {
+    display: none !important;
+  }
+
+  .sc-stock-text-mobile {
+    display: inline !important;
+  }
+
+  /* Carousel Controls: Accessible 44px buttons & subtle pill design */
+  .slider-buttons {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin: 6px 0 14px 0 !important;
+  }
+
+  .slider-button {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    border: 1px solid #edd9df !important;
+    box-shadow: 0 2px 6px rgba(44, 32, 36, 0.08) !important;
+    color: #4a3840 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+  }
+
+  .slider-button:active {
+    transform: scale(0.94) !important;
+    background: #fcf5f7 !important;
+  }
+
+  .slider-button[disabled] {
+    opacity: 0.35 !important;
+    box-shadow: none !important;
+    border-color: #f3e8eb !important;
+    pointer-events: none !important;
+  }
+
+  .slider-button .icon,
+  .slider-button .svg-wrapper svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .slider-counter {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #6b5560 !important;
+    letter-spacing: 0.5px !important;
+    min-width: 44px !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  /* "View all" Button: Mobile spacing and touch support */
+  .collection__view-all {
+    margin-top: 8px !important;
+    text-align: center !important;
+  }
+
+  .collection__view-all a.button,
+  .collection__view-all .button {
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 0 32px !important;
+    font-size: 14px !important;
+    border-radius: 999px !important;
+    box-shadow: 0 4px 14px rgba(231, 133, 146, 0.3) !important;
+    touch-action: manipulation !important;
+  }
+
+  .collection__view-all a.button::after,
+  .collection__view-all .button::after {
+    display: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    content: none !important;
   }
 
   /* PDP Variant Button Touch Enhancements */
