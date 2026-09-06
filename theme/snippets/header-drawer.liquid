@@ -100,9 +100,9 @@
               {%- endfor -%}
               <li>
                 {% comment %}
-                  Why: Direct entry point in mobile drawer for customer parcel tracking.
+                  Why: Primary entry point in mobile navigation drawer to the dedicated live order-tracking page (/pages/track-order).
                 {% endcomment %}
-                <a href="/pages/track-order" class="menu-drawer__menu-item list-menu__item link link--text focus-inset">
+                <a href="/pages/track-order" class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if request.path contains 'track-order' %} menu-drawer__menu-item--active{% endif %}" aria-label="Track Order">
                   Track Order
                 </a>
               </li>
