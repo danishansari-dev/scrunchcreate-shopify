@@ -245,7 +245,7 @@ Contains hard-coded pricing table mapping `(category, type)` → `{ base, mrp, d
 
 - **Supabase Auth & Database:** User auth and Postgres tables → Shopify Customer Accounts + Shopify Admin API.
 - **WhatsApp:** `wa.me/917300969491` order conversion → Shopify Order Webhooks / SuperLemon app.
-- **Socials:** Instagram (`@scrunch_and_create`), Facebook, Pinterest.
+- **Socials:** Instagram (`@scrunch_and_create`), Facebook, Pinterest, YouTube.
 
 ---
 
