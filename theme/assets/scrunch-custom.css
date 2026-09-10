@@ -64,7 +64,7 @@ html, body {
    while preserving mobile fluid gutter behavior.
    ========================================================================== */
 :root {
-  --page-width: 144rem !important;
+  --page-width: 150rem !important;
 }
 
 .page-width {
