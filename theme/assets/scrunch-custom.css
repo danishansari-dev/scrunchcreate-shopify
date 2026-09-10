@@ -115,6 +115,50 @@ body, p, span, a, input, button, select, textarea {
 }
 
 /* ==========================================================================
+   ANNOUNCEMENT BAR BRAND STYLING
+   Why: Provides a cohesive, high-contrast banner to advertise the ₹499 free
+   shipping threshold, first-order coupons, and dispatch times across all devices.
+   ========================================================================== */
+.utility-bar,
+.announcement-bar {
+  background: linear-gradient(90deg, #4A1C40 0%, #5B2333 50%, #4A1C40 100%) !important;
+  color: #FFFFFF !important;
+  border-bottom: 1px solid rgba(231, 133, 146, 0.25) !important;
+}
+
+.announcement-bar__message {
+  font-family: var(--font-body-family) !important;
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  color: #FFFFFF !important;
+  padding: 8px 16px !important;
+  margin: 0 !important;
+  text-align: center;
+}
+
+.announcement-bar__message span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.announcement-bar__link {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.announcement-bar .slider-button {
+  color: #FFFFFF !important;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.announcement-bar .slider-button:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
    1. HERO BANNER SECTION
    ========================================================================== */
 .sc-hero-banner-wrapper {
@@ -127,7 +171,15 @@ body, p, span, a, input, button, select, textarea {
 .sc-desktop-carousel {
   position: relative;
   width: 100%;
-  height: 520px;
+  height: clamp(380px, 37.5vw, 680px);
+  aspect-ratio: 2048 / 768;
+}
+
+@supports (aspect-ratio: 2048 / 768) {
+  .sc-desktop-carousel {
+    height: auto;
+    max-height: 720px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -451,10 +503,28 @@ body, p, span, a, input, button, select, textarea {
 }
 
 .sc-kit-img-wrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
   background-color: var(--sc-color-surface-soft);
+}
+
+.sc-kit-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: var(--sc-color-secondary);
+  color: #FFFFFF;
+  font-family: var(--font-body-family);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .sc-kit-img {
@@ -489,6 +559,16 @@ body, p, span, a, input, button, select, textarea {
   flex: 1;
 }
 
+.sc-kit-cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--sc-color-border-soft);
+}
+
 .sc-kit-pricing {
   display: flex;
   align-items: center;
@@ -505,6 +585,262 @@ body, p, span, a, input, button, select, textarea {
   font-size: 1.4rem;
   color: var(--sc-color-text-muted);
   text-decoration: line-through;
+}
+
+.sc-kit-cta-btn {
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--sc-color-primary-strong);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.sc-kit-card:hover .sc-kit-cta-btn {
+  color: var(--sc-color-secondary);
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   AUTHENTIC CUSTOMER REVIEWS SECTION
+   Why: Delivers credible, editorial community praise with verified buyer tags,
+   grounded hair experiences (tension-free, barrette grip, gifting), and direct product links.
+   ========================================================================== */
+.sc-reviews-section {
+  padding: 56px 0 64px;
+  background-color: #FAF6F7;
+  border-top: 1px solid var(--sc-color-border-soft);
+  border-bottom: 1px solid var(--sc-color-border-soft);
+}
+
+.sc-reviews-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
+
+.sc-reviews-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body-family);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #D96B7A;
+  margin-bottom: 8px;
+}
+
+.sc-reviews-title {
+  font-family: var(--font-heading-family) !important;
+  font-size: clamp(2.4rem, 3.5vw, 3.4rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  color: #2D1A24 !important;
+  margin: 0 0 10px !important;
+}
+
+.sc-reviews-subtitle {
+  font-family: var(--font-body-family);
+  font-size: 1.45rem;
+  line-height: 1.5;
+  color: #6E535E;
+  margin: 0 0 16px;
+}
+
+.sc-reviews-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #EADBDE;
+  padding: 6px 16px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.sc-reviews-summary-stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.sc-reviews-summary-text {
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4A1C40;
+}
+
+.sc-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.sc-review-card {
+  background: #FFFFFF;
+  border: 1px solid #EADBDE;
+  border-radius: 12px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(74, 28, 64, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sc-review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(74, 28, 64, 0.08);
+}
+
+.sc-review-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.sc-review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.sc-review-date {
+  font-family: var(--font-body-family);
+  font-size: 1.2rem;
+  color: #8C757F;
+}
+
+.sc-review-title {
+  font-family: var(--font-heading-family) !important;
+  font-size: 1.85rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  color: #2D1A24 !important;
+  margin: 0 0 10px !important;
+}
+
+.sc-review-body {
+  font-family: var(--font-body-family);
+  font-size: 1.35rem;
+  line-height: 1.55;
+  color: #4D3841;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.sc-review-author-wrap {
+  padding-top: 14px;
+  border-top: 1px solid #F0E6E9;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.sc-review-author-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sc-review-author-name {
+  font-family: var(--font-body-family);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2D1A24;
+}
+
+.sc-review-author-city {
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  color: #8C757F;
+}
+
+.sc-review-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2D7A46;
+  background: #EBF7EE;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: 2px;
+}
+
+.sc-review-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #7A425A;
+  background: #F8EDF1;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.sc-review-product-anchor {
+  padding-top: 10px;
+  border-top: 1px dashed #F0E6E9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.2rem;
+}
+
+.sc-review-product-label {
+  color: #8C757F;
+}
+
+.sc-review-product-link {
+  color: #D96B7A;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.sc-review-product-link:hover {
+  color: #4A1C40;
+  text-decoration: underline;
+}
+
+.sc-review-product-name {
+  color: #4D3841;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .sc-reviews-section {
+    padding: 40px 0 48px;
+  }
+
+  .sc-reviews-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 4px 16px 20px;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    scrollbar-width: none;
+  }
+
+  .sc-reviews-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sc-review-card {
+    flex: 0 0 86%;
+    max-width: 320px;
+    scroll-snap-align: center;
+  }
 }
 
 /* ==========================================================================
@@ -634,8 +970,18 @@ body, p, span, a, input, button, select, textarea {
  * Why: Dawn renders a duplicate card__information block inside card__inner for no-media fallbacks.
  * When media is present, this block must be hidden to prevent faint ghost text over the product image.
  */
-.card .card__inner .card__information {
+.card .card__inner .card__information,
+.card .card__inner .card__content .card__information,
+.card .card__inner .card__heading,
+.card .card__inner a[id*="NoMediaLink"],
+.card .card__inner a[id*="StandardCardNoMediaLink"] {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
 }
 
 .card__heading a {
@@ -755,6 +1101,62 @@ body, p, span, a, input, button, select, textarea {
 .collection__view-all a.button:active,
 .collection__view-all .button:active {
   transform: translateY(0) scale(0.98) !important;
+}
+
+/* ==========================================================================
+   HOMEPAGE & COLLECTION QUICK ADD BUTTON BRAND STYLING
+   Why: Enables standard Quick Add on touchscreens and desktop with brand aesthetics,
+   ensuring 44px touch targets, clear loading states, and instant cart interaction.
+   ========================================================================== */
+.quick-add {
+  margin: 10px 0 4px 0 !important;
+  width: 100% !important;
+}
+
+.quick-add__submit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  font-family: var(--font-body-family) !important;
+  font-size: 1.3rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  background-color: var(--sc-color-surface) !important;
+  color: var(--sc-color-primary-strong) !important;
+  border: 1.5px solid var(--sc-color-primary) !important;
+  box-shadow: var(--shadow-soft) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+}
+
+.quick-add__submit::after {
+  display: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  content: none !important;
+}
+
+.quick-add__submit:hover {
+  background-color: var(--sc-color-primary) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(231, 133, 146, 0.35) !important;
+}
+
+.quick-add__submit:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+@media (max-width: 767px) {
+  .quick-add__submit {
+    min-height: 38px !important;
+    font-size: 1.2rem !important;
+    padding: 6px 10px !important;
+  }
 }
 
 /* Quick View Modal */
@@ -1024,10 +1426,10 @@ main#MainContent {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    max-width: 1440px !important;
+    max-width: var(--page-width, 1200px) !important;
     margin: 0 auto !important;
     min-height: 56px !important;
-    padding: 8px 32px !important;
+    padding: 8px 24px !important;
     box-sizing: border-box !important;
   }
 
@@ -1179,6 +1581,50 @@ main#MainContent {
 .header__heading-link:hover .h2,
 .header__heading-link:hover {
   color: #1a1614 !important;
+}
+
+/*
+  Why: Controls crisp logo rendering, aspect ratio preservation, and hover micro-interaction
+  for the official Scrunch & Create logo across desktop and mobile screens.
+*/
+.header__heading-logo-wrapper {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 100% !important;
+}
+
+.header__heading-logo {
+  object-fit: contain !important;
+  vertical-align: middle !important;
+  transition: opacity 200ms ease, transform 200ms ease !important;
+  height: auto !important;
+}
+
+.header__heading-link:hover .header__heading-logo {
+  opacity: 0.92 !important;
+  transform: scale(1.015) !important;
+}
+
+@media screen and (max-width: 989px) {
+  .header__heading-logo-wrapper {
+    max-width: 140px !important;
+  }
+
+  .header__heading-logo {
+    max-height: 48px !important;
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 374px) {
+  .header__heading-logo-wrapper {
+    max-width: 115px !important;
+  }
+
+  .header__heading-logo {
+    max-height: 40px !important;
+  }
 }
 
 /* --------------------------------------------------------------------------
