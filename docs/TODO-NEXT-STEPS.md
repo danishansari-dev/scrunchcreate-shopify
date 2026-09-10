@@ -62,6 +62,10 @@ This document outlines the step-by-step roadmap and operational checklist to com
   - Go to **Settings** &rarr; **Shipping and delivery**.
   - Ensure standard shipping is configured across India (e.g. ₹49 flat rate).
   - Ensure Free Shipping applies automatically on carts &ge; ₹499 (matches our cart drawer progress bar).
+- [ ] **Step 2.5: Populate Shopify Admin Policies**
+  - Go to **Settings** &rarr; **Policies**.
+  - Resolve the orange **"Required"** badge on **Purchase options cancellation policy** and populate the remaining policies using pre-formatted text in [`docs/SHOPIFY-LEGAL-POLICIES.md`](SHOPIFY-LEGAL-POLICIES.md).
+  - Ensures policy links render cleanly in checkout footer and prevents compliance warnings.
 
 ---
 
