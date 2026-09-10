@@ -11,11 +11,11 @@
         <div class="sc-carousel-slide {% if forloop.first %}is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
           {%- if block.settings.image != blank -%}
             <img
-              src="{{ block.settings.image | image_url: width: 1800 }}"
+              src="{{ block.settings.image | image_url: width: 2048 }}"
               alt="{{ block.settings.heading | escape }}"
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-              width="{{ block.settings.image.width | default: 1800 }}"
-              height="{{ block.settings.image.height | default: 600 }}"
+              width="{{ block.settings.image.width | default: 2048 }}"
+              height="{{ block.settings.image.height | default: 768 }}"
               class="sc-slide-img"
             >
           {%- else -%}
@@ -31,8 +31,8 @@
               src="{{ default_slide | asset_url }}"
               alt="{{ block.settings.heading | escape }}"
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-              width="1800"
-              height="600"
+              width="2048"
+              height="768"
               class="sc-slide-img"
             >
           {%- endif -%}
