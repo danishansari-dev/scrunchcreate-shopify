@@ -19,7 +19,7 @@
   .sc-footer__newsletter-band,
   .sc-footer__main,
   .sc-footer__bottom {
-    width: min(100%, 1440px);
+    width: min(100%, var(--page-width, 1200px));
     margin-right: auto;
     margin-left: auto;
     padding-left: 24px;
@@ -163,6 +163,23 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  .sc-footer__brand-link {
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 200ms ease;
+  }
+
+  .sc-footer__brand-link:hover {
+    opacity: 0.85;
+  }
+
+  .sc-footer__brand-logo {
+    display: block;
+    max-width: 175px;
+    height: auto;
+    object-fit: contain;
   }
 
   .sc-footer__brand-title {
@@ -360,7 +377,20 @@
     <div class="sc-footer__grid">
       <!-- Column 1: Brand & Contact -->
       <div class="sc-footer__col">
-        <a href="{{ routes.root_url }}" class="sc-footer__brand-title">Scrunch &amp; Create</a>
+        <a href="{{ routes.root_url }}" class="sc-footer__brand-link" aria-label="{{ shop.name | default: 'Scrunch & Create' | escape }}">
+          {% comment %}
+            Why: Displays the official brand horizontal logo on the footer with explicit dimensions
+            to prevent layout shifts (CLS) and establish cohesive visual brand identity.
+          {% endcomment %}
+          <img
+            src="{{ 'scrunch-horizontal-compact.png' | asset_url }}"
+            alt="{{ shop.name | default: 'Scrunch & Create' | escape }}"
+            class="sc-footer__brand-logo"
+            width="175"
+            height="58"
+            loading="lazy"
+          >
+        </a>
         <p class="sc-footer__bio">
           Premium handmade hair accessories crafted in India for everyday polish, gifting, and occasion styling.
         </p>
