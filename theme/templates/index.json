@@ -100,7 +100,7 @@
             "badge": "24 styles",
             "desc": "Luxurious fabric scrunchies that care for your hair",
             "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597198/scrunchcreate/products/scrunchie/classic/brown/sc-scrunchie-classic-brown-1.webp",
-            "link": "/collections/all"
+            "link": "/collections/scrunchies"
           }
         },
         "c_2": {
@@ -110,7 +110,7 @@
             "badge": "18 styles",
             "desc": "Elegant bows for a sophisticated touch",
             "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597148/scrunchcreate/products/hairbow/satin/black/sc-hairbow-satin-black-1.webp",
-            "link": "/collections/all"
+            "link": "/collections/hair-bows"
           }
         },
         "c_3": {
@@ -120,7 +120,7 @@
             "badge": "12 styles",
             "desc": "Elegant clips for a stylish look",
             "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597566/scrunchcreate/products/hairclip/rose/red/sc-hairclip-rose-red-1.webp",
-            "link": "/collections/all"
+            "link": "/collections/hair-clips"
           }
         },
         "c_4": {
@@ -130,7 +130,7 @@
             "badge": "12 styles",
             "desc": "Curated gift sets for your loved ones",
             "image_url": "https://res.cloudinary.com/duu26sqog/image/upload/v1775597038/scrunchcreate/products/gifthamper/sc-gifthamper-1.webp",
-            "link": "/collections/all"
+            "link": "/collections/gift-hampers"
           }
         }
       },
@@ -166,8 +166,8 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "hover",
+        "show_rating": true,
+        "quick_add": "standard",
         "columns_mobile": "2",
         "padding_top": 40,
         "padding_bottom": 40
@@ -179,28 +179,34 @@
         "kit_1": {
           "type": "kit",
           "settings": {
+            "badge": "SAVE 20%",
             "title": "Everyday Polish Kit",
             "desc": "2 Classic scrunchies + 1 Satin bow in a signature gift box.",
             "price": "₹199",
-            "compare_price": "₹249"
+            "compare_price": "₹249",
+            "link": "/collections/gift-hampers"
           }
         },
         "kit_2": {
           "type": "kit",
           "settings": {
+            "badge": "BESTSELLER",
             "title": "Festive Bloom Kit",
             "desc": "Rose Flower Jewellery set + 2 Tulip scrunchies for special events.",
             "price": "₹399",
-            "compare_price": "₹499"
+            "compare_price": "₹499",
+            "link": "/collections/flower-jewellery"
           }
         },
         "kit_3": {
           "type": "kit",
           "settings": {
+            "badge": "LUXURY BOX",
             "title": "Satin Hamper Luxury Kit",
             "desc": "Complete accessory wardrobe in hand-tied luxury packaging.",
             "price": "₹699",
-            "compare_price": "₹799"
+            "compare_price": "₹799",
+            "link": "/collections/gift-hampers"
           }
         }
       },
@@ -210,9 +216,69 @@
         "kit_3"
       ],
       "settings": {
-        "heading": "The Kits",
+        "heading": "The Kits & Gift Sets",
         "subheading": "Curated sets — ready to gift or keep",
-        "view_all_text": "Shop all kits"
+        "view_all_text": "Shop all hampers",
+        "view_all_link": "/collections/gift-hampers"
+      }
+    },
+    "scrunch_testimonials": {
+      "type": "scrunch-testimonials",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2 weeks ago",
+            "title": "Doesn't stretch out or cause tension headaches",
+            "review_text": "Most satin scrunchies lose their elasticity within days. These have a sturdy, resilient inner elastic that keeps my high bun in place all day without pulling. No crease marks when I let my hair down.",
+            "author": "Rhea K.",
+            "city": "Mumbai",
+            "hair_type": "Thick, Wavy Hair",
+            "product_name": "Classic Satin Scrunchie Set",
+            "product_url": "/collections/scrunchies"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "1 month ago",
+            "title": "The bow clip stays in place on fine hair",
+            "review_text": "I was worried the bow would slide down my straight hair, but the French barrette clip is high quality and grips securely without snagging. Wore it to a wedding reception and didn't have to adjust it once.",
+            "author": "Priyanka S.",
+            "city": "Kolkata",
+            "hair_type": "Fine, Straight Hair",
+            "product_name": "Satin Hair Bow Barrette",
+            "product_url": "/collections/hair-bows"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "3 weeks ago",
+            "title": "Ordered 4 hampers for bridesmaid boxes",
+            "review_text": "The presentation in the rigid keepsake box with the satin ribbon was stunning. Didn't even need to re-wrap them before gifting. All 4 arrived neatly packed with zero transit damage. Everyone loved them.",
+            "author": "Dr. Ananya S.",
+            "city": "Bengaluru",
+            "hair_type": "Gifted / Wedding Favors",
+            "product_name": "Curated Luxury Gift Hamper",
+            "product_url": "/collections/gift-hampers"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "eyebrow": "COMMUNITY LOVE",
+        "heading": "Real Words From Real Hair Lovers",
+        "subheading": "Honest thoughts from women who swapped damaging elastics for gentle, handmade accessories.",
+        "show_rating_summary": true,
+        "rating_summary_text": "4.8 out of 5 based on verified customer orders"
       }
     },
     "scrunch_instagram": {
@@ -242,6 +308,7 @@
     "scrunch_collections",
     "featured_collection",
     "scrunch_kits",
+    "scrunch_testimonials",
     "scrunch_instagram"
   ]
 }
