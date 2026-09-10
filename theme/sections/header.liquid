@@ -199,7 +199,21 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          {% comment %}
+            Why: Displays the official brand horizontal logo when unselected in Shopify Theme Editor settings,
+            guaranteeing brand presence without layout shifts (CLS) on initial paint.
+          {% endcomment %}
+          <div class="header__heading-logo-wrapper">
+            <img
+              src="{{ 'scrunch-horizontal-header.png' | asset_url }}"
+              alt="{{ shop.name | default: 'Scrunch & Create' | escape }}"
+              class="header__heading-logo motion-reduce"
+              width="{{ settings.logo_width | default: 160 }}"
+              height="{{ settings.logo_width | default: 160 | divided_by: 3.0 | round }}"
+              loading="eager"
+              fetchpriority="high"
+            >
+          </div>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -234,7 +248,20 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          {% comment %}
+            Why: Displays the official brand horizontal logo for centered header layouts when settings.logo is unselected.
+          {% endcomment %}
+          <div class="header__heading-logo-wrapper">
+            <img
+              src="{{ 'scrunch-horizontal-header.png' | asset_url }}"
+              alt="{{ shop.name | default: 'Scrunch & Create' | escape }}"
+              class="header__heading-logo"
+              width="{{ settings.logo_width | default: 160 }}"
+              height="{{ settings.logo_width | default: 160 | divided_by: 3.0 | round }}"
+              loading="eager"
+              fetchpriority="high"
+            >
+          </div>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
