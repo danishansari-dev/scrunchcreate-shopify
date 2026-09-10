@@ -53,6 +53,66 @@ html, body {
   max-width: 100%;
 }
 
+/* ==========================================================================
+   EXPANDED CONTAINER & VIEWPORT WHITESPACE ELIMINATION
+   Why: Eliminates the narrow 1200px container that leaves wide dead white gutters
+   on modern 1440px and 1920px desktop viewports. Expands max container to 1440px
+   and rebalances desktop edge padding from 50px to 24px-32px, matching the
+   immersive, expansive presentation seen on luxury beauty & accessory storefronts.
+   Tricky logic: We override Dawn's `--page-width` root custom property with !important
+   to guarantee all child grids, headers, and utility bars inherit 144rem uniformly
+   while preserving mobile fluid gutter behavior.
+   ========================================================================== */
+:root {
+  --page-width: 144rem !important;
+}
+
+.page-width {
+  max-width: var(--page-width) !important;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+.page-width-desktop {
+  max-width: var(--page-width) !important;
+}
+
+@media screen and (min-width: 750px) {
+  .page-width {
+    padding-left: 2.4rem !important;
+    padding-right: 2.4rem !important;
+  }
+
+  .header.page-width,
+  .utility-bar__grid.page-width {
+    padding-left: 2.4rem !important;
+    padding-right: 2.4rem !important;
+  }
+
+  .page-width-desktop {
+    padding-left: 2.4rem !important;
+    padding-right: 2.4rem !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .page-width {
+    padding-left: 3.2rem !important;
+    padding-right: 3.2rem !important;
+  }
+
+  .header.page-width,
+  .utility-bar__grid.page-width {
+    padding-left: 3.2rem !important;
+    padding-right: 3.2rem !important;
+  }
+
+  .page-width-desktop {
+    padding-left: 3.2rem !important;
+    padding-right: 3.2rem !important;
+  }
+}
+
 body, p, span, a, input, button, select, textarea {
   font-family: var(--font-body-family);
 }
