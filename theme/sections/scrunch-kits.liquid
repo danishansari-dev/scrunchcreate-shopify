@@ -1,18 +1,19 @@
 {% comment %}
   Scrunch & Create - Curated Kits Section
-  Why: Replicates the 3-bundle curated kit showcase from features/products/components/KitsSection/
+  Why: Highlights high-AOV gift hampers and bundles with transparent price anchoring,
+  savings badges, and immediate visual action buttons.
 {% endcomment %}
 
 <div class="sc-kits-section">
   <div class="page-width">
     <div class="sc-section-header">
       <div class="sc-section-title-wrap">
-        <h2 class="sc-section-title">{{ section.settings.heading | default: "The Kits" }}</h2>
-        <p class="sc-section-subtitle">{{ section.settings.subheading | default: "Curated sets — ready to gift or keep" }}</p>
+        <h2 class="sc-section-title">{{ section.settings.heading | default: "The Kits & Gift Sets" }}</h2>
+        <p class="sc-section-subtitle">{{ section.settings.subheading | default: "Curated gift bundles — ready to gift or keep" }}</p>
       </div>
       {%- if section.settings.view_all_link != blank -%}
         <a href="{{ section.settings.view_all_link }}" class="sc-section-link">
-          {{ section.settings.view_all_text | default: "Shop all kits" }} &rarr;
+          {{ section.settings.view_all_text | default: "Shop all hampers" }} &rarr;
         </a>
       {%- endif -%}
     </div>
@@ -22,6 +23,9 @@
         {%- for product in section.settings.collection.products limit: 3 -%}
           <a href="{{ product.url }}" class="sc-kit-card">
             <div class="sc-kit-img-wrap">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="sc-kit-badge">BEST VALUE</span>
+              {%- endif -%}
               {%- if product.featured_media != blank -%}
                 <img
                   src="{{ product.featured_media | image_url: width: 600 }}"
@@ -36,11 +40,14 @@
             <div class="sc-kit-body">
               <h3 class="sc-kit-name">{{ product.title }}</h3>
               <p class="sc-kit-desc">{{ product.description | strip_html | truncatewords: 15 }}</p>
-              <div class="sc-kit-pricing">
-                <span class="sc-kit-price">{{ product.price | money }}</span>
-                {%- if product.compare_at_price > product.price -%}
-                  <span class="sc-kit-original">{{ product.compare_at_price | money }}</span>
-                {%- endif -%}
+              <div class="sc-kit-cta-row">
+                <div class="sc-kit-pricing">
+                  <span class="sc-kit-price">{{ product.price | money }}</span>
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="sc-kit-original">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="sc-kit-cta-btn">View Set &rarr;</span>
               </div>
             </div>
           </a>
@@ -48,8 +55,14 @@
       {%- else -%}
         <!-- Static Default Fallbacks when collection is not yet linked -->
         {%- for block in section.blocks -%}
-          <a href="{{ block.settings.link | default: routes.all_products_collection_url }}" class="sc-kit-card" {{ block.shopify_attributes }}>
+          {%- liquid
+            assign kit_link = block.settings.link | default: "/collections/gift-hampers"
+          -%}
+          <a href="{{ kit_link }}" class="sc-kit-card" {{ block.shopify_attributes }}>
             <div class="sc-kit-img-wrap">
+              {%- if block.settings.badge != blank -%}
+                <span class="sc-kit-badge">{{ block.settings.badge }}</span>
+              {%- endif -%}
               {%- if block.settings.image != blank -%}
                 <img
                   src="{{ block.settings.image | image_url: width: 600 }}"
@@ -81,11 +94,14 @@
             <div class="sc-kit-body">
               <h3 class="sc-kit-name">{{ block.settings.title }}</h3>
               <p class="sc-kit-desc">{{ block.settings.desc }}</p>
-              <div class="sc-kit-pricing">
-                <span class="sc-kit-price">{{ block.settings.price }}</span>
-                {%- if block.settings.compare_price != blank -%}
-                  <span class="sc-kit-original">{{ block.settings.compare_price }}</span>
-                {%- endif -%}
+              <div class="sc-kit-cta-row">
+                <div class="sc-kit-pricing">
+                  <span class="sc-kit-price">{{ block.settings.price }}</span>
+                  {%- if block.settings.compare_price != blank -%}
+                    <span class="sc-kit-original">{{ block.settings.compare_price }}</span>
+                  {%- endif -%}
+                </div>
+                <span class="sc-kit-cta-btn">View Set &rarr;</span>
               </div>
             </div>
           </a>
@@ -105,13 +121,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "The Kits"
+      "default": "The Kits & Gift Sets"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Curated sets — ready to gift or keep"
+      "default": "Curated gift bundles — ready to gift or keep"
     },
     {
       "type": "collection",
@@ -122,7 +138,7 @@
       "type": "text",
       "id": "view_all_text",
       "label": "View All Text",
-      "default": "Shop all kits"
+      "default": "Shop all hampers"
     },
     {
       "type": "url",
@@ -139,6 +155,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Kit Image"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge (e.g. Save 20%, Best Value)",
+          "default": "BEST VALUE"
         },
         {
           "type": "text",
@@ -179,28 +201,34 @@
         {
           "type": "kit",
           "settings": {
+            "badge": "SAVE 20%",
             "title": "Everyday Polish Kit",
             "desc": "2 Classic scrunchies + 1 Satin bow in a signature gift box.",
             "price": "₹199",
-            "compare_price": "₹249"
+            "compare_price": "₹249",
+            "link": "/collections/gift-hampers"
           }
         },
         {
           "type": "kit",
           "settings": {
+            "badge": "BESTSELLER",
             "title": "Festive Bloom Kit",
             "desc": "Rose Flower Jewellery set + 2 Tulip scrunchies for special events.",
             "price": "₹399",
-            "compare_price": "₹499"
+            "compare_price": "₹499",
+            "link": "/collections/flower-jewellery"
           }
         },
         {
           "type": "kit",
           "settings": {
+            "badge": "LUXURY BOX",
             "title": "Satin Hamper Luxury Kit",
             "desc": "Complete accessory wardrobe in hand-tied luxury packaging.",
             "price": "₹699",
-            "compare_price": "₹799"
+            "compare_price": "₹799",
+            "link": "/collections/gift-hampers"
           }
         }
       ]
