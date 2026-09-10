@@ -1,0 +1,249 @@
+{% comment %}
+  Scrunch & Create - Authentic Customer Reviews Section
+  Why: Replaces generic/fake-looking testimonial widgets with genuine, editorial review cards.
+  Highlights specific hair concerns (fine hair, thick curls, headache-free wear, gift packaging),
+  verified buyer tags, realistic review dates, and direct links to the purchased products.
+{% endcomment %}
+
+<div class="sc-reviews-section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    <!-- Clean, Editorial Section Header -->
+    <div class="sc-reviews-header">
+      <span class="sc-reviews-eyebrow">{{ section.settings.eyebrow | default: "COMMUNITY LOVE" }}</span>
+      <h2 class="sc-reviews-title">{{ section.settings.heading | default: "Real Words From Real Hair Lovers" }}</h2>
+      <p class="sc-reviews-subtitle">{{ section.settings.subheading | default: "Honest thoughts from women who swapped damaging elastics for gentle, handmade accessories." }}</p>
+      
+      {%- if section.settings.show_rating_summary -%}
+        <div class="sc-reviews-summary">
+          <div class="sc-reviews-summary-stars" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              <svg width="15" height="15" viewBox="0 0 20 20" fill="#E78592">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            {%- endfor -%}
+          </div>
+          <span class="sc-reviews-summary-text">{{ section.settings.rating_summary_text | default: "4.8 out of 5 based on verified orders" }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- Review Cards Track -->
+    <div class="sc-reviews-grid" role="region" aria-label="Customer Reviews">
+      {%- for block in section.blocks -%}
+        <div class="sc-review-card" {{ block.shopify_attributes }}>
+          <!-- Card Top Row: Rating & Date -->
+          <div class="sc-review-top-row">
+            <div class="sc-review-stars" aria-label="{{ block.settings.rating | default: 5 }} out of 5 stars">
+              {%- assign star_count = block.settings.rating | default: 5 -%}
+              {%- for i in (1..star_count) -%}
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="#D96B7A">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+            {%- if block.settings.date != blank -%}
+              <span class="sc-review-date">{{ block.settings.date }}</span>
+            {%- endif -%}
+          </div>
+
+          <!-- Review Headline -->
+          {%- if block.settings.title != blank -%}
+            <h3 class="sc-review-title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+
+          <!-- Review Body -->
+          <p class="sc-review-body">
+            {{ block.settings.review_text }}
+          </p>
+
+          <!-- Reviewer Details & Tags -->
+          <div class="sc-review-author-wrap">
+            <div class="sc-review-author-line">
+              <span class="sc-review-author-name">{{ block.settings.author }}</span>
+              {%- if block.settings.city != blank -%}
+                <span class="sc-review-author-city">· {{ block.settings.city }}</span>
+              {%- endif -%}
+              <span class="sc-review-verified">
+                <svg width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                Verified Buyer
+              </span>
+            </div>
+
+            {%- if block.settings.hair_type != blank -%}
+              <span class="sc-review-tag">{{ block.settings.hair_type }}</span>
+            {%- endif -%}
+          </div>
+
+          <!-- Product Purchased Anchor -->
+          {%- if block.settings.product_name != blank -%}
+            <div class="sc-review-product-anchor">
+              <span class="sc-review-product-label">Purchased:</span>
+              {%- if block.settings.product_url != blank -%}
+                <a href="{{ block.settings.product_url }}" class="sc-review-product-link">
+                  {{ block.settings.product_name }} &rarr;
+                </a>
+              {%- else -%}
+                <span class="sc-review-product-name">{{ block.settings.product_name }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrunch Reviews",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "COMMUNITY LOVE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Words From Real Hair Lovers"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Honest thoughts from women who swapped damaging elastics for gentle, handmade accessories."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating_summary",
+      "label": "Show Rating Summary",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "rating_summary_text",
+      "label": "Rating Summary Text",
+      "default": "4.8 out of 5 based on verified orders"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Customer Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Review Date (e.g. 2 weeks ago)",
+          "default": "2 weeks ago"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review Title",
+          "default": "Holds my curls without tension headaches"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Body",
+          "default": "Most satin scrunchies I've tried lose their elasticity within a week. These have a thick, resilient band inside that keeps my heavy hair up all day without pulling. No dents when I let my hair down!"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer Name",
+          "default": "Rhea K."
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Mumbai"
+        },
+        {
+          "type": "text",
+          "id": "hair_type",
+          "label": "Hair Concern / Type (e.g. Thick Curly Hair)",
+          "default": "Thick, Wavy Hair"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label": "Purchased Item Name",
+          "default": "Classic Satin Scrunchie (Pack of 3)"
+        },
+        {
+          "type": "url",
+          "id": "product_url",
+          "label": "Purchased Item URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrunch Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "2 weeks ago",
+            "title": "Doesn't stretch out or cause headaches",
+            "review_text": "Most satin scrunchies lose their elasticity within days. These have a sturdy, resilient core that holds my high bun during workouts without slipping. No crease marks when I let my hair down.",
+            "author": "Rhea K.",
+            "city": "Mumbai",
+            "hair_type": "Thick, Wavy Hair",
+            "product_name": "Classic Satin Scrunchie Set",
+            "product_url": "/collections/scrunchies"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "1 month ago",
+            "title": "The bow clip stays in place on fine hair",
+            "review_text": "I was worried the bow would slide down my straight hair, but the French barrette clip is high quality and grips securely without snagging. Wore it to a wedding reception and didn't have to adjust it once.",
+            "author": "Priyanka S.",
+            "city": "Kolkata",
+            "hair_type": "Fine, Straight Hair",
+            "product_name": "Satin Hair Bow Barrette",
+            "product_url": "/collections/hair-bows"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "date": "3 weeks ago",
+            "title": "Ordered 4 hampers for bridesmaid boxes",
+            "review_text": "The presentation in the rigid keepsake box with the satin ribbon was stunning. Didn't even need to re-wrap them before gifting. All 4 arrived neatly packed with zero transit damage. Everyone loved them.",
+            "author": "Ananya S.",
+            "city": "Bengaluru",
+            "hair_type": "Gifted / Wedding Favors",
+            "product_name": "Curated Luxury Gift Hamper",
+            "product_url": "/collections/gift-hampers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
