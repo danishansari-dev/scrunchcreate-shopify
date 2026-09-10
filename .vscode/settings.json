@@ -1,9 +1,6 @@
 {
-    "kiroAgent.configureMCP": "Disabled",
     "markdown.validate.enabled": true,
     "editor.autoIndentOnPaste": true,
-    "kiroAgent.notifications.agent.failure": true,
-    "kiroAgent.notifications.agent.success": true,
     "git.showPushSuccessNotification": true,
     "accessibility.signals.chatRequestSent": {
         "sound": "on"
