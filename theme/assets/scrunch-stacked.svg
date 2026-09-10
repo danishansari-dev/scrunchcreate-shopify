@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .serif-main { font-family: 'Playfair Display', Didot, 'Bodoni MT', Georgia, serif; font-weight: 800; fill: #1a1817; }
+      .ampersand { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 700; fill: #8c766b; }
+      .tagline { font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 19px; font-weight: 600; letter-spacing: 0.28em; fill: #24201e; text-anchor: middle; text-transform: uppercase; }
+      .tagline-line { stroke: #8c766b; stroke-width: 1.5; stroke-linecap: round; }
+    </style>
+    <linearGradient id="ribbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4BAB4"/>
+      <stop offset="35%" stop-color="#E39793"/>
+      <stop offset="70%" stop-color="#D17A7D"/>
+      <stop offset="100%" stop-color="#ECA7A3"/>
+    </linearGradient>
+    <filter id="ribbonShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#2a1f1d" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Wordmark Line 1: Scrunch -->
+  <text x="40" y="160" class="serif-main" font-size="180" letter-spacing="-0.03em">Scrunch</text>
+
+  <!-- Wordmark Line 2: & Create -->
+  <text x="60" y="310" class="ampersand" font-size="155">&amp;</text>
+  <text x="205" y="310" class="serif-main" font-size="170" letter-spacing="-0.02em">Create</text>
+
+  <!-- Elegant Flowing Silk Ribbon Loop -->
+  <path d="M 360 270 C 370 200, 480 200, 520 230 C 560 260, 680 250, 710 220 C 725 205, 700 195, 660 205 C 590 220, 500 245, 430 255 C 380 262, 355 250, 360 270 Z" 
+        fill="url(#ribbonGradient)" 
+        filter="url(#ribbonShadow)"
+        opacity="0.95"/>
+  <path d="M 370 260 C 440 240, 560 215, 680 200 C 720 195, 735 210, 705 225 C 640 255, 520 265, 410 265 C 385 265, 365 260, 370 260 Z" 
+        fill="#ffffff" 
+        opacity="0.35"/>
+
+  <!-- Divider Rules and Tagline -->
+  <line x1="40" y1="358" x2="160" y2="358" class="tagline-line"/>
+  <text x="400" y="365" class="tagline">Created to Make You Shine</text>
+  <line x1="640" y1="358" x2="760" y2="358" class="tagline-line"/>
+</svg>
