@@ -198,7 +198,7 @@ async function main() {
   await page.setContent(html);
   await page.waitForTimeout(500);
 
-  const artifactDir = 'C:/Users/daans/.gemini/antigravity-ide/brain/ba34bc25-3db6-4edb-8ae5-33300fadec85';
+  const artifactDir = 'C:/Users/daans/.gemini/antigravity-ide/brain/462dc442-b23d-48bd-91f9-c732b6ceaad6';
   await page.screenshot({ path: `${artifactDir}/desktop_logo_preview.png` });
 
   await page.setViewportSize({ width: 390, height: 844 });
