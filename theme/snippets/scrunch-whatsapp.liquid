@@ -18,7 +18,6 @@
   assign greeting_message = settings.whatsapp_greeting | default: 'Hi there! 👋 Welcome to Scrunch & Create! How can we help you today?'
   assign default_message = settings.whatsapp_default_message | default: 'Hi Scrunch & Create! I have a question about your products.'
   assign widget_position = settings.whatsapp_position | default: 'bottom_right'
-  assign button_label = settings.whatsapp_button_label | default: 'Chat with us'
   assign show_badge = settings.whatsapp_show_badge
   if show_badge == nil
     assign show_badge = true
