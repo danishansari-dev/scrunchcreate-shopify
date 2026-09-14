@@ -47,6 +47,7 @@ scrunchcreate-shopify/
 ## 2. Store & Environment Credentials
 
 - **Store URL:** `https://scrunchcreate.myshopify.com/`
+- **Store Password:** `123456`
 - **Active Theme Name:** `test-data`
 - **Live Theme ID:** `186623852655`
 - **Target Custom Domain:** `scrunchcreate.com`
@@ -59,6 +60,7 @@ scrunchcreate-shopify/
 All Shopify theme development and deployment is managed using the official Shopify CLI (`@shopify/cli`).
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - Shopify CLI access to `scrunchcreate.myshopify.com`
 
@@ -85,10 +87,12 @@ npx @shopify/cli theme push --store scrunchcreate.myshopify.com --allow-live --l
 > [!IMPORTANT]
 > **Catalog Data Dependency:**
 > The migration scripts in `scripts/` (`export-shopify-csv.js` and `export-shopify-inventory-csv.js`) were designed to extract product and inventory records from the original custom website catalog located at:
+>
 > - `../src/data/products.json`
 > - `../scripts/cloudinary-url-map.json`
 >
 > If you run these scripts in an isolated repository without the custom website present:
+>
 > 1. Copy `src/data/products.json` and `cloudinary-url-map.json` into a local `data/` directory.
 > 2. Update the input paths at the top of `scripts/export-shopify-csv.js` and `scripts/export-shopify-inventory-csv.js`.
 > 3. Generated import CSVs are committed in `migration/` and ready for direct import via **Shopify Admin -> Products -> Import**.
@@ -98,6 +102,7 @@ npx @shopify/cli theme push --store scrunchcreate.myshopify.com --allow-live --l
 ## 5. Automated Storefront Audits
 
 The script `scripts/audit-storefront.mjs` executes an end-to-end audit of `https://scrunchcreate.myshopify.com` using Playwright:
+
 - Tests 4 viewports: Desktop Large (1440x900), Tablet iPad (768x1024), Mobile iPhone (390x844), Mobile Compact (360x740).
 - Verifies navigation, search modals, dynamic mega menu hover states, color swatches, cart drawer subtotal & progress bar, and mobile menu drawers.
 - Detects console errors and network request failures.
@@ -112,6 +117,7 @@ node scripts/audit-storefront.mjs
 ## 6. AI Agent Skills Suite (`.agents/`)
 
 The `.agents/` directory provides workspace-level capabilities for AI assistants operating on this repository:
+
 1. **`shopify-liquid-theme`**: Liquid templates, section schemas, blocks, Theme Check linting & CLI deployment.
 2. **`shopify-ecom-cro`**: Conversion rate optimization, PDP layout, color swatches, sticky ATC & cart drawer.
 3. **`shopify-ecom-seo`**: Technical SEO, JSON-LD schemas (`Product`, `Offer`, `BreadcrumbList`), canonicals & meta tags.
