@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280">
+  <defs><style>/* <![CDATA[ */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+    .text-primary {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.58em;
+    }
+    .text-tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.57em;
+    }
+/* ]]> */</style></defs>
+  <text x="600" y="122" class="text-primary" font-size="48" fill="#2B2B2B" text-anchor="middle">SCRUNCH &amp; CREATE</text>
+  <text x="600" y="188" class="text-tagline" font-size="25" fill="#2B2B2B" text-anchor="middle">Created to Make You Shine</text>
+</svg>
