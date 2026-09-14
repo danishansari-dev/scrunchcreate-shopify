@@ -27,7 +27,7 @@ async function runAudit() {
   };
 
   const BASE_URL = 'https://scrunchcreate.myshopify.com';
-
+// password is 123456
   const viewports = [
     { name: 'Desktop Large', width: 1440, height: 900 },
     { name: 'Tablet iPad', width: 768, height: 1024 },
