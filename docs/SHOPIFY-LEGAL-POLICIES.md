@@ -35,7 +35,7 @@ You may cancel any standard order or pre-order purchase option at any time befor
 If you enroll in any recurring subscription box, scheduled gift delivery, or recurring purchase option:
 - Cancel Anytime: You can cancel, pause, or adjust your recurring subscription at any time with zero penalty or cancellation fees.
 - Notice Period: Cancellations must be made at least 24 hours prior to your scheduled recurring billing/shipment date.
-- How to Cancel: You can manage your subscription directly by logging into your Scrunch & Create Customer Account, or by sending a cancellation request with your Order/Subscription ID to our WhatsApp Support (+91 73009 69491) or Email (scrunchandcreate@gmail.com).
+- How to Cancel: You can manage your subscription directly by logging into your Scrunch & Create Customer Account, or by sending a cancellation request with your Order/Subscription ID to our WhatsApp Support (+91 73009 69491) or Email (scrunchcreate@gmail.com).
 - Billing After Cancellation: Once cancelled, you will not be billed for any future billing cycles. Any order that has already been billed and dispatched prior to cancellation will be fulfilled as scheduled.
 
 3. Pre-Orders & Custom Hampers
@@ -44,7 +44,7 @@ For personalized or custom curated hampers ordered under a purchase option, canc
 4. Contact Support
 If you have any questions regarding your purchase options or need assistance cancelling a recurring order, our team is available:
 - WhatsApp: +91 73009 69491 (Mon–Sat, 10:00 AM – 7:00 PM IST)
-- Email: scrunchandcreate@gmail.com
+- Email: scrunchcreate@gmail.com
 ```
 
 ---
@@ -71,7 +71,7 @@ If you receive an item that is defective, damaged in transit, or different from 
 
 3. How to Submit a Claim
 Initiating a return or replacement is simple:
-1. Contact us via WhatsApp at +91 73009 69491 or email scrunchandcreate@gmail.com.
+1. Contact us via WhatsApp at +91 73009 69491 or email scrunchcreate@gmail.com.
 2. Share your Order Number (e.g. #1001), continuous unboxing video, and clear photos highlighting the defect or damage.
 3. Our customer support team will verify your request within 24 business hours.
 4. Upon approval, we will arrange a reverse courier pickup or immediately dispatch a brand-new replacement at zero cost to you.
@@ -164,7 +164,7 @@ All content included on this site—including logos, product designs, photograph
 These Terms of Service and any separate agreements whereby we provide you services shall be governed by and construed in accordance with the laws of India, with jurisdiction in Uttar Pradesh, India.
 
 8. Contact Information
-Questions regarding the Terms of Service should be directed to scrunchandcreate@gmail.com or WhatsApp: +91 73009 69491.
+Questions regarding the Terms of Service should be directed to scrunchcreate@gmail.com or WhatsApp: +91 73009 69491.
 ```
 
 ---
@@ -182,7 +182,7 @@ Trade Name: Scrunch & Create
 Legal Business Entity: Scrunch & Create (Handcrafted Hair Accessories & Lifestyle Gifts)
 Operating Studio Address: Scrunch & Create Studio, Bisalpur, Pilibhit, Uttar Pradesh 262201, India
 Customer Care WhatsApp / Phone: +91 73009 69491
-Customer Care Email: scrunchandcreate@gmail.com
+Customer Care Email: scrunchcreate@gmail.com
 Website: https://scrunchcreate.com
 Operating Hours: Monday to Saturday, 10:00 AM – 7:00 PM IST (Closed on Sundays and National Holidays)
 Social Media: Instagram @scrunch_and_create
@@ -226,7 +226,7 @@ We DO NOT sell, rent, trade, or monetize your personal data. We only disclose es
 Our storefront is hosted on Shopify, utilizing industry-standard 256-bit SSL encryption and Level 1 PCI-DSS compliance to safeguard all customer data.
 
 5. Your Rights & Inquiries
-You have the right to review, update, or request the deletion of your personal account data at any time. For privacy inquiries, please contact us at scrunchandcreate@gmail.com or WhatsApp +91 73009 69491.
+You have the right to review, update, or request the deletion of your personal account data at any time. For privacy inquiries, please contact us at scrunchcreate@gmail.com or WhatsApp +91 73009 69491.
 ```
 
 ---
