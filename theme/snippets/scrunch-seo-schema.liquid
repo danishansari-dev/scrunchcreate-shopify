@@ -1,0 +1,280 @@
+{% comment %}
+  Scrunch & Create - Master SEO & JSON-LD Structured Data Engine
+  Why this file exists:
+  Provides search engines (Google, Bing) with semantic Schema.org structured data,
+  powering rich snippets (Product prices, availability, breadcrumbs, search action, organization profile).
+  Adheres strictly to Google Search Central guidelines with ZERO fabricated reviews or ratings.
+{% endcomment %}
+
+{%- liquid
+  assign canonical_clean_url = canonical_url | default: shop.url
+  assign brand_name = 'Scrunch & Create'
+  assign studio_address = 'Scrunch & Create Studio, Bisalpur, Pilibhit, Uttar Pradesh 262201, India'
+  assign customer_care_phone = '+91 73009 69491'
+  assign support_email = 'scrunchcreate@gmail.com'
+  assign instagram_url = 'https://www.instagram.com/scrunch_and_create/'
+-%}
+
+{%- comment -%} 1. Organization & OnlineStore Schema {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OnlineStore",
+  "@id": "{{ shop.url }}/#organization",
+  "name": {{ brand_name | json }},
+  "legalName": {{ brand_name | json }},
+  "url": "{{ shop.url }}",
+  "logo": {
+    "@type": "ImageObject",
+    "url": {% if settings.logo %}{{ settings.logo | image_url: width: 600 | prepend: 'https:' | json }}{% else %}{{ 'scrunch-horizontal-header.png' | asset_url | prepend: 'https:' | json }}{% endif %},
+    "caption": {{ brand_name | json }}
+  },
+  "image": {{ 'scrunch-stacked-card.jpg' | asset_url | prepend: 'https:' | json }},
+  "description": "Scrunch & Create is an Indian artisanal brand specializing in handcrafted satin scrunchies, organza and velvet hair bows, floral jewellery sets for Haldi & Mehndi, and luxury bridesmaid gift hampers.",
+  "email": {{ support_email | json }},
+  "telephone": {{ customer_care_phone | json }},
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": {{ studio_address | json }},
+    "addressLocality": "Bisalpur",
+    "addressRegion": "Uttar Pradesh",
+    "postalCode": "262201",
+    "addressCountry": "IN"
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": {{ customer_care_phone | json }},
+      "contactType": "customer support",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi"]
+    }
+  ],
+  "sameAs": [
+    {{ instagram_url | json }}
+  ],
+  "priceRange": "₹30 - ₹999",
+  "paymentAccepted": "Cash on Delivery, UPI, Credit Card, Debit Card, NetBanking",
+  "currenciesAccepted": "INR"
+}
+</script>
+
+{%- comment -%} 2. WebSite & Sitelinks SearchBox Schema {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "{{ shop.url }}/#website",
+  "url": "{{ shop.url }}",
+  "name": {{ brand_name | json }},
+  "description": "Handcrafted Scrunchies, Hair Bows, Floral Jewellery & Lifestyle Accessories in India",
+  "publisher": {
+    "@id": "{{ shop.url }}/#organization"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "{{ shop.url }}/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{%- comment -%} 3. BreadcrumbList Schema (All non-home pages) {%- endcomment -%}
+{%- unless request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {%- if request.page_type == 'collection' and collection.handle -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ collection.title | json }},
+        "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+      }
+    {%- elsif request.page_type == 'product' -%}
+      {%- if collection and collection.handle -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": "{{ shop.url }}/collections/{{ collection.handle }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | json }},
+          "item": "{{ shop.url }}{{ product.url | within: nil }}"
+        }
+      {%- else -%}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Products",
+          "item": "{{ shop.url }}/collections/all"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | json }},
+          "item": "{{ shop.url }}{{ product.url | within: nil }}"
+        }
+      {%- endif -%}
+    {%- elsif request.page_type == 'page' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ page.title | json }},
+        "item": "{{ canonical_clean_url }}"
+      }
+    {%- elsif request.page_type == 'blog' or request.page_type == 'article' -%}
+      ,{
+        "@type": "ListItem",
+        "position": 2,
+        "name": {{ blog.title | default: 'Blog' | json }},
+        "item": "{{ shop.url }}/blogs/{{ blog.handle }}"
+      }
+      {%- if request.page_type == 'article' -%}
+        ,{
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ article.title | json }},
+          "item": "{{ canonical_clean_url }}"
+        }
+      {%- endif -%}
+    {%- endif -%}
+  ]
+}
+</script>
+{%- endunless -%}
+
+{%- comment -%} 4. Comprehensive Product & Offer Schema {%- endcomment -%}
+{%- if request.page_type == 'product' -%}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {%- assign clean_product_desc = product.description | strip_html | strip_newlines | truncatewords: 60 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "{{ shop.url }}{{ product.url | within: nil }}/#product",
+  "name": {{ product.title | json }},
+  "url": "{{ shop.url }}{{ product.url | within: nil }}",
+  "category": {{ product.type | default: 'Hair Accessories' | json }},
+  "description": {{ clean_product_desc | json }},
+  "brand": {
+    "@type": "Brand",
+    "name": {{ brand_name | json }}
+  },
+  "manufacturer": {
+    "@id": "{{ shop.url }}/#organization"
+  },
+  "sku": {{ current_variant.sku | default: product.id | json }},
+  "mpn": {{ current_variant.barcode | default: product.id | json }},
+  "image": [
+    {%- for image in product.images limit: 8 -%}
+      {{ image | image_url: width: 1200 | prepend: 'https:' | json }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ],
+  "itemCondition": "https://schema.org/NewCondition",
+  "offers": [
+    {%- for variant in product.variants -%}
+      {
+        "@type": "Offer",
+        "name": {{ variant.title | json }},
+        "sku": {{ variant.sku | default: variant.id | json }},
+        "price": {{ variant.price | divided_by: 100.00 | json }},
+        "priceCurrency": {{ cart.currency.iso_code | default: 'INR' | json }},
+        "priceValidUntil": "{{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' }}",
+        "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "itemCondition": "https://schema.org/NewCondition",
+        "url": "{{ shop.url }}{{ variant.url }}",
+        "seller": {
+          "@id": "{{ shop.url }}/#organization"
+        },
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "{% if variant.price >= 49900 %}0.00{% else %}49.00{% endif %}",
+            "currency": "INR"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "IN"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 1,
+              "maxValue": 2,
+              "unitCode": "d"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 2,
+              "maxValue": 5,
+              "unitCode": "d"
+            }
+          }
+        },
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "applicableCountry": "IN",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+          "merchantReturnDays": 7,
+          "returnMethod": "https://schema.org/ReturnByMail",
+          "returnFees": "https://schema.org/FreeReturn"
+        }
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+  {%- comment -%} Real customer ratings only — zero fabricated review data {%- endcomment -%}
+  {%- if product.metafields.reviews.rating.value -%}
+  ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ product.metafields.reviews.rating.value }}",
+    "reviewCount": "{{ product.metafields.reviews.rating_count.value | default: 1 }}"
+  }
+  {%- endif -%}
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} 5. CollectionPage & ItemList Schema {%- endcomment -%}
+{%- if request.page_type == 'collection' and collection.products.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "{{ shop.url }}/collections/{{ collection.handle }}/#collection",
+  "name": {{ collection.title | json }},
+  "url": "{{ shop.url }}/collections/{{ collection.handle }}",
+  "description": {{ collection.description | strip_html | default: 'Handcrafted hair accessories collection by Scrunch & Create' | json }},
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {%- for product in collection.products limit: 16 -%}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "name": {{ product.title | json }},
+          "url": "{{ shop.url }}{{ product.url | within: nil }}"
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+{%- endif -%}
