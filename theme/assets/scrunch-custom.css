@@ -308,123 +308,104 @@ body, p, span, a, input, button, select, textarea {
 .sc-prev-btn { left: 24px; }
 .sc-next-btn { right: 24px; }
 
-/* Mobile Hero Banner */
+/* ==========================================================================
+   Mobile Hero Banner Carousel
+   Why: Renders studio-designed 896x1200 (3:4) vertical mobile banners cleanly with touch swipe gestures and elegant indicator dots.
+   ========================================================================== */
 .sc-mobile-hero-container {
   display: none;
   position: relative;
-  min-height: 440px;
+  width: 100%;
+  background-color: #FDF7F4;
 }
 
 @media (max-width: 767px) {
+  .sc-desktop-carousel {
+    display: none !important;
+  }
   .sc-mobile-hero-container {
     display: block !important;
   }
 }
 
+.sc-mobile-track {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 896 / 1200;
+  overflow: hidden;
+}
+
 .sc-mobile-slide {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   visibility: hidden;
-  padding: 48px 24px 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   transition: opacity 0.4s ease, visibility 0.4s ease;
+  z-index: 1;
 }
 
 .sc-mobile-slide.is-active {
   opacity: 1;
   visibility: visible;
+  z-index: 2;
+}
+
+.sc-mobile-slide-link {
+  display: block;
+  width: 100%;
+  height: 100%;
   position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.sc-mobile-bg-wash {
-  position: absolute;
-  inset: 0;
-  background: var(--slide-gradient);
-  z-index: 0;
+.sc-mobile-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.sc-mobile-content {
-  position: relative;
-  z-index: 1;
-  color: #FFFFFF;
-}
-
-.sc-mobile-badge {
-  display: inline-block;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  padding: 4px 10px;
-  border-radius: 999px;
-  margin-bottom: 16px;
-}
-
-.sc-mobile-heading {
-  font-size: clamp(2.4rem, 7vw, 3.4rem);
-  font-weight: 700;
-  color: #FFFFFF !important;
-  line-height: 1.15;
-  margin: 0 0 8px;
-}
-
-.sc-mobile-subtext {
-  font-size: clamp(1.3rem, 4vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.92);
-  margin: 0 0 20px;
-  line-height: 1.4;
-}
-
-.sc-mobile-cta {
-  padding: 12px 28px;
-  font-size: 1.4rem;
-  min-height: 44px; /* Accessible 44px touch target */
-  touch-action: manipulation;
-}
-
-.sc-cta-saffron { background-color: #E78592 !important; color: #fff !important; }
-.sc-cta-rose { background-color: #FFFFFF !important; color: var(--sc-color-secondary) !important; }
-.sc-cta-dark { background-color: var(--sc-color-secondary) !important; color: #fff !important; }
-
+/* Elegant indicator dots placed beneath banner */
 .sc-mobile-dots {
-  position: absolute;
-  bottom: 16px;
-  right: 20px;
   display: flex;
   align-items: center;
-  gap: 4px;
-  z-index: 2;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0 10px;
+  background: #FDF7F4;
 }
 
 .sc-dot {
   position: relative;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(91, 35, 51, 0.25); /* Subtle brand plum */
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   touch-action: manipulation;
 }
 
-/* Transparent touch expansion hitbox to ensure easy tapping on mobile */
+/* Touch hit expansion hitbox */
 .sc-dot::before {
   content: '';
   position: absolute;
-  inset: -12px -6px;
+  inset: -10px -8px;
 }
 
 .sc-dot.is-active {
   width: 24px;
   border-radius: 999px;
-  background: #ffffff;
+  background: #5B2333; /* Deep active brand plum */
 }
 
 /* ==========================================================================
@@ -2649,4 +2630,300 @@ body:has(cart-drawer.active) #sc-whatsapp-widget {
   pointer-events: none !important;
   transform: translateY(20px) scale(0.9) !important;
 }
+
+/* ==========================================================================
+   Product Detail Page (PDP) Conversion Enhancements
+   Why: Alleviates customer hesitation on product pages with trust badges, social proof, and expandable spec accordions.
+   ========================================================================== */
+
+/* Social Proof Rating Badge under PDP Title */
+.sc-pdp-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 12px;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.sc-pdp-rating-badge .sc-stars {
+  color: #D4AF37; /* Luxury warm gold */
+  letter-spacing: 2px;
+  font-size: 1.4rem;
+}
+
+.sc-pdp-rating-badge .sc-rating-score {
+  font-weight: 700;
+  color: var(--sc-color-text-main, #2D0F19);
+}
+
+.sc-pdp-rating-badge .sc-rating-count {
+  color: #6B7280;
+}
+
+.sc-pdp-rating-badge .sc-rating-bullet {
+  color: #D1D5DB;
+}
+
+.sc-pdp-rating-badge .sc-rating-highlight {
+  font-weight: 600;
+  color: var(--sc-color-secondary, #5B2333);
+  background: rgba(231, 133, 146, 0.12);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+}
+
+/* 4-Item PDP Trust & Delivery Perks Grid */
+.sc-pdp-perks-wrapper {
+  margin: 24px 0;
+  padding: 16px;
+  background: #FCF8F7;
+  border: 1px solid rgba(231, 133, 146, 0.22);
+  border-radius: 12px;
+}
+
+.sc-pdp-perks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 480px) {
+  .sc-pdp-perks-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.sc-pdp-perk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sc-perk-icon-wrap {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(231, 133, 146, 0.15);
+  color: var(--sc-color-secondary, #5B2333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sc-perk-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sc-perk-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--sc-color-text-main, #2D0F19);
+  line-height: 1.25;
+}
+
+.sc-perk-desc {
+  font-size: 1.15rem;
+  color: #6B7280;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+/* PDP Specifications & Care Guide Accordions */
+.sc-pdp-accordions-wrapper {
+  margin: 24px 0;
+  border-top: 1px solid #E5E7EB;
+}
+
+.sc-accordion-item {
+  border-bottom: 1px solid #E5E7EB;
+  transition: all 0.2s ease;
+}
+
+.sc-accordion-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--sc-color-text-main, #2D0F19);
+  user-select: none;
+}
+
+.sc-accordion-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sc-summary-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sc-summary-icon {
+  font-size: 1.6rem;
+}
+
+.sc-accordion-chevron {
+  transition: transform 0.25s ease;
+  color: #9CA3AF;
+}
+
+details[open] .sc-accordion-chevron {
+  transform: rotate(180deg);
+  color: var(--sc-color-secondary, #5B2333);
+}
+
+.sc-accordion-content {
+  padding: 4px 4px 18px;
+  font-size: 1.35rem;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+.sc-accordion-content p {
+  margin: 0 0 10px;
+}
+
+.sc-specs-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sc-specs-list li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+
+.sc-specs-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--sc-color-primary, #E78592);
+  font-size: 1.1rem;
+}
+
+/* Cart Drawer 1-Click Upsell Widget */
+.sc-cart-upsell-wrapper {
+  margin: 12px 0 16px;
+  padding: 12px;
+  background: #FCF8F7;
+  border-radius: 10px;
+  border: 1px dashed rgba(231, 133, 146, 0.4);
+}
+
+.sc-cart-upsell-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  color: var(--sc-color-secondary, #5B2333);
+}
+
+.sc-upsell-sparkle {
+  color: var(--sc-color-primary, #E78592);
+  font-size: 1.3rem;
+}
+
+.sc-upsell-title {
+  line-height: 1.25;
+}
+
+.sc-cart-upsell-list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.sc-cart-upsell-list::-webkit-scrollbar {
+  height: 3px;
+}
+
+.sc-cart-upsell-list::-webkit-scrollbar-thumb {
+  background: rgba(231, 133, 146, 0.3);
+  border-radius: 4px;
+}
+
+.sc-upsell-card {
+  flex: 0 0 130px;
+  background: #FFFFFF;
+  border: 1px solid rgba(231, 133, 146, 0.18);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.sc-upsell-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.sc-upsell-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sc-upsell-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--sc-color-text-main, #2D0F19);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.sc-upsell-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--sc-color-secondary, #5B2333);
+  margin-top: 2px;
+}
+
+.sc-upsell-add-btn {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: var(--sc-color-primary, #E78592);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+
+.sc-upsell-add-btn:hover {
+  background: var(--sc-color-secondary, #5B2333);
+}
+
+.sc-upsell-add-btn:active {
+  transform: scale(0.96);
+}
+
+
 
