@@ -39,19 +39,16 @@
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
 
-  # Why: Verbose 'Rs. XX.XX INR' presentation clutters mobile viewports.
-  # We compute clean Indian Rupee strings ('₹40', '₹48') by stripping minor currency labels
-  # and trailing decimals, allowing mobile to render concise ₹ pricing while keeping
-  # Shopify's standard currency formatting for desktop screens.
-  assign mobile_price = price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'INR', '' | strip
-  unless mobile_price contains '₹'
-    assign mobile_price = '₹' | append: mobile_price
+  # Clean Indian Rupee formatting (e.g. ₹99, ₹119) without redundant decimals or currency codes
+  assign clean_price = price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'INR', '' | strip
+  unless clean_price contains '₹'
+    assign clean_price = '₹' | append: clean_price
   endunless
 
   if compare_at_price
-    assign mobile_compare_price = compare_at_price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'INR', '' | strip
-    unless mobile_compare_price contains '₹'
-      assign mobile_compare_price = '₹' | append: mobile_compare_price
+    assign clean_compare_price = compare_at_price | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'INR', '' | strip
+    unless clean_compare_price contains '₹'
+      assign clean_compare_price = '₹' | append: clean_compare_price
     endunless
   endif
 -%}
@@ -83,14 +80,7 @@
               </span>
               <span>
                 <s class="price-item price-item--regular variant-item__old-price">
-                  <span class="sc-price-desktop">
-                    {% if settings.currency_code_enabled %}
-                      {{ compare_at_price | money_with_currency }}
-                    {% else %}
-                      {{ compare_at_price | money }}
-                    {% endif %}
-                  </span>
-                  <span class="sc-price-mobile">{{ mobile_compare_price }}</span>
+                  <span class="sc-clean-price">{{ clean_compare_price }}</span>
                 </s>
               </span>
             {%- endunless -%}
@@ -105,8 +95,7 @@
         {%- else -%}
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
           <span class="price-item price-item--regular">
-            <span class="sc-price-desktop">{{ money_price }}</span>
-            <span class="sc-price-mobile">{{ mobile_price }}</span>
+            <span class="sc-clean-price">{{ clean_price }}</span>
           </span>
         {%- endif -%}
       </div>
@@ -115,21 +104,13 @@
           <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
           <span>
             <s class="price-item price-item--regular">
-              <span class="sc-price-desktop">
-                {% if settings.currency_code_enabled %}
-                  {{ compare_at_price | money_with_currency }}
-                {% else %}
-                  {{ compare_at_price | money }}
-                {% endif %}
-              </span>
-              <span class="sc-price-mobile">{{ mobile_compare_price }}</span>
+              <span class="sc-clean-price">{{ clean_compare_price }}</span>
             </s>
           </span>
         {%- endunless -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
         <span class="price-item price-item--sale price-item--last">
-          <span class="sc-price-desktop">{{ money_price }}</span>
-          <span class="sc-price-mobile">{{ mobile_price }}</span>
+          <span class="sc-clean-price">{{ clean_price }}</span>
         </span>
       </div>
       {%- if product.selected_or_first_available_variant.unit_price_measurement -%}
