@@ -52,14 +52,14 @@ npx @shopify/cli theme check
 # Automatically fix autofixable Theme Check offenses
 npx @shopify/cli theme check --auto-correct
 
-# Preview theme in local development server with hot-reload
-npx @shopify/cli theme dev --store scrunchcreate.myshopify.com
+# Preview theme in local development server with hot-reload (My Store 3)
+npx @shopify/cli theme dev --store diqk8z-gb.myshopify.com
 
 # Push changes to the live theme (Requires confirmation or --allow-live)
-npx @shopify/cli theme push --store scrunchcreate.myshopify.com --allow-live --live
+npx @shopify/cli theme push --store diqk8z-gb.myshopify.com --allow-live --live
 
 # Pull latest customizer settings from live store
-npx @shopify/cli theme pull --store scrunchcreate.myshopify.com --live
+npx @shopify/cli theme pull --store diqk8z-gb.myshopify.com --live
 ```
 
 ---
