@@ -1,45 +1,61 @@
 {% comment %}
   Scrunch & Create - Hero Banner Carousel
-  Why: Replicates the responsive desktop slide track and mobile gradient hero banner overlay from components/Banner/
+  Why: Renders responsive desktop widescreen banners and dedicated studio-designed mobile portrait banners with seamless touch swiping, accessible navigation, and Shopify Theme Customizer lifecycle support.
 {% endcomment %}
 
-<div class="sc-hero-banner-wrapper" data-section-id="{{ section.id }}" data-autoplay="{{ section.settings.autoplay | default: 4000 }}">
-  <!-- Desktop Carousel View (Hidden on mobile) -->
+<div class="sc-hero-banner-wrapper" data-section-id="{{ section.id }}" data-autoplay="{{ section.settings.autoplay | default: 4500 }}">
+  <!-- Desktop Carousel View (Hidden on mobile <= 767px) -->
   <div class="sc-desktop-carousel">
     <div class="sc-carousel-track">
       {%- for block in section.blocks -%}
-        <div class="sc-carousel-slide {% if forloop.first %}is-active{% endif %}" data-slide-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+        {%- liquid
+          assign default_d_slide = 'slider1.png'
+          if forloop.index == 2
+            assign default_d_slide = 'slider2.png'
+          elsif forloop.index >= 3
+            assign default_d_slide = 'slider3.png'
+          endif
+
+          assign slide_cta_url = block.settings.cta_link
+          if slide_cta_url == blank
+            if forloop.index == 2
+              assign slide_cta_url = '/collections/gift-hampers'
+            elsif forloop.index >= 3
+              assign slide_cta_url = '/collections/scrunchies'
+            else
+              assign slide_cta_url = routes.all_products_collection_url
+            endif
+          endif
+        -%}
+        <div
+          class="sc-carousel-slide {% if forloop.first %}is-active{% endif %}"
+          data-slide-index="{{ forloop.index0 }}"
+          data-block-id="{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >
           {%- if block.settings.image != blank -%}
             <img
-              src="{{ block.settings.image | image_url: width: 2048 }}"
-              alt="{{ block.settings.heading | escape }}"
+              src="{{ block.settings.image | image_url: width: 2400 }}"
+              alt="{{ block.settings.heading | default: 'Scrunch & Create' | escape }}"
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
               width="{{ block.settings.image.width | default: 2048 }}"
               height="{{ block.settings.image.height | default: 768 }}"
               class="sc-slide-img"
             >
           {%- else -%}
-            {%- liquid
-              assign default_slide = 'slider1.png'
-              if forloop.index == 2
-                assign default_slide = 'slider2.png'
-              elsif forloop.index >= 3
-                assign default_slide = 'slider3.png'
-              endif
-            -%}
             <img
-              src="{{ default_slide | asset_url }}"
-              alt="{{ block.settings.heading | escape }}"
+              src="{{ default_d_slide | asset_url }}"
+              alt="{{ block.settings.heading | default: 'Scrunch & Create' | escape }}"
               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
               width="2048"
               height="768"
               class="sc-slide-img"
             >
           {%- endif -%}
 
-          {%- if block.settings.cta_link != blank -%}
-            <a href="{{ block.settings.cta_link }}" class="sc-slide-link" aria-label="{{ block.settings.heading }}"></a>
-          {%- endif -%}
+          <a href="{{ slide_cta_url }}" class="sc-slide-link" aria-label="{{ block.settings.heading | default: 'Shop Collection' }}"></a>
         </div>
       {%- endfor -%}
     </div>
@@ -59,42 +75,93 @@
 
   <!-- Mobile Hero Banner (Visible only on mobile <= 767px) -->
   <div class="sc-mobile-hero-container">
-    {%- for block in section.blocks -%}
-      <div class="sc-mobile-slide {% if forloop.first %}is-active{% endif %}" data-mobile-index="{{ forloop.index0 }}" style="--slide-gradient: {{ block.settings.mobile_gradient }};" {{ block.shopify_attributes }}>
-        <div class="sc-mobile-bg-wash"></div>
-        <div class="sc-mobile-content">
-          {%- if block.settings.badge != blank -%}
-            <span class="sc-mobile-badge">{{ block.settings.badge }}</span>
-          {%- endif -%}
-          <h2 class="sc-mobile-heading">{{ block.settings.heading }}</h2>
-          {%- if block.settings.subtext != blank -%}
-            <p class="sc-mobile-subtext">{{ block.settings.subtext }}</p>
-          {%- endif -%}
-          {%- if block.settings.cta_text != blank and block.settings.cta_link != blank -%}
-            <a href="{{ block.settings.cta_link }}" class="sc-mobile-cta sc-cta-{{ block.settings.cta_style }}">
-              {{ block.settings.cta_text }}
-            </a>
-          {%- endif -%}
-        </div>
-      </div>
-    {%- endfor -%}
-
-    <!-- Mobile Indicator Dots -->
-    <div class="sc-mobile-dots" aria-label="Slide indicators">
+    <div class="sc-mobile-track">
       {%- for block in section.blocks -%}
-        <button class="sc-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {%- liquid
+          assign default_m_slide = 'slider1-mobile.jpg'
+          if forloop.index == 2
+            assign default_m_slide = 'slider2-mobile.jpg'
+          elsif forloop.index >= 3
+            assign default_m_slide = 'slider3-mobile.jpg'
+          endif
+
+          assign mobile_cta_url = block.settings.cta_link
+          if mobile_cta_url == blank
+            if forloop.index == 2
+              assign mobile_cta_url = '/collections/gift-hampers'
+            elsif forloop.index >= 3
+              assign mobile_cta_url = '/collections/scrunchies'
+            else
+              assign mobile_cta_url = routes.all_products_collection_url
+            endif
+          endif
+        -%}
+        <div
+          class="sc-mobile-slide {% if forloop.first %}is-active{% endif %}"
+          data-mobile-index="{{ forloop.index0 }}"
+          data-block-id="{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >
+          <a href="{{ mobile_cta_url }}" class="sc-mobile-slide-link" aria-label="{{ block.settings.heading | default: 'Explore Collection' }}">
+            {%- if block.settings.image_mobile != blank -%}
+              <img
+                src="{{ block.settings.image_mobile | image_url: width: 1000 }}"
+                alt="{{ block.settings.heading | default: 'Scrunch & Create' | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                width="{{ block.settings.image_mobile.width | default: 896 }}"
+                height="{{ block.settings.image_mobile.height | default: 1200 }}"
+                class="sc-mobile-slide-img"
+              >
+            {%- elsif block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1000 }}"
+                alt="{{ block.settings.heading | default: 'Scrunch & Create' | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                width="{{ block.settings.image.width | default: 896 }}"
+                height="{{ block.settings.image.height | default: 1200 }}"
+                class="sc-mobile-slide-img"
+              >
+            {%- else -%}
+              <img
+                src="{{ default_m_slide | asset_url }}"
+                alt="{{ block.settings.heading | default: 'Scrunch & Create' | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                width="896"
+                height="1200"
+                class="sc-mobile-slide-img"
+              >
+            {%- endif -%}
+          </a>
+        </div>
       {%- endfor -%}
     </div>
+
+    <!-- Mobile Indicator Dots -->
+    {%- if section.blocks.size > 1 -%}
+      <div class="sc-mobile-dots" aria-label="Slide indicators">
+        {%- for block in section.blocks -%}
+          <button
+            class="sc-dot {% if forloop.first %}is-active{% endif %}"
+            data-index="{{ forloop.index0 }}"
+            aria-label="Go to slide {{ forloop.index }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
 <script>
   /**
    * Initializes the responsive Hero Banner carousel with touch swipe gestures for mobile
+   * and binds Shopify Theme Customizer events.
    * @danishansari-dev userId - Admin/Theme author
    * @returns {void}
    */
-  document.addEventListener('DOMContentLoaded', function() {
+  function initScrunchHeroBanner_{{ section.id | replace: '-', '_' }}() {
     const wrapper = document.querySelector('[data-section-id="{{ section.id }}"]');
     if (!wrapper) return;
 
@@ -109,7 +176,7 @@
 
     let current = 0;
     let timer = null;
-    const interval = parseInt(wrapper.dataset.autoplay) || 4000;
+    const interval = parseInt(wrapper.dataset.autoplay) || 4500;
 
     /**
      * Activates a specific slide index on both desktop and mobile views
@@ -123,6 +190,9 @@
       mobileSlides.forEach((s, i) => s.classList.toggle('is-active', i === current));
       dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
     }
+
+    // Expose slide switch handler for Shopify Theme Editor
+    window.__scrunchShowSlide_{{ section.id | replace: '-', '_' }} = showSlide;
 
     /**
      * Starts or resets the automatic slide transition timer
@@ -189,6 +259,33 @@
     }
 
     startTimer();
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrunchHeroBanner_{{ section.id | replace: '-', '_' }});
+  } else {
+    initScrunchHeroBanner_{{ section.id | replace: '-', '_' }}();
+  }
+
+  // Shopify Theme Editor Live Integration
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
+      initScrunchHeroBanner_{{ section.id | replace: '-', '_' }}();
+    }
+  });
+
+  document.addEventListener('shopify:block:select', function(e) {
+    const blockId = e.detail.blockId;
+    const wrapper = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!wrapper) return;
+    const targetSlide = wrapper.querySelector(`[data-block-id="${blockId}"]`);
+    if (targetSlide) {
+      const idx = parseInt(targetSlide.dataset.slideIndex || targetSlide.dataset.mobileIndex);
+      if (!isNaN(idx) && window.__scrunchShowSlide_{{ section.id | replace: '-', '_' }}) {
+        window.__scrunchShowSlide_{{ section.id | replace: '-', '_' }}(idx);
+      }
+    }
   });
 </script>
 
@@ -206,7 +303,7 @@
       "step": 500,
       "unit": "ms",
       "label": "Slide Duration",
-      "default": 4000
+      "default": 4500
     }
   ],
   "blocks": [
@@ -217,53 +314,23 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Desktop Slide Image"
+          "label": "Desktop Slide Image (2048x768)"
         },
         {
-          "type": "text",
-          "id": "badge",
-          "label": "Mobile Badge Text",
-          "default": "✦ HANDCRAFTED IN INDIA"
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Slide Image (896x1200 / 3:4)"
         },
         {
           "type": "text",
           "id": "heading",
-          "label": "Slide Heading",
-          "default": "New Collection"
-        },
-        {
-          "type": "text",
-          "id": "subtext",
-          "label": "Slide Subtitle",
-          "default": "Handcrafted with Love"
-        },
-        {
-          "type": "text",
-          "id": "cta_text",
-          "label": "Button Label",
-          "default": "Shop Now"
+          "label": "Slide Title / Alt Text",
+          "default": "Scrunch & Create"
         },
         {
           "type": "url",
           "id": "cta_link",
-          "label": "Button Link"
-        },
-        {
-          "type": "select",
-          "id": "cta_style",
-          "label": "Button Color Style",
-          "options": [
-            { "value": "saffron", "label": "Saffron Pink" },
-            { "value": "rose", "label": "Rose Blossom" },
-            { "value": "dark", "label": "Plum Dark" }
-          ],
-          "default": "saffron"
-        },
-        {
-          "type": "color_background",
-          "id": "mobile_gradient",
-          "label": "Mobile Gradient Background",
-          "default": "linear-gradient(135deg, #5B2333 0%, #8B3A4A 40%, #C9A87C 100%)"
+          "label": "Slide Destination Link"
         }
       ]
     }
@@ -275,34 +342,22 @@
         {
           "type": "slide",
           "settings": {
-            "badge": "✦ HANDCRAFTED IN INDIA",
-            "heading": "New Collection",
-            "subtext": "Handcrafted with Love",
-            "cta_text": "Shop Now",
-            "cta_style": "saffron",
-            "mobile_gradient": "linear-gradient(135deg, #5B2333 0%, #8B3A4A 40%, #C9A87C 100%)"
+            "heading": "Handmade Hair Bows & Accessories",
+            "cta_link": "/collections/all"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "badge": "🎁 PERFECT GIFTS",
-            "heading": "Gift Something Special",
-            "subtext": "Curated hampers for your loved ones",
-            "cta_text": "Explore Hampers",
-            "cta_style": "rose",
-            "mobile_gradient": "linear-gradient(135deg, #E8C4D8 0%, #D4A8C8 40%, #B8A0D2 100%)"
+            "heading": "Curated Gift Hampers",
+            "cta_link": "/collections/gift-hampers"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "badge": "⭐ 1200+ HAPPY CUSTOMERS",
-            "heading": "Customer Favourites",
-            "subtext": "Loved by our amazing community",
-            "cta_text": "Shop Bestsellers",
-            "cta_style": "dark",
-            "mobile_gradient": "linear-gradient(135deg, #FFF8F0 0%, #FFE8D6 40%, #FDDCBE 100%)"
+            "heading": "Artisanal Satin Scrunchies",
+            "cta_link": "/collections/scrunchies"
           }
         }
       ]
