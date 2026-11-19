@@ -1,6 +1,6 @@
 # Scrunch & Create — Shopify Storefront & Migration Suite
 
-This repository contains the complete Shopify storefront, customized Liquid theme, catalog migration tools, automated audit scripts, and AI agent skills for **Scrunch & Create** ([scrunchcreate.myshopify.com](https://scrunchcreate.myshopify.com/)).
+This repository contains the complete Shopify storefront, customized Liquid theme, catalog migration tools, automated audit scripts, and AI agent skills for **Scrunch & Create** on active production store **My Store 3** ([diqk8z-gb.myshopify.com](https://diqk8z-gb.myshopify.com/)).
 
 ---
 
@@ -46,10 +46,11 @@ scrunchcreate-shopify/
 
 ## 2. Store & Environment Credentials
 
-- **Store URL:** `https://scrunchcreate.myshopify.com/`
-- **Store Password:** `123456`
-- **Active Theme Name:** `test-data`
-- **Live Theme ID:** `186623852655`
+- **Store Name:** `My Store 3` (Active Primary Production Store)
+- **Store URL:** `https://diqk8z-gb.myshopify.com/`
+- **Shopify Admin URL:** `https://admin.shopify.com/store/diqk8z-gb/`
+- **Live Theme Name:** `theme-export-scrunchcreate-40u8sjz9-myshopify`
+- **Live Theme ID:** `190676009279`
 - **Target Custom Domain:** `scrunchcreate.com`
 - **Primary Courier Partner:** Delhivery One (Account: `moinaaaftab@gmail.com`)
 
@@ -62,7 +63,7 @@ All Shopify theme development and deployment is managed using the official Shopi
 ### Prerequisites
 
 - Node.js 18+ installed
-- Shopify CLI access to `scrunchcreate.myshopify.com`
+- Shopify CLI access to `diqk8z-gb.myshopify.com`
 
 ### Common CLI Commands (Run from `theme/` directory)
 
@@ -74,10 +75,10 @@ cd theme
 npx @shopify/cli theme check
 
 # Start local live preview / dev server
-npx @shopify/cli theme dev --store scrunchcreate.myshopify.com
+npx @shopify/cli theme dev --store diqk8z-gb.myshopify.com
 
 # Deploy / push changes directly to the live store
-npx @shopify/cli theme push --store scrunchcreate.myshopify.com --allow-live --live
+npx @shopify/cli theme push --store diqk8z-gb.myshopify.com --allow-live --live
 ```
 
 ---
@@ -101,7 +102,7 @@ npx @shopify/cli theme push --store scrunchcreate.myshopify.com --allow-live --l
 
 ## 5. Automated Storefront Audits
 
-The script `scripts/audit-storefront.mjs` executes an end-to-end audit of `https://scrunchcreate.myshopify.com` using Playwright:
+The script `scripts/audit-storefront.mjs` executes an end-to-end audit of `https://diqk8z-gb.myshopify.com` using Playwright:
 
 - Tests 4 viewports: Desktop Large (1440x900), Tablet iPad (768x1024), Mobile iPhone (390x844), Mobile Compact (360x740).
 - Verifies navigation, search modals, dynamic mega menu hover states, color swatches, cart drawer subtotal & progress bar, and mobile menu drawers.
