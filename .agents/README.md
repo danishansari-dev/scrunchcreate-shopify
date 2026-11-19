@@ -1,6 +1,6 @@
 # Shopify E-Commerce Skills Suite for Scrunch & Create
 
-This directory contains the workspace-level Antigravity / AI Agent skills configured for the **Scrunch & Create** Shopify storefront (`scrunchcreate.myshopify.com`).
+This directory contains the workspace-level Antigravity / AI Agent skills configured for the **Scrunch & Create** Shopify storefront on **My Store 3** (`diqk8z-gb.myshopify.com`).
 
 ---
 
