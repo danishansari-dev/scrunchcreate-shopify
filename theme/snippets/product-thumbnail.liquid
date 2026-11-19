@@ -26,9 +26,18 @@
 {% endcomment %}
 
 {%- liquid
-  unless lazy_load == false
+  # Why this exists: First image on PDP is the Largest Contentful Paint (LCP) element;
+  # loading it eager with high fetchpriority prevents rendering delays.
+  if lazy_load == false or position == 1
+    assign lazy = 'eager'
+    assign fetch_priority = 'high'
+  else
     assign lazy = 'lazy'
-  endunless
+    assign fetch_priority = 'auto'
+  endif
+
+  # Why this exists: Guarantees descriptive, brand-aligned image alt text for image search indexing
+  assign media_alt = media.preview_image.alt | default: product.title | append: ' - Handcrafted by Scrunch & Create' | escape
 
   assign desktop_columns = 1
   if desktop_layout == 'columns' and media_count > 1
@@ -84,6 +93,8 @@
         | image_tag:
           class: image_class,
           loading: lazy,
+          fetchpriority: fetch_priority,
+          alt: media_alt,
           sizes: sizes,
           widths: '246, 493, 600, 713, 823, 990, 1100, 1206, 1346, 1426, 1646, 1946'
       }}
