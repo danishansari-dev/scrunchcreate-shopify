@@ -31,10 +31,10 @@ This document outlines the step-by-step roadmap and operational checklist to com
   - Pack the 7 handcrafted scrunchies (Classic + Tulip Sheer).
   - Affix the label securely on the outer waterproof poly mailer / box.
 - [ ] **Step 1.4: Confirm Shopify Fulfillment Sync**
-  - Open [Shopify Admin Orders](https://admin.shopify.com/store/scrunchcreate/orders).
+  - Open [Shopify Admin Orders](https://admin.shopify.com/store/diqk8z-gb/orders).
   - Verify that the Delhivery app has automatically marked Order `#1001` as **Fulfilled** and linked the new AWB number with carrier set to `Delhivery`.
 - [ ] **Step 1.5: Test Live AWB on Storefront**
-  - Visit `https://scrunchcreate.myshopify.com/pages/track-order`.
+  - Visit `https://diqk8z-gb.myshopify.com/pages/track-order`.
   - Enter the new AWB into the "By Courier AWB" tab to verify live checkpoint retrieval.
 - [ ] **Step 1.6: Handover to Courier**
   - Delhivery pickup agent will arrive at `Scrunch & Create, Bisalpur, Uttar Pradesh 262201`.
