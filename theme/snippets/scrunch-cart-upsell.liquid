@@ -1,0 +1,122 @@
+{% comment %}
+  Scrunch & Create - Cart Drawer 1-Click Upsell Widget
+  Why: Boosts Average Order Value (AOV) by offering quick-add affordable accessories to help shoppers reach the ₹499 Free Shipping threshold.
+{% endcomment %}
+
+{%- if cart != empty and cart.total_price < 49900 -%}
+  {%- assign free_shipping_threshold = 49900 -%}
+  {%- assign remaining_amount = free_shipping_threshold | minus: cart.total_price -%}
+
+  <div class="sc-cart-upsell-wrapper">
+    <div class="sc-cart-upsell-header">
+      <span class="sc-upsell-sparkle">✦</span>
+      <span class="sc-upsell-title">Add an accessory to get <strong>FREE Shipping</strong>!</span>
+    </div>
+
+    <div class="sc-cart-upsell-list">
+      <!-- Upsell Item 1: Classic Scrunchie (₹40) -->
+      <div class="sc-upsell-card" data-variant-id="68174701986111">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1008/5908/5119/files/sc-scrunchie-classic-brown-1.webp?v=1795108418"
+          alt="Classic Scrunchie"
+          width="48"
+          height="48"
+          loading="lazy"
+          class="sc-upsell-img"
+        >
+        <div class="sc-upsell-info">
+          <span class="sc-upsell-name">Classic Scrunchie</span>
+          <span class="sc-upsell-price">₹40</span>
+        </div>
+        <button type="button" class="sc-upsell-add-btn" onclick="scAddUpsellToCart(this, '68174701986111')">
+          <span>+ Add</span>
+        </button>
+      </div>
+
+      <!-- Upsell Item 2: Printed Mini Hairbow (₹59) -->
+      <div class="sc-upsell-card" data-variant-id="68174705131839">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1008/5908/5119/files/sc-hairbow-printed-mini-1.webp?v=1795108432"
+          alt="Printed Mini Hairbow"
+          width="48"
+          height="48"
+          loading="lazy"
+          class="sc-upsell-img"
+        >
+        <div class="sc-upsell-info">
+          <span class="sc-upsell-name">Printed Mini Hairbow</span>
+          <span class="sc-upsell-price">₹59</span>
+        </div>
+        <button type="button" class="sc-upsell-add-btn" onclick="scAddUpsellToCart(this, '68174705131839')">
+          <span>+ Add</span>
+        </button>
+      </div>
+
+      <!-- Upsell Item 3: Satin Hairbow (₹79) -->
+      <div class="sc-upsell-card" data-variant-id="68174696808767">
+        <img
+          src="https://cdn.shopify.com/s/files/1/1008/5908/5119/files/sc-hairbow-satin-black-1.webp?v=1795108403"
+          alt="Satin Hairbow"
+          width="48"
+          height="48"
+          loading="lazy"
+          class="sc-upsell-img"
+        >
+        <div class="sc-upsell-info">
+          <span class="sc-upsell-name">Satin Hairbow</span>
+          <span class="sc-upsell-price">₹79</span>
+        </div>
+        <button type="button" class="sc-upsell-add-btn" onclick="scAddUpsellToCart(this, '68174696808767')">
+          <span>+ Add</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Adds an upsell accessory to the Shopify cart asynchronously and re-renders the cart drawer
+     * @danishansari-dev btnElement - The clicked button DOM element
+     * @danishansari-dev variantId - Target product variant ID
+     * @returns {Promise<void>}
+     */
+    async function scAddUpsellToCart(btn, variantId) {
+      if (!variantId || btn.disabled) return;
+      btn.disabled = true;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span>...</span>';
+
+      try {
+        const root = window.Shopify && window.Shopify.routes && window.Shopify.routes.root ? window.Shopify.routes.root : '/';
+        const response = await fetch(root + 'cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            items: [{ id: parseInt(variantId), quantity: 1 }],
+            sections: 'cart-drawer,cart-icon-bubble'
+          })
+        });
+
+        const data = await response.json();
+        const cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer && typeof cartDrawer.renderContents === 'function') {
+          cartDrawer.renderContents(data);
+        } else {
+          // Fallback: Dispatch cart update event
+          if (typeof publish !== 'undefined' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: data });
+          } else {
+            window.location.reload();
+          }
+        }
+      } catch (err) {
+        console.error('Failed to add upsell item:', err);
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+  </script>
+{%- endif -%}
