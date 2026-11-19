@@ -30,6 +30,12 @@
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
   {%- liquid
+    # Why this exists: Enforces canonical clean root product URLs (/products/handle) rather than nested collection paths
+    assign card_product_url = card_product.url | within: nil
+    # Why this exists: Guarantees descriptive, brand-aligned image alt text for image search indexing
+    assign card_img_alt = card_product.featured_media.alt | default: card_product.title | append: ' - Handcrafted Hair Accessories by Scrunch & Create' | escape
+    assign card_secondary_alt = card_product.media[1].alt | default: card_product.title | append: ' - Detail View' | escape
+
     assign ratio = 1
     if card_product.featured_media and media_aspect_ratio == 'portrait'
       assign ratio = 0.8
@@ -75,7 +81,7 @@
                   "
                   src="{{ card_product.featured_media | image_url: width: 533 }}"
                   sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-                  alt="{{ card_product.featured_media.alt | escape }}"
+                  alt="{{ card_img_alt }}"
                   class="motion-reduce"
                   {% unless lazy_load == false %}
                     loading="lazy"
@@ -98,7 +104,7 @@
                     "
                     src="{{ card_product.media[1] | image_url: width: 533 }}"
                     sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
-                    alt="{{ card_product.media[1].alt | escape }}"
+                    alt="{{ card_secondary_alt }}"
                     class="motion-reduce"
                     loading="lazy"
                     width="{{ card_product.media[1].width }}"
@@ -117,7 +123,7 @@
                 {% endif %}
               >
                 <a
-                  href="{{ card_product.url }}"
+                  href="{{ card_product_url }}"
                   id="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}"
                   class="full-unstyled-link"
                   aria-labelledby="StandardCardNoMediaLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}{% endif %}"
@@ -165,7 +171,7 @@
               {% endif %}
             >
               <a
-                href="{{ card_product.url }}"
+                href="{{ card_product_url }}"
                 id="CardLink-{{ section_id }}-{{ card_product.id }}"
                 class="full-unstyled-link"
                 aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }}{% if card_product.available == false or card_product.compare_at_price > card_product.price %} Badge-{{ section_id }}-{{ card_product.id }}{% endif %}"
@@ -478,7 +484,7 @@
                             {% if card_product == blank %}
                               role="link" aria-disabled="true"
                             {% else %}
-                              href="{{ card_product.url }}"
+                              href="{{ card_product_url }}"
                             {% endif %}
                             class="link product__view-details animate-arrow small-hide medium-hide"
                           >
@@ -487,7 +493,7 @@
                           </a>
                         </div>
                         <div class="quick-add-modal__content-info--bulk-details large-up-hide">
-                          <a href="{{ card_product.url }}" class="full-unstyled-link">
+                          <a href="{{ card_product_url }}" class="full-unstyled-link">
                             <h3>{{ card_product.title | escape }}</h3>
                           </a>
                           {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
@@ -500,7 +506,7 @@
                       </div>
                       <div>
                         <div class="quick-add-modal__content-info--bulk-details small-hide medium-hide">
-                          <a href="{{ card_product.url }}" class="full-unstyled-link">
+                          <a href="{{ card_product_url }}" class="full-unstyled-link">
                             <h3 class="h2">
                               {{ card_product.title | escape }}
                             </h3>
