@@ -93,9 +93,11 @@
             </div>
           {%- else -%}
             {%- assign remaining_amount = free_shipping_threshold | minus: cart_total -%}
+            {%- assign clean_remaining = remaining_amount | money_without_trailing_zeros | replace: 'Rs.', '₹' | replace: 'INR', '' | strip -%}
+            {%- unless clean_remaining contains '₹' -%}{%- assign clean_remaining = '₹' | append: clean_remaining -%}{%- endunless -%}
             <div class="sc-shipping-text">
               <span class="sc-shipping-icon">🚚</span>
-              <span>Add <strong>{{ remaining_amount | money }}</strong> more for <strong>FREE Shipping</strong></span>
+              <span>Add <strong>{{ clean_remaining }}</strong> more for <strong>FREE Shipping</strong></span>
             </div>
             {%- assign progress_pct = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
             <div class="sc-shipping-meter">
@@ -541,6 +543,8 @@
 
         <!-- Start blocks -->
         <!-- Subtotals -->
+
+        {%- render 'scrunch-cart-upsell', cart: cart -%}
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           <div>
