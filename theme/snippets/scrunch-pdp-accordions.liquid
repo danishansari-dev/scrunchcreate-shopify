@@ -1,0 +1,105 @@
+{% comment %}
+  Scrunch & Create - PDP Specifications & Care Guide Accordions
+  Why: Gives shoppers complete fabric specs, wear guide, care instructions, and return policies directly on the product page.
+{% endcomment %}
+
+<div class="sc-pdp-accordions-wrapper">
+  <!-- Accordion 1: Material & Craftsmanship -->
+  <details class="sc-accordion-item" open>
+    <summary class="sc-accordion-summary">
+      <div class="sc-summary-title-wrap">
+        <span class="sc-summary-icon">🧵</span>
+        <span class="sc-summary-title">Fabric & Craftsmanship</span>
+      </div>
+      <svg class="sc-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+    <div class="sc-accordion-content">
+      <p>
+        {%- if product.type contains 'Hairbow' or product.title contains 'Hairbow' or product.title contains 'Bow' -%}
+          Crafted from ultra-luxurious, non-snagging shimmer satin fabric. Features a premium metal French barrette with secure clasp teeth that firmly holds fine, medium, or thick hair without pulling or causing scalp tension.
+        {%- elsif product.type contains 'Scrunchie' or product.title contains 'Scrunchie' -%}
+          Hand-stitched from silky-smooth, premium satin that creates zero friction against hair cuticles. Fitted with high-resilience inner elastic that maintains its stretch wash after wash without leaving crease marks.
+        {%- elsif product.type contains 'Hamper' or product.title contains 'Hamper' -%}
+          Elegantly arranged in our signature pastel gift hamper with satin ribbon closure, luxury protective tissue, and a personal gift note. Perfect for birthdays, bridesmaid favors, and festivals.
+        {%- else -%}
+          Carefully handcrafted in small batches using premium materials selected for elegance, gentle hair care, and long-lasting durability.
+        {%- endif -%}
+      </p>
+      <ul class="sc-specs-list">
+        <li><strong>Finish:</strong> Lustrous soft sheen, silky hand-feel</li>
+        <li><strong>Hardware:</strong> Anti-tarnish, snag-free clasp</li>
+        <li><strong>Origin:</strong> Handcrafted in India</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Accordion 2: Size & Styling Guide -->
+  <details class="sc-accordion-item">
+    <summary class="sc-accordion-summary">
+      <div class="sc-summary-title-wrap">
+        <span class="sc-summary-icon">📏</span>
+        <span class="sc-summary-title">Size & Styling Tips</span>
+      </div>
+      <svg class="sc-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+    <div class="sc-accordion-content">
+      <p>
+        Designed to complement everyday outfits, office formals, and festive occasions alike.
+      </p>
+      <ul class="sc-specs-list">
+        <li><strong>Half-Up Hairstyles:</strong> Clip over your crown for an instant effortless chic look.</li>
+        <li><strong>High Ponytails & Buns:</strong> Adds volume and elegance without slipping or needing bobby pins.</li>
+        <li><strong>Hair Types:</strong> Suitable for all hair textures (straight, wavy, curly, thick or fine).</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Accordion 3: Wash & Care Guide -->
+  <details class="sc-accordion-item">
+    <summary class="sc-accordion-summary">
+      <div class="sc-summary-title-wrap">
+        <span class="sc-summary-icon">🫧</span>
+        <span class="sc-summary-title">Wash & Care Instructions</span>
+      </div>
+      <svg class="sc-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+    <div class="sc-accordion-content">
+      <ul class="sc-specs-list">
+        <li>Spot clean with a gentle damp cloth or mild soapy water when needed.</li>
+        <li>If washing, gentle hand-wash only in cold water. Do not twist or wring.</li>
+        <li>Lay flat on a towel in shade to air dry naturally.</li>
+        <li>Avoid harsh chemical detergents, bleach, and direct machine spin cycles.</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- Accordion 4: Shipping & Replacement Policy -->
+  <details class="sc-accordion-item">
+    <summary class="sc-accordion-summary">
+      <div class="sc-summary-title-wrap">
+        <span class="sc-summary-icon">🚚</span>
+        <span class="sc-summary-title">Shipping & Replacement Policy</span>
+      </div>
+      <svg class="sc-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+    <div class="sc-accordion-content">
+      <p>
+        <strong>Free Domestic Shipping:</strong> All orders of ₹499 and above qualify for Free Shipping anywhere in India. For orders under ₹499, a flat shipping fee of ₹49 applies.
+      </p>
+      <p>
+        <strong>Dispatch Time:</strong> Orders are hand-packed and dispatched within 24 to 48 hours. Express delivery arrives within 3 to 5 business days.
+      </p>
+      <p>
+        <strong>7-Day Easy Replacement:</strong> In the rare event of transit damage or manufacturing defect, reach out to our team at <a href="mailto:scrunchcreate@gmail.com">scrunchcreate@gmail.com</a> for an immediate replacement.
+      </p>
+    </div>
+  </details>
+</div>
