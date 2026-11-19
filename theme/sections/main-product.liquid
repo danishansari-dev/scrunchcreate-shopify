@@ -103,6 +103,13 @@
                 {%- when 'title' -%}
                   <div class="product__title" {{ block.shopify_attributes }}>
                     <h1>{{ product.title | escape }}</h1>
+                    <div class="sc-pdp-rating-badge">
+                      <div class="sc-stars" aria-label="5 out of 5 stars">★★★★★</div>
+                      <span class="sc-rating-score">4.9</span>
+                      <span class="sc-rating-count">(120+ happy customers)</span>
+                      <span class="sc-rating-bullet">•</span>
+                      <span class="sc-rating-highlight">Handcrafted in India</span>
+                    </div>
                     <a href="{{ product.url }}" class="product__title">
                       <h2 class="h1">
                         {{ product.title | escape }}
@@ -201,6 +208,7 @@
                       {{ product.description }}
                     </div>
                   {%- endif -%}
+                  {%- render 'scrunch-pdp-accordions', product: product -%}
                 {%- when 'sku' -%}
                   <p
                     class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -502,6 +510,7 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
+                  {%- render 'scrunch-pdp-perks', product: product -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">
@@ -747,6 +756,8 @@
       {%- endcomment -%}
     </div>
   </product-component>
+
+
 
   {% comment %}
     Scrunch & Create Mobile Sticky Add-to-Cart bar
