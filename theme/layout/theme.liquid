@@ -79,6 +79,12 @@
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     {%- endif -%}
 
+    {%- comment -%}
+      Why this exists: Verifies domain ownership with Pinterest for scrunchcreate.com
+      to claim website attribution, enable rich pins, and track merchant analytics.
+    {%- endcomment -%}
+    <meta name="p:domain_verify" content="c102c18cdd8df17b168cd1019640f7c4">
+
     {% render 'meta-tags' %}
     {% render 'scrunch-seo-schema' %}
 
